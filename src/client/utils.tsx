@@ -97,9 +97,7 @@ export async function addMockMarket(num_option: number = 5) {
 }
 
 export async function triggerAddHistoryOption(option_id: string) {
-  const event = getRequestEvent();
-  const origin = event ? new URL(event.request.url).origin : "";
-  const res = await fetch(`${origin}/api/history__options/${option_id}`, {
+  const res = await fetch(`/api/history__options/${option_id}`, {
     method: "POST",
   });
   if (!res.ok) {

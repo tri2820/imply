@@ -9,7 +9,7 @@ export default function MarketCard(props: { marketId?: string }) {
   const market = () => markets().find((m) => m?.id == props.marketId);
 
   const redirectToMarket = (optionId?: string, shareId?: string) => {
-    const url = new URL(`/markets/${props.marketId}`, window.location.origin);
+    const url = new URL(`/market/${props.marketId}`, window.location.origin);
     if (optionId) url.searchParams.set("optionId", optionId);
     if (shareId) url.searchParams.set("shareId", shareId);
     // Push the new state to the browser history
@@ -23,7 +23,7 @@ export default function MarketCard(props: { marketId?: string }) {
         <div class="border border-neutral-800 p-4 rounded bg-neutral-900 no-scrollbar space-y-2 flex flex-col">
           <div class="flex items-center space-x-3">
             <MarketImage size="sm" />
-            <a href={`/markets/${props.marketId}`} class="font-bold">
+            <a href={`/market/${props.marketId}`} class="font-bold">
               {m().name}
             </a>
           </div>
