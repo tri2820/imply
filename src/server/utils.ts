@@ -1,4 +1,4 @@
-import { jwtVerify as jose_jwtVerify, SignJWT} from "jose";
+import { jwtVerify as jose_jwtVerify, SignJWT } from "jose";
 import { getRequestEvent } from "solid-js/web";
 
 import OpenAI from "openai";
@@ -10,7 +10,6 @@ import {
   setCookie as vinxi_setCookie,
 } from "vinxi/http";
 import schema from "~/../instant.schema";
-import { APICompleteBody, ChatTaskMessage } from "../utils";
 
 import { create_market, search_news } from "./tools";
 
@@ -19,7 +18,6 @@ export function getEnv(key: string) {
   return event?.nativeEvent.context.cloudflare?.env[key] ?? process.env[key];
 }
 
-export type AdminDB = ReturnType<typeof createAdminDb>;
 export function createAdminDb() {
   const INSTANT_APP_ADMIN_TOKEN = getEnv("INSTANT_APP_ADMIN_TOKEN");
   const db = init({
@@ -71,13 +69,7 @@ export async function sign(jwtObject: SignJWT) {
   const secret = new TextEncoder().encode(JWT_SECRET_KEY);
   return jwtObject.sign(secret);
 }
-
-// AI
-
-export async function chatTask(props: {
-  send: (msg: ChatTaskMessage) => void;
-  body: APICompleteBody;
-}) {
+export async function chatTask(props: ChatTaskProps) {
   const history: ChatCompletionMessageParam[] = props.body.blocks.map((b) => {
     return {
       role: b.role,
@@ -113,14 +105,20 @@ export async function chatTask(props: {
         messages,
         // tools: [add, get_weather],
         // create_market_factory(send)
-        tools: [create_market, search_news],
+        tools: [
+          create_market,
+          search_news
+        ].map(factory => factory(props)),
       })
       .on("content.delta", (e) => {
         props.send({
           delta: e.delta,
         });
       })
-      .on("tool_calls.function.arguments.delta", (e) => {})
+      .on("tool_calls.function.arguments.delta", (e) => { })
+      .on("tool_calls.function.arguments.done", (e) => {
+        console.log('tool done', e)
+      })
       // .on("chunk", (chunk) => {
       //   controller.enqueue({
       //     chunk
@@ -128,7 +126,7 @@ export async function chatTask(props: {
       // })
       .on("message", (message) => {
         props.send({
-          message,
+          forward: message,
         });
       });
 
@@ -155,3 +153,4 @@ export async function triggerAddHistoryOption(option_id: string) {
     );
   }
 }
+

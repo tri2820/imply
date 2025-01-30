@@ -9,7 +9,7 @@ import {
   untrack,
 } from "solid-js";
 import { chartSeries } from "~/client/utils";
-import { DataPoint, lastItemToUSD } from "~/utils";
+import { lastItemToUSD } from "~/shared/utils";
 
 export default function MarketChart() {
   const [chart, setChart] = createSignal<IChartApi>();

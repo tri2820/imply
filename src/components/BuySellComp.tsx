@@ -1,4 +1,3 @@
-import { BuySellProps, HoldingSubscription, YesOrNo } from "~/utils";
 import BuyComp from "./BuyComp";
 import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { optionId, profile, setOptionId, setType } from "~/client/utils";

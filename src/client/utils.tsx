@@ -1,18 +1,5 @@
-import { id } from "@instantdb/core";
+import { id, InstantCoreDatabase } from "@instantdb/core";
 import { db } from "./database";
-import {
-  Block,
-  calculateAttributes,
-  colors,
-  hash,
-  HistoryOptionSubscription,
-  interpolate,
-  MarketResponse,
-  MarketSubscription,
-  ProfileSubscription,
-  Series,
-  YesOrNo,
-} from "../utils";
 import { createSignal } from "solid-js";
 import {
   LastPriceAnimationMode,
@@ -20,20 +7,29 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { getRequestEvent } from "solid-js/web";
+import { InstantAdminDatabase } from "@instantdb/admin";
+import { AppSchema } from "../../instant.schema";
+import { calculateAttributes, colors, hash } from "~/shared/utils";
 
-export function createOption() {
+export function createOption(
+  db: InstantAdminDatabase<AppSchema> | InstantCoreDatabase<AppSchema>,
+  name: string,
+  yes_prob: number,
+  image = ""
+) {
   const yes_share_id = id();
   const no_share_id = id();
   const option_id = id();
-  // let yesReserve = Math.round(800 + Math.random() * 300);
-  // let noReserve = Math.round(800 + Math.random() * 300);
-  // const totalReserve = yesReserve * noReserve;
-  // const targetTotalReserve = 1000000;
-  // const scale = Math.sqrt(targetTotalReserve / totalReserve);
-  // yesReserve *= scale;
-  // noReserve *= scale;
-  const yesReserve = 1000;
-  const noReserve = 1000;
+
+  const K = 1000 * 1000;
+  const yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
+  const noReserve = Math.ceil(K / yesReserve);
+  console.log("debug", yesReserve, noReserve, yesReserve * noReserve);
+  if (yesReserve * noReserve < K) {
+    throw new Error(
+      `Initial reserves is too low, wrong calculation ${yesReserve} * ${noReserve} < ${K}`
+    );
+  }
 
   return {
     option_id,
@@ -49,9 +45,9 @@ export function createOption() {
 
       db.tx.options[option_id]
         .update({
-          name: `o_${Math.random().toString(36).substring(7)}`,
+          name,
           color: colors[hash(option_id) % colors.length],
-          image: "",
+          image,
         })
         .link({
           shares: [yes_share_id, no_share_id],
@@ -63,7 +59,9 @@ export function createOption() {
 export async function addMockMarket(num_option: number = 5) {
   const market_id = id();
 
-  const options = Array.from({ length: num_option }, (_, i) => createOption());
+  const options = Array.from({ length: num_option }, (_, i) =>
+    createOption(db, `Option ${i + 1}`, Math.random())
+  );
   const transactions: Parameters<typeof db.transact>[0] = [
     ...options.flatMap((o) => o.transactions),
     db.tx.markets[market_id]
@@ -139,8 +137,6 @@ export async function loadMarkets() {
   setLoadMarketsState("idle");
 }
 
-// AI page
-export type Blocks = { [id: string]: Block };
 export const [blocks, setBlocks] = createSignal<Blocks>({});
 export const blocksToList = (blocks: Blocks) =>
   Object.values(blocks).toSorted(

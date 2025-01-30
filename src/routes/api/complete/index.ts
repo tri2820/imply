@@ -1,7 +1,7 @@
 import type { APIEvent } from "@solidjs/start/server";
 import { stringifyMultiJsonStream } from "json-stream-es";
 import { chatTask } from "~/server/utils";
-import { APICompleteBody, streamNDJSON } from "~/utils";
+import { streamNDJSON } from "~/shared/utils";
 
 export async function POST(event: APIEvent) {
   const body = (await event.request.json()) as APICompleteBody;

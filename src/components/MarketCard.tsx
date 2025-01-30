@@ -1,9 +1,10 @@
 import { For, Show } from "solid-js";
-import { Color, noProb, prob } from "~/utils";
+
 import CheckBoxItem from "./CheckboxItem";
 import MarketImage from "./MarketImage";
 import OptionItem from "./OptionItem";
 import { markets } from "~/client/utils";
+import { Color, noProb, prob } from "~/shared/utils";
 
 export default function MarketCard(props: { marketId?: string }) {
   const market = () => markets().find((m) => m?.id == props.marketId);

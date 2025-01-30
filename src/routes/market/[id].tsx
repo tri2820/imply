@@ -7,13 +7,13 @@ import {
   optionId,
   setHistoryOptionSubscription,
   setMarketSubscription,
-  setOptionId
+  setOptionId,
 } from "~/client/utils";
 import BuySellComp from "~/components/BuySellComp";
 import MarketImage from "~/components/MarketImage";
 import MarketChart from "~/components/MartketChart";
 import OptionImage from "~/components/OptionImage";
-import { dateF_dmy, dateF_h, prob, probToPercent } from "~/utils";
+import { dateF_dmy, dateF_h, prob, probToPercent } from "~/shared/utils";
 
 export default function MarketPage() {
   const params = useParams();

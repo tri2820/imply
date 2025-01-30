@@ -1,4 +1,4 @@
-import { Color, colorClasses, probToPercent } from "~/utils";
+import { Color, colorClasses, probToPercent } from "~/shared/utils";
 
 export default function OptionItem(props: {
   id: string;

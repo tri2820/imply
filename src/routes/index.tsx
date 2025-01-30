@@ -3,7 +3,6 @@ import { setProfileSubscription, userChatted } from "~/client/utils";
 import AIComp from "../components/AIComp";
 import Markets from "../components/Markets";
 import { db } from "~/client/database";
-import { JWTResult } from "~/utils";
 
 export default function Home() {
   function subscribeProfile(profile_id: string) {

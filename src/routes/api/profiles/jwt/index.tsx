@@ -10,10 +10,7 @@ import {
   verifyJWT,
 } from "~/server/utils";
 
-import { JWTResult } from "~/utils";
-
 export async function GET(event: APIEvent) {
-  console.log('here')
   const profile_jwt = getCookie("profile_jwt");
 
   if (profile_jwt) {

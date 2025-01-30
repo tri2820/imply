@@ -1,17 +1,7 @@
 import { BsCheckCircleFill, BsXCircleFill } from "solid-icons/bs";
-import { TbLoader } from "solid-icons/tb";
 import { createEffect, createSignal, Show } from "solid-js";
 import { optionId, setType, type } from "~/client/utils";
-import {
-  BuySellAction,
-  BuySellProps,
-  buyShare,
-  MIN_USD_AMOUNT,
-  noProb,
-  ShareActionResult_Buy,
-  Status,
-  YesOrNo,
-} from "~/utils";
+import { buyShare, MIN_USD_AMOUNT, noProb } from "~/shared/utils";
 import CheckBoxItem from "./CheckboxItem";
 import OptionImage from "./OptionImage";
 import Spinner from "./Spinner";
@@ -194,7 +184,7 @@ export default function BuyComp(props: BuySellProps) {
                   <div>{props.market.name}</div>
                   <div class="flex items-center space-x-2">
                     <div
-                      class="w-2 h-2 rounded-full"
+                      class="w-2 h-2 rounded-full flex-none"
                       style={{ background: o().color }}
                     />
                     <div class="font-bold">{o().name}</div>

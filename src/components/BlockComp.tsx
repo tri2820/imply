@@ -1,31 +1,26 @@
 import { marked } from "marked";
 import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
-import { createSignal, onMount, Show } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
-import {
-  listBlocks,
-  scrolledToBottom,
-  scrollToEnd,
-  setScrolledToBottom,
-} from "~/client/utils";
-import { AssistantBlock, Role, ToolBlock, UIBlock, UserBlock } from "~/utils";
+import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
 
-  onMount(() => {
-    const isLastBlock = listBlocks().at(-1)?.id === props.block.id;
+  // Does not feel right yet
+  // onMount(() => {
+  //   const isLastBlock = listBlocks().at(-1)?.id === props.block.id;
 
-    if (isLastBlock) {
-      if (scrolledToBottom() === props.block.id) {
-        scrollToEnd();
-        return;
-      }
+  //   if (isLastBlock) {
+  //     if (scrolledToBottom() === props.block.id) {
+  //       scrollToEnd();
+  //       return;
+  //     }
 
-      setScrolledToBottom(props.block.id);
-    }
-  });
+  //     setScrolledToBottom(props.block.id);
+  //   }
+  // });
 
   // TODO: sanitize
   const html = () => marked.parse(props.block.content) as string;
@@ -51,8 +46,24 @@ function UserBlockComp(props: { block: UserBlock }) {
   );
 }
 
+function ToolBlockBody_CreateMarket(props: { block: ToolBlock }) {
+  return (
+    <div class="py-2 flex items-stretch max-h-60">
+      <div class="flex-none mx-2 w-[2px] bg-neutral-800"></div>
+      <div class="pl-2 pr-4 overflow-auto">
+        {JSON.stringify(props.block.content.arguments)}
+      </div>
+    </div>
+  );
+}
+
 function ToolBlockComp(props: { block: ToolBlock }) {
   const [show, setShow] = createSignal(true);
+  // const bodies = {
+  //   'create_market': ToolBlockBody_CreateMarket,
+  //   ''
+  // }
+
   return (
     <div class="max-w-96 rounded-l my-1">
       <button
@@ -74,12 +85,7 @@ function ToolBlockComp(props: { block: ToolBlock }) {
         </div>
       </button>
       <Show when={show()}>
-        <div class="py-2 flex items-stretch max-h-60">
-          <div class="mx-2 w-4 bg-neutral-800"></div>
-          <div class="pl-2 pr-4 overflow-auto">
-            {props.block.content.arguments}
-          </div>
-        </div>
+        <Dynamic component={ToolBlockBody_CreateMarket} block={props.block} />
       </Show>
     </div>
   );

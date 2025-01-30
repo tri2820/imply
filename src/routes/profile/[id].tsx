@@ -2,7 +2,7 @@ import { useParams } from "@solidjs/router";
 import { createSignal, For, onMount, Show } from "solid-js";
 import ProfileImage from "~/components/ProfileImage";
 import { db } from "~/client/database";
-import { dateF, ProfileResponse } from "~/utils";
+import { dateF } from "~/shared/utils";
 
 export default function ProfilePage() {
   const [profileResponse, setProfileResponse] = createSignal<ProfileResponse>();

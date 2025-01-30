@@ -1,10 +1,9 @@
 import { id } from "@instantdb/core";
 
 import { BsArrowUpShort, BsStopFill } from "solid-icons/bs";
-import { createSignal, For, Show } from "solid-js";
+import { createSignal, For, onMount, Show } from "solid-js";
 import {
   abortController,
-  Blocks,
   blocks,
   blocksToList,
   listBlocks,
@@ -15,22 +14,14 @@ import {
   userChatted,
 } from "~/client/utils";
 
-
-import {
-  APICompleteBody,
-  Block,
-  ChatTaskMessage,
-  OneOf,
-  readNDJSON,
-  ToolCalls,
-} from "~/utils";
+import { accept } from "~/client/accept";
+import { db } from "~/client/database";
+import BlockComp from "./BlockComp";
 import IconComp from "./IconComp";
 import Spinner from "./Spinner";
-import BlockComp from "./BlockComp";
-import { db } from "~/client/database";
+import { generateBlocks, readNDJSON } from "~/shared/utils";
 
 export default function AIComp() {
-  const toolCalls: ToolCalls = {};
   const [text, setText] = createSignal("");
 
   async function submit() {
@@ -115,106 +106,12 @@ export default function AIComp() {
     });
 
     if (!resp.body) return;
-    let needSplit = false;
+    const state: SharedState = {
+      needSplit: false,
+      assistantBlock,
+    };
     for await (const value of readNDJSON(resp.body)) {
-      const json = value as ChatTaskMessage;
-
-      // console.log("json", json);
-
-      if (json.delta) {
-        if (needSplit) {
-          // Commit block
-          console.log(
-            "maybe submitting here because split",
-            assistantBlock,
-            needSplit,
-            json,
-            `@${assistantBlock.content}@`
-          );
-          needSplit = false;
-
-          // Sometimes the assistant block is empty because the assitant call tool first
-          if (assistantBlock.content) {
-            await db.transact([
-              db.tx.blocks[assistantBlock.id].update(assistantBlock),
-            ]);
-          }
-
-          assistantBlock = {
-            id: id(),
-            role: "assistant",
-            content: "",
-            created_at: new Date(Date.now()).toISOString(),
-            updated_at: new Date(Date.now()).toISOString(),
-          };
-
-          setBlocks((prev) => {
-            return {
-              ...prev,
-              [assistantBlock.id]: assistantBlock,
-            };
-          });
-        }
-
-        assistantBlock.content += json.delta;
-        assistantBlock.updated_at = new Date().toISOString();
-        setBlocks((blocks) => {
-          return {
-            ...blocks,
-            [assistantBlock.id]: {
-              ...assistantBlock,
-            },
-          };
-        });
-      }
-
-      if (json.message) {
-        if (json.message.role === "assistant") {
-          if (json.message.tool_calls && json.message.tool_calls.length > 0) {
-            let updates: Blocks = {};
-
-            // Add tool blocks
-            json.message.tool_calls.forEach((tc) => {
-              // Tool block
-              toolCalls[tc.id] = {
-                // We will add a pending tool block based on the name
-                name: tc.function.name,
-                arguments: tc.function.arguments,
-                created_at: new Date().toISOString(),
-              };
-
-              const toolBlock: Block = {
-                id: id(),
-                content: {
-                  name: tc.function.name,
-                  arguments: tc.function.arguments,
-                },
-                role: "tool",
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
-              };
-              db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
-
-              updates[toolBlock.id] = toolBlock;
-            });
-
-            // TODO: split assistant block
-            needSplit = true;
-            console.log("calling a tool, set Split", needSplit, json);
-
-            setBlocks((blocks) => {
-              return {
-                ...blocks,
-                ...updates,
-              };
-            });
-          }
-        }
-
-        if (json.message.role === "tool") {
-          console.log("toolCalls result", toolCalls[json.message.tool_call_id]);
-        }
-      }
+      await accept(state, value as ChatTaskMessage);
     }
 
     setAbortController(undefined);
@@ -230,9 +127,9 @@ export default function AIComp() {
     }
   }
 
-  // onMount(() => {
-  //   setBlocks(generateBlocks());
-  // });
+  onMount(() => {
+    setBlocks(generateBlocks());
+  });
 
   return (
     <div class="flex-1 w-full flex flex-col items-stretch ">

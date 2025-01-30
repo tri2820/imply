@@ -2,7 +2,7 @@ import { id } from "@instantdb/admin";
 import type { APIEvent } from "@solidjs/start/server";
 
 import { createAdminDb } from "~/server/utils";
-import { yesProb } from "~/utils";
+import { yesProb } from "~/shared/utils";
 
 export async function POST(event: APIEvent) {
   const option_id = event.params.id;
