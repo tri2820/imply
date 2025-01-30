@@ -30,10 +30,6 @@
 
 To self-host Imply, follow the [self-hosting guide](/docs/SELFHOST.md).
 
-## Proudly Open Source
-
-We value contributions and feedback. Join and help us shape the future (literally 😃).
-
 ## License
 
 Imply is released under the **MIT License**. See [LICENSE](LICENSE) for details.
