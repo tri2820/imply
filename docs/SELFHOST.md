@@ -48,7 +48,8 @@ BRAVE_SEARCH_API_KEY=
 ## Running the App Locally
 
 ```sh
-bun run build:bun
+cp app.config.bun.ts app.config.ts
+bun run build
 bun run start:bun
 ```
 
