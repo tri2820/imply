@@ -3,18 +3,116 @@
 @tailwind utilities;
 
 :root {
-  --background-rgb: 214, 219, 220;
-  --foreground-rgb: 0, 0, 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-rgb: 0, 0, 0;
-    --foreground-rgb: 255, 255, 255;
-  }
+  --background-rgb: 19, 19, 19;
+  --foreground-rgb: 255, 255, 255;
 }
 
 body {
+  /* font-family: "Inter", sans-serif; */
+  font-family: 'Poppins', sans-serif;
   background: rgb(var(--background-rgb));
   color: rgb(var(--foreground-rgb));
+
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  z-index: -10;
+  transform: translateZ(0);
+}
+
+.grain::before {
+  content: "";
+  top: -10rem;
+  left: -10rem;
+  width: calc(100% + 20rem);
+  height: calc(100% + 20rem);
+  z-index: 9999;
+  position: fixed;
+  background-image: url(/gaussian_noise.png);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.dots-bg {
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, #404040 2px, transparent 1px);
+  background-size: 60px 40px;
+  z-index: -1;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.checkbox-no-style {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.table-container {
+  @apply bg-neutral-900 rounded-lg border border-neutral-800 overflow-hidden;
+}
+
+.table-container thead {
+  @apply text-left p-4;
+}
+
+.table-container tr {
+  @apply border-b border-neutral-800;
+}
+
+.table-container td,
+.table-container th {
+  @apply p-4;
+}
+
+.table-container th {
+  @apply bg-neutral-800;
+}
+
+
+@keyframes translating {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.font-lexend {
+  font-family: 'Lexend Variable', sans-serif;
+}
+
+span.avoidwrap {
+  display: inline-block;
 }

@@ -1,0 +1,11 @@
+# robots.txt for imply.app
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /tmp/
+Allow: /
+
+# Sitemap
+Sitemap: https://imply.app/sitemap.xml

@@ -1,0 +1,322 @@
+import { id } from "@instantdb/core";
+
+import { BsArrowUpShort, BsStopFill } from "solid-icons/bs";
+import { createSignal, For, Show } from "solid-js";
+import {
+  abortController,
+  Blocks,
+  blocks,
+  blocksToList,
+  listBlocks,
+  scrollToEnd,
+  setAbortController,
+  setBigLogoEl,
+  setBlocks,
+  userChatted,
+} from "~/client/utils";
+
+
+import {
+  APICompleteBody,
+  Block,
+  ChatTaskMessage,
+  OneOf,
+  readNDJSON,
+  ToolCalls,
+} from "~/utils";
+import IconComp from "./IconComp";
+import Spinner from "./Spinner";
+import BlockComp from "./BlockComp";
+import { db } from "~/client/database";
+
+export default function AIComp() {
+  const toolCalls: ToolCalls = {};
+  const [text, setText] = createSignal("");
+
+  async function submit() {
+    const ac = abortController();
+    if (ac) {
+      ac.abort();
+    }
+
+    const t = text().trim();
+    if (!t) return;
+
+    scrollToEnd();
+    setText("");
+
+    const userBlock: Block = {
+      id: id(),
+      role: "user",
+      content: t,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    // Log the user's message
+    db.transact([db.tx.blocks[userBlock.id].update(userBlock)]);
+
+    const blocks_1 = {
+      ...blocks(),
+      [userBlock.id]: userBlock,
+    };
+
+    const onlyAssistantOrUser = blocksToList(blocks_1).filter(
+      (b) => b.role == "user" || b.role == "assistant"
+    );
+
+    let history = [];
+    let remainingLength = 1000;
+
+    for (let i = onlyAssistantOrUser.length - 1; i >= 0; i--) {
+      const { content } = onlyAssistantOrUser[i];
+
+      if (content.length > remainingLength) {
+        // Add only the part of the content that fits
+        history.push({
+          ...onlyAssistantOrUser[i],
+          content: content.slice(0, remainingLength),
+        });
+        break;
+      }
+
+      // Add the full content if it fits
+      history.push(onlyAssistantOrUser[i]);
+      remainingLength -= content.length;
+    }
+
+    history = history.toReversed();
+
+    let assistantBlock: Block = {
+      id: id(),
+      role: "assistant",
+      content: "",
+      created_at: new Date(Date.now() + 1000).toISOString(),
+      updated_at: new Date(Date.now() + 1000).toISOString(),
+    };
+
+    const blocks_2 = {
+      ...blocks_1,
+      [assistantBlock.id]: assistantBlock,
+    };
+    setBlocks(blocks_2);
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    setAbortController(controller);
+
+    const resp = await fetch("/api/complete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ blocks: history } as APICompleteBody),
+      signal,
+    });
+
+    if (!resp.body) return;
+    let needSplit = false;
+    for await (const value of readNDJSON(resp.body)) {
+      const json = value as ChatTaskMessage;
+
+      // console.log("json", json);
+
+      if (json.delta) {
+        if (needSplit) {
+          // Commit block
+          console.log(
+            "maybe submitting here because split",
+            assistantBlock,
+            needSplit,
+            json,
+            `@${assistantBlock.content}@`
+          );
+          needSplit = false;
+
+          // Sometimes the assistant block is empty because the assitant call tool first
+          if (assistantBlock.content) {
+            await db.transact([
+              db.tx.blocks[assistantBlock.id].update(assistantBlock),
+            ]);
+          }
+
+          assistantBlock = {
+            id: id(),
+            role: "assistant",
+            content: "",
+            created_at: new Date(Date.now()).toISOString(),
+            updated_at: new Date(Date.now()).toISOString(),
+          };
+
+          setBlocks((prev) => {
+            return {
+              ...prev,
+              [assistantBlock.id]: assistantBlock,
+            };
+          });
+        }
+
+        assistantBlock.content += json.delta;
+        assistantBlock.updated_at = new Date().toISOString();
+        setBlocks((blocks) => {
+          return {
+            ...blocks,
+            [assistantBlock.id]: {
+              ...assistantBlock,
+            },
+          };
+        });
+      }
+
+      if (json.message) {
+        if (json.message.role === "assistant") {
+          if (json.message.tool_calls && json.message.tool_calls.length > 0) {
+            let updates: Blocks = {};
+
+            // Add tool blocks
+            json.message.tool_calls.forEach((tc) => {
+              // Tool block
+              toolCalls[tc.id] = {
+                // We will add a pending tool block based on the name
+                name: tc.function.name,
+                arguments: tc.function.arguments,
+                created_at: new Date().toISOString(),
+              };
+
+              const toolBlock: Block = {
+                id: id(),
+                content: {
+                  name: tc.function.name,
+                  arguments: tc.function.arguments,
+                },
+                role: "tool",
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+              };
+              db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
+
+              updates[toolBlock.id] = toolBlock;
+            });
+
+            // TODO: split assistant block
+            needSplit = true;
+            console.log("calling a tool, set Split", needSplit, json);
+
+            setBlocks((blocks) => {
+              return {
+                ...blocks,
+                ...updates,
+              };
+            });
+          }
+        }
+
+        if (json.message.role === "tool") {
+          console.log("toolCalls result", toolCalls[json.message.tool_call_id]);
+        }
+      }
+    }
+
+    setAbortController(undefined);
+
+    console.log("assistantBlock", assistantBlock);
+
+    // Commit last Assitant block
+    // Sometimes the assistant block is empty because the assitant call tool first
+    if (assistantBlock.content) {
+      await db.transact([
+        db.tx.blocks[assistantBlock.id].update(assistantBlock),
+      ]);
+    }
+  }
+
+  // onMount(() => {
+  //   setBlocks(generateBlocks());
+  // });
+
+  return (
+    <div class="flex-1 w-full flex flex-col items-stretch ">
+      <main class="flex-1  flex flex-col mx-auto lg:max-w-3xl w-full">
+        <div class="flex-1  flex flex-col">
+          <Show
+            when={userChatted()}
+            fallback={
+              <div class="flex-1 flex items-end pb-8" ref={setBigLogoEl}>
+                <div class="flex items-center justify-center">
+                  <div class="space-y-4">
+                    <div class="flex items-center space-x-4">
+                      <IconComp size="lg" />
+                      <h1 class="font-bold text-4xl md:text-5xl font-lexend leading-none ">
+                        Predict Anything
+                      </h1>
+                    </div>
+
+                    <div>
+                      <span class="avoidwrap">
+                        We will tell how accurate your prediction is.
+                      </span>{" "}
+                      <span class="avoidwrap">
+                        If no data is available, a prediction market will be
+                        created to gather insights from the crowd.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          >
+            <div class="py-4 px-2">
+              <For each={listBlocks()}>
+                {(b) => <BlockComp blockId={b.id} />}
+              </For>
+              <Show when={abortController()}>
+                <Spinner size="sm" />
+              </Show>
+            </div>
+          </Show>
+        </div>
+
+        <div class=" sticky bottom-0 py-4">
+          <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 hover rounded-3xl focus-within:border-neutral-500">
+            <textarea
+              value={text()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  submit();
+                }
+              }}
+              onInput={(e) => setText(e.currentTarget.value)}
+              class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500"
+              placeholder="My prediction is..."
+            />
+
+            <Show
+              when={abortController()}
+              fallback={
+                <button
+                  onClick={submit}
+                  class="p-1 bg-white rounded-full text-black mr-2 mt-2 hover:opacity-50"
+                >
+                  <BsArrowUpShort class="w-8 h-8" />
+                </button>
+              }
+            >
+              {(ac) => (
+                <button
+                  onClick={() => {
+                    ac().abort();
+                    setAbortController(undefined);
+                  }}
+                  class="p-1 bg-white rounded-full text-black mr-2 mt-2 hover:opacity-50"
+                >
+                  <BsStopFill class="w-8 h-8" />
+                </button>
+              )}
+            </Show>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

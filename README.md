@@ -1,32 +1,43 @@
-# SolidStart
+<p align="center">
+<img src="/public/banner.png">
+</p>
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+<p align="center">
 
-## Creating a project
+[![](https://dcbadge.limes.pink/api/server/yJt8WQNFeJ)](https://discord.gg/yJt8WQNFeJ)
 
-```bash
-# create a new project in the current directory
-npm init solid@latest
+</p>
 
-# create a new project in my-app
-npm init solid@latest my-app
-```
+## Imply
+[Imply](https://imply.app) is a platform to host and resolve prediction markets. We focus on making prediction markets user-friendly and ready for mass adoption through AI.
 
-## Developing
+### Currently working on:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- [x] 📈 Prediction markets
+  - [x] Automated Market Markers (CPMM)
+  - [x] Real-time price update
+  - [ ] Simplified UI/UX
+- [x] 🤖 AI Agents
+  - [x] AI can research & create prediction markets
+  - [ ] AI can resolve markets (e.g. verifying sources)
+  - [ ] AI can buy/sell shares on users' behalf
 
-```bash
-npm run dev
+<p align="center">
+  <img src="/public/screenshot.jpg" />
+</p>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Self-Hosting
 
-## Building
+To self-host Imply, follow the [self-hosting guide](/docs/SELFHOST.md).
 
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
+## Proudly Open Source
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
+We value contributions and feedback. Join and help us shape the future (literally 😃).
 
-## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+## License
+
+Imply is released under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+## Support
+
+For any questions or support, join our [Discord](https://discord.gg/yJt8WQNFeJ) or email **oss@imply.app**.
