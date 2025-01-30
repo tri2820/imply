@@ -6,7 +6,7 @@ import {
 } from "lightweight-charts";
 import { createSignal } from "solid-js";
 import {
-  calculateAttributes,
+  calcAttributes,
   createOption,
   triggerAddHistoryOption,
 } from "~/shared/utils";
@@ -108,7 +108,7 @@ export const [marketResponses, setMarketResponses] = createSignal<
 >([]);
 export const markets = () => {
   const ms = marketResponses().flatMap((m) => m.data.markets);
-  return calculateAttributes(ms);
+  return ms.map((m) => calcAttributes(m));
 };
 export const marketsHasNextPage = () => {
   const r = marketResponses().at(-1);
@@ -135,7 +135,7 @@ export const [marketSubscription, setMarketSubscription] =
 export const market = () => {
   const s = marketSubscription();
   const ms = s?.data?.markets ?? [];
-  const _ms = calculateAttributes(ms);
+  const _ms = ms.map((m) => calcAttributes(m));
   return _ms.at(0);
 };
 export const [historyOptionSubscription, setHistoryOptionSubscription] =

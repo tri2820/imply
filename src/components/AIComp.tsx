@@ -133,8 +133,8 @@ export default function AIComp() {
 
   return (
     <div class="flex-1 w-full flex flex-col items-stretch ">
-      <main class="flex-1  flex flex-col mx-auto lg:max-w-3xl w-full">
-        <div class="flex-1  flex flex-col">
+      <main class="flex-1  flex flex-col mx-auto lg:max-w-3xl w-full relative">
+        <div class="flex-1  flex flex-col z-10">
           <Show
             when={userChatted()}
             fallback={
@@ -173,7 +173,7 @@ export default function AIComp() {
           </Show>
         </div>
 
-        <div class=" sticky bottom-0 py-4">
+        <div class=" sticky bottom-0 py-4 z-20">
           <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 hover rounded-3xl focus-within:border-neutral-500">
             <textarea
               value={text()}
@@ -184,7 +184,7 @@ export default function AIComp() {
                 }
               }}
               onInput={(e) => setText(e.currentTarget.value)}
-              class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500"
+              class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500 z-50"
               placeholder="My prediction is..."
             />
 

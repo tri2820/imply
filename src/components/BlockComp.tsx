@@ -5,8 +5,12 @@ import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
 import { ToolName } from "~/shared/tools";
-import { CreateMarketToolProps } from "~/shared/tools/createMarketFactory";
+import {
+  CreateMarketToolProps,
+  CreateMarketToolResult,
+} from "~/shared/tools/createMarketFactory";
 import { SearchNewsToolProps } from "~/shared/tools/searchNewsFactory";
+import MarketCard from "./MarketCard";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -61,16 +65,18 @@ function ToolBlockBody_ArgumentsString(props: { block: ToolBlock }) {
 }
 
 function ToolBlockBody_createMarket(props: {
-  block: ToolBlock<CreateMarketToolProps>;
+  block: ToolBlock<CreateMarketToolProps, CreateMarketToolResult>;
 }) {
   return (
     <Show
       when={props.block.content.result}
       fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
     >
-      <div class="py-2 bg-red-500">
-        <div>{JSON.stringify(props.block.content.result)}</div>
-      </div>
+      {(result) => (
+        <div class="mt-2">
+          <MarketCard marketId={result().market_id} queryAgain />
+        </div>
+      )}
     </Show>
   );
 }
@@ -83,7 +89,8 @@ function ToolBlockBody_searchNews(props: {
       when={props.block.content.result}
       fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
     >
-      <div class="py-2 bg-red-500">
+      <div class="py-2">
+        <div class="text-sm">{props.block.content.arguments?.query}</div>
         <div>{JSON.stringify(props.block.content.result)}</div>
       </div>
     </Show>

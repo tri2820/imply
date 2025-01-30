@@ -1,13 +1,41 @@
-import { For, Show } from "solid-js";
+import { createSignal, For, onMount, Show } from "solid-js";
 
 import CheckBoxItem from "./CheckboxItem";
 import MarketImage from "./MarketImage";
 import OptionItem from "./OptionItem";
 import { markets } from "~/client/utils";
-import { Color, noProb, prob } from "~/shared/utils";
+import { calcAttributes, Color, noProb, prob } from "~/shared/utils";
+import { db } from "~/client/database";
 
-export default function MarketCard(props: { marketId?: string }) {
-  const market = () => markets().find((m) => m?.id == props.marketId);
+export default function MarketCard(props: {
+  marketId?: string;
+  queryAgain?: boolean;
+}) {
+  const [marketResponse, setMarketResponse] = createSignal<MarketResponse>();
+  const m = () => {
+    const m = marketResponse()?.data.markets.at(0);
+    if (!m) return;
+    return calcAttributes(m);
+  };
+  const m0 = () => markets().find((m) => m?.id == props.marketId);
+  const market = () => m() ?? m0();
+
+  onMount(async () => {
+    if (!props.queryAgain || !props.marketId) return;
+    const resp = await db.queryOnce({
+      markets: {
+        options: {
+          shares: {},
+        },
+        $: {
+          where: {
+            id: props.marketId,
+          },
+        },
+      },
+    });
+    setMarketResponse(resp);
+  });
 
   const redirectToMarket = (optionId?: string, shareId?: string) => {
     const url = new URL(`/market/${props.marketId}`, window.location.origin);

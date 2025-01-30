@@ -23,7 +23,7 @@ export default function CheckBoxItem(props: {
       onClick={() => {
         props.onChange?.(props.id);
       }}
-      class="group relative p-4 flex items-center space-x-2 border rounded border-neutral-800 bg-white/5 flex-1 cursor-pointer"
+      class="group relative p-4 flex items-center space-x-2 border rounded border-neutral-800 bg-white/5 flex-1 cursor-pointer "
     >
       <div
         data-checked={checked()}

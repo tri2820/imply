@@ -1,15 +1,14 @@
 
 
 
-import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
-import { z } from "zod";
-import { buyShare, calculateAttributes, sellShare } from "~/shared/utils";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { InstaQLEntity, InstaQLSubscriptionState, PageInfoResponse } from "@instantdb/core";
 import { Cursor } from "@instantdb/core/dist/module/queryTypes";
 import { LineSeriesPartialOptions, UTCTimestamp } from "lightweight-charts";
+import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { AppSchema } from "~/../instant.schema";
 import { ToolName } from "~/shared/tools";
+import { buyShare, calcAttributes, sellShare } from "~/shared/utils";
 
 /// <reference types="@solidjs/start/env" />
 
@@ -35,8 +34,7 @@ declare global {
     type YesOrNo = "yes" | "no";
 
     // Market related types
-    type MarketResponse_Market = MarketResponse["data"]["markets"][number];
-    type Ext_Option = ReturnType<typeof calculateAttributes>[number]["options"][number];
+    type Ext_Option = ReturnType<typeof calcAttributes>["options"][number];
 
     type BuySellProps = {
         market: {
@@ -252,7 +250,7 @@ declare global {
         content: unknown;
     };
 
-    type ToolBlock<T = any> = Refine<
+    type ToolBlock<T = any, K = any> = Refine<
         BaseBlock & {
             role: "tool";
         },
@@ -261,7 +259,7 @@ declare global {
             name: ToolName;
             arguments_partial_str: string;
             arguments?: T;
-            result?: unknown;
+            result?: K;
         }
     >;
 

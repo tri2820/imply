@@ -125,43 +125,38 @@ export function generateBlocks(): Blocks {
   };
 }
 
-export const calculateAttributes = (markets: MarketResponse_Market[]) => {
-  const calulatedYesProb = markets.map((m) => {
-    return {
-      ...m,
-      options: m.options.map((o) => {
+export const calcAttributes = (
+  market: MarketResponse["data"]["markets"][number]
+) => {
+  const market1 = {
+    ...market,
+    options: market.options.map((o) => {
+      return {
+        ...o,
+        // In the context of this market
+        independent: market.allow_multiple_correct,
+        yesProb: yesProb(o.shares),
+      };
+    }),
+  };
+
+  const totalYesProb = market1.options.reduce((acc, o) => {
+    return acc + (o.yesProb ?? 0);
+  }, 0);
+
+  return {
+    ...market1,
+    options: market1.options
+      .map((o) => {
         return {
           ...o,
-          // In the context of this market
-          independent: m.allow_multiple_correct,
-          yesProb: yesProb(o.shares),
+          normalizedYesProb: o.yesProb ? o.yesProb / totalYesProb : undefined,
         };
+      })
+      .toSorted((a, b) => {
+        return (b.normalizedYesProb ?? -1) - (a.normalizedYesProb ?? -1);
       }),
-    };
-  });
-
-  // Only for exclusive options
-  const calculatedNormalizedYesProb = calulatedYesProb.map((m) => {
-    const totalYesProb = m.options.reduce((acc, o) => {
-      return acc + (o.yesProb ?? 0);
-    }, 0);
-
-    return {
-      ...m,
-      options: m.options
-        .map((o) => {
-          return {
-            ...o,
-            normalizedYesProb: o.yesProb ? o.yesProb / totalYesProb : undefined,
-          };
-        })
-        .toSorted((a, b) => {
-          return (b.normalizedYesProb ?? -1) - (a.normalizedYesProb ?? -1);
-        }),
-    };
-  });
-
-  return calculatedNormalizedYesProb;
+  };
 };
 
 export function yesProb(shares: Share[]) {
