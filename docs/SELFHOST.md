@@ -55,6 +55,6 @@ bun run start:bun
 ## Deploy to Cloudflare Pages
 
 1. **Framework preset**: None
-2. **Build command**: `bun run build`
+2. **Build command**: `bun i && bun run build`
 3. **Build output directory**: `dist`
 4. **Environment variables**: Copy over the keys from the `.env` file
