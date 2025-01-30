@@ -4,6 +4,9 @@ import { createSignal, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
+import { ToolName } from "~/shared/tools";
+import { CreateMarketToolProps } from "~/shared/tools/createMarketFactory";
+import { SearchNewsToolProps } from "~/shared/tools/searchNewsFactory";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -46,26 +49,57 @@ function UserBlockComp(props: { block: UserBlock }) {
   );
 }
 
-function ToolBlockBody_CreateMarket(props: { block: ToolBlock }) {
+function ToolBlockBody_ArgumentsString(props: { block: ToolBlock }) {
   return (
-    <div class="py-2 flex items-stretch max-h-60">
-      <div class="flex-none mx-2 w-[2px] bg-neutral-800"></div>
-      <div class="pl-2 pr-4 overflow-auto">
-        {JSON.stringify(props.block.content.arguments)}
+    <div class="">
+      <div class="py-2 flex items-stretch">
+        <div class="flex-none mx-2 w-[2px] bg-neutral-800"></div>
+        <div class="flex-1">{props.block.content.arguments_partial_str}</div>
       </div>
     </div>
   );
 }
 
+function ToolBlockBody_createMarket(props: {
+  block: ToolBlock<CreateMarketToolProps>;
+}) {
+  return (
+    <Show
+      when={props.block.content.result}
+      fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
+    >
+      <div class="py-2 bg-red-500">
+        <div>{JSON.stringify(props.block.content.result)}</div>
+      </div>
+    </Show>
+  );
+}
+
+function ToolBlockBody_searchNews(props: {
+  block: ToolBlock<SearchNewsToolProps>;
+}) {
+  return (
+    <Show
+      when={props.block.content.result}
+      fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
+    >
+      <div class="py-2 bg-red-500">
+        <div>{JSON.stringify(props.block.content.result)}</div>
+      </div>
+    </Show>
+  );
+}
+
 function ToolBlockComp(props: { block: ToolBlock }) {
   const [show, setShow] = createSignal(true);
-  // const bodies = {
-  //   'create_market': ToolBlockBody_CreateMarket,
-  //   ''
-  // }
+  const body = {
+    [ToolName.createMarket]: ToolBlockBody_createMarket,
+    [ToolName.searchNews]: ToolBlockBody_searchNews,
+  }[props.block.content.name];
 
+  const doing = () => props.block.content.result === undefined;
   return (
-    <div class="max-w-96 rounded-l my-1">
+    <div data-doing={doing()} class="my-1 data-[doing=true]:animate-pulse">
       <button
         onClick={() => {
           setShow((p) => !p);
@@ -85,7 +119,7 @@ function ToolBlockComp(props: { block: ToolBlock }) {
         </div>
       </button>
       <Show when={show()}>
-        <Dynamic component={ToolBlockBody_CreateMarket} block={props.block} />
+        <Dynamic component={body} block={props.block} />
       </Show>
     </div>
   );

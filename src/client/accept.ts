@@ -1,6 +1,7 @@
 import { id } from "@instantdb/core";
 import { db } from "./database";
-import { setBlocks } from "./utils";
+import { blocks, setBlocks } from "./utils";
+import { ToolName } from "~/shared/tools";
 
 
 async function accept_delta(state: SharedState, delta: NonNullable<ChatTaskMessage["delta"]>) {
@@ -45,21 +46,26 @@ async function accept_delta(state: SharedState, delta: NonNullable<ChatTaskMessa
 
 export async function accept_tool(state: SharedState, tool: NonNullable<ChatTaskMessage["tool"]>) {
   console.log("toolMessage", tool);
-  if (tool.started) {
+  if (tool.arguments_delta) {
+    console.log("arguments_delta", tool.arguments_delta);
     state.needSplit = true;
 
-    // Tool block
-    const toolBlock: ToolBlock = {
-      id: tool.call_id,
-      content: {
-        name: tool.name,
-        arguments: tool.started.arguments,
-      },
-      role: "tool",
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-    db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
+    let toolBlock = blocks()[tool.call_id] as ToolBlock | undefined;
+    if (!toolBlock) {
+      toolBlock = {
+        id: tool.call_id,
+        content: {
+          name: tool.arguments_delta.name as ToolName,
+          arguments_partial_str: '',
+        },
+        role: "tool",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
+    }
+
+    toolBlock.content.arguments_partial_str += tool.arguments_delta.delta;
 
     setBlocks((blocks) => {
       return {
@@ -69,24 +75,27 @@ export async function accept_tool(state: SharedState, tool: NonNullable<ChatTask
     });
   }
 
-  if (tool.done) {
-    const done = tool.done;
+
+  if (tool.started) {
+    let toolBlock = blocks()[tool.call_id] as ToolBlock;
+    toolBlock.content.arguments = tool.started.arguments;
+    db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
     setBlocks((blocks) => {
-
-      const block = blocks[tool.call_id];
-      if (!block || block.role !== "tool") {
-        return blocks;
-      }
-
       return {
         ...blocks,
-        [block.id]: {
-          ...block,
-          content: {
-            ...block.content,
-            result: done.result,
-          }
-        },
+        [toolBlock.id]: toolBlock,
+      };
+    });
+  }
+
+  if (tool.done) {
+    let toolBlock = blocks()[tool.call_id] as ToolBlock
+    toolBlock.content.result = tool.done.result;
+
+    setBlocks((blocks) => {
+      return {
+        ...blocks,
+        [toolBlock.id]: toolBlock,
       };
     });
   }
@@ -99,6 +108,7 @@ export async function accept(state: SharedState, json: ChatTaskMessage) {
 
   if (json.forward) {
     // Do nothing for now
+    console.log('forward', json.forward)
   }
 
   if (json.tool) {

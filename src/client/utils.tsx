@@ -1,60 +1,16 @@
-import { id, InstantCoreDatabase } from "@instantdb/core";
-import { db } from "./database";
-import { createSignal } from "solid-js";
+import { id } from "@instantdb/core";
 import {
   LastPriceAnimationMode,
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
-import { getRequestEvent } from "solid-js/web";
-import { InstantAdminDatabase } from "@instantdb/admin";
-import { AppSchema } from "../../instant.schema";
-import { calculateAttributes, colors, hash } from "~/shared/utils";
-
-export function createOption(
-  db: InstantAdminDatabase<AppSchema> | InstantCoreDatabase<AppSchema>,
-  name: string,
-  yes_prob: number,
-  image = ""
-) {
-  const yes_share_id = id();
-  const no_share_id = id();
-  const option_id = id();
-
-  const K = 1000 * 1000;
-  const yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
-  const noReserve = Math.ceil(K / yesReserve);
-  console.log("debug", yesReserve, noReserve, yesReserve * noReserve);
-  if (yesReserve * noReserve < K) {
-    throw new Error(
-      `Initial reserves is too low, wrong calculation ${yesReserve} * ${noReserve} < ${K}`
-    );
-  }
-
-  return {
-    option_id,
-    transactions: [
-      db.tx.shares[yes_share_id].update({
-        type: "yes",
-        reserve: yesReserve,
-      }),
-      db.tx.shares[no_share_id].update({
-        type: "no",
-        reserve: noReserve,
-      }),
-
-      db.tx.options[option_id]
-        .update({
-          name,
-          color: colors[hash(option_id) % colors.length],
-          image,
-        })
-        .link({
-          shares: [yes_share_id, no_share_id],
-        }),
-    ],
-  };
-}
+import { createSignal } from "solid-js";
+import {
+  calculateAttributes,
+  createOption,
+  triggerAddHistoryOption,
+} from "~/shared/utils";
+import { db } from "./database";
 
 export async function addMockMarket(num_option: number = 5) {
   const market_id = id();
@@ -92,19 +48,6 @@ export async function addMockMarket(num_option: number = 5) {
   // trigger api history__options
   const ps = options.map((o) => triggerAddHistoryOption(o.option_id));
   await Promise.all(ps);
-}
-
-export async function triggerAddHistoryOption(option_id: string) {
-  const res = await fetch(`/api/history__options/${option_id}`, {
-    method: "POST",
-  });
-  if (!res.ok) {
-    console.error(
-      "failed to trigger api history__options",
-      res.status,
-      res.statusText
-    );
-  }
 }
 
 export const [loadMarketsState, setLoadMarketsState] = createSignal<

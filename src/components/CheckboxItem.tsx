@@ -1,6 +1,5 @@
-import { BsCheck } from "solid-icons/bs";
 import { Show } from "solid-js";
-import { probToPercent, YesOrNo } from "~/shared/utils";
+import { probToPercent } from "~/shared/utils";
 import CheckBox from "./CheckBox";
 
 export default function CheckBoxItem(props: {

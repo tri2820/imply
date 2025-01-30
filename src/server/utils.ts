@@ -3,15 +3,15 @@ import { getRequestEvent } from "solid-js/web";
 
 import OpenAI from "openai";
 
-import { init } from "@instantdb/admin";
+import { id, init } from "@instantdb/admin";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import {
   getCookie as vinxi_getCookie,
   setCookie as vinxi_setCookie,
 } from "vinxi/http";
 import schema from "~/../instant.schema";
-
-import { create_market, search_news } from "./tools";
+import { createMarketFactory } from "~/shared/tools/createMarketFactory";
+import { searchNewsFactory } from "~/shared/tools/searchNewsFactory";
 
 export function getEnv(key: string) {
   const event = getRequestEvent();
@@ -98,33 +98,83 @@ export async function chatTask(props: ChatTaskProps) {
   const client = createOpenAI();
 
   try {
+    const toolBindings: ToolBindings = {}
     const runner = client.beta.chat.completions
       .runTools({
         stream: true,
         model: "gpt-4o",
         messages,
-        // tools: [add, get_weather],
-        // create_market_factory(send)
         tools: [
-          create_market,
-          search_news
-        ].map(factory => factory(props)),
+          createMarketFactory,
+          searchNewsFactory,
+        ].map(factory => factory({
+          ...props,
+          toolBindings
+        })),
       })
       .on("content.delta", (e) => {
         props.send({
           delta: e.delta,
         });
       })
-      .on("tool_calls.function.arguments.delta", (e) => { })
-      .on("tool_calls.function.arguments.done", (e) => {
-        console.log('tool done', e)
+      .on("tool_calls.function.arguments.delta", (e) => {
+        let toolBinding = toolBindings[e.index.toString()];
+        if (toolBinding === undefined) {
+          toolBinding = {
+            id: id()
+          }
+          toolBindings[e.index.toString()] = toolBinding
+        }
+
+        props.send({
+          tool: {
+            call_id: toolBinding.id,
+            arguments_delta: {
+              delta: e.arguments_delta,
+              name: e.name,
+            },
+          },
+        });
       })
-      // .on("chunk", (chunk) => {
-      //   controller.enqueue({
-      //     chunk
-      //   });
-      // })
       .on("message", (message) => {
+        if (message.role === 'assistant') {
+          if (message.tool_calls) {
+            for (const [index, tool] of message.tool_calls.entries()) {
+              const toolBinding = toolBindings[index.toString()];
+              if (toolBinding === undefined) {
+                throw new Error('toolBinding is undefined')
+              }
+              toolBinding.openai_call_id = tool.id;
+
+              props.send({
+                tool: {
+                  call_id: toolBinding.id,
+                  started: {
+                    arguments: JSON.parse(tool.function.arguments)
+                  }
+                },
+              });
+
+            }
+          }
+        }
+
+        if (message.role === "tool") {
+          const index = Object.keys(toolBindings).find((i) => toolBindings[i].openai_call_id === message.tool_call_id);
+          if (index === undefined) {
+            throw new Error('id is undefined')
+          }
+          props.send({
+            tool: {
+              call_id: toolBindings[index].id,
+              done: {
+                result: JSON.parse(message.content as string),
+              },
+            },
+          });
+          delete toolBindings[index];
+        }
+
         props.send({
           forward: message,
         });
@@ -137,20 +187,4 @@ export async function chatTask(props: ChatTaskProps) {
   }
 }
 
-
-export async function triggerAddHistoryOption(option_id: string) {
-  const event = getRequestEvent();
-  if (!event) throw new Error("No event!");
-  const origin = new URL(event.request.url).origin
-  const res = await fetch(`${origin}/api/history__options/${option_id}`, {
-    method: "POST",
-  });
-  if (!res.ok) {
-    console.error(
-      "failed to trigger api history__options",
-      res.status,
-      res.statusText
-    );
-  }
-}
 

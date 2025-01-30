@@ -1,4 +1,5 @@
-import { id } from "@instantdb/core";
+import { InstantAdminDatabase } from "@instantdb/admin";
+import { id, InstantCoreDatabase } from "@instantdb/core";
 import { formatDistance } from "date-fns";
 import {
   parseJsonStream,
@@ -8,8 +9,11 @@ import {
 import { LineType, UTCTimestamp } from "lightweight-charts";
 
 import { JSONSchema } from "openai/lib/jsonschema.mjs";
-import { ZodSchema } from "zod";
+import { z, ZodSchema, ZodType } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { AppSchema } from "../../instant.schema";
+import { getRequestEvent } from "solid-js/web";
+import { ToolName } from "./tools";
 
 export const MIN_USD_AMOUNT = 10;
 export const MIN_SHARE_AMOUNT = 1;
@@ -102,7 +106,8 @@ export function generateBlocks(): Blocks {
     "2643e820-b1a4-423e-86ea-d5c9884caef4": {
       id: "2643e820-b1a4-423e-86ea-d5c9884caef4",
       content: {
-        name: "create_market",
+        arguments_partial_str: "",
+        name: ToolName.createMarket,
         arguments: {
           name: "Will Trump win the 2028 U.S. Presidential Election?",
           details: {
@@ -353,59 +358,36 @@ export function readNDJSON(body: ReadableStream) {
 function zodParseJSON<T>(schema: ZodSchema<T>) {
   return (input: string): T => schema.parse(JSON.parse(input));
 }
-export const mkToolFactory =
-  <T,>({
-    name,
-    schema,
-    factory: factory,
-    description,
-  }: {
-    name: string;
-    schema: ZodSchema<T>;
-    factory: (factoryProps: ToolFactoryProps) => ToolFunction<typeof schema>;
-    description: string;
-  }) =>
-  (chatTaskProps: ChatTaskProps) => {
-    const f = factory(chatTaskProps);
 
+export function mkToolFactory<
+  T extends ZodType<any, any, any>
+>(mkToolFactoryProps: {
+  name: ToolName;
+  schema: T;
+  factory: (factoryProps: FactoryProps) => (args: z.infer<T>) => any;
+  description: string;
+}) {
+  return (unboundedFactoryProps: UnboundedFactoryProps) => {
     const tool: Tool = {
       type: "function",
       function: {
-        name,
-        function: (args: any) => {
-          const call_id = id();
-          chatTaskProps.send({
-            tool: {
-              call_id,
-              name,
-              started: {
-                arguments: args,
-              },
-            },
-          });
-
-          const result = f(args);
-
-          chatTaskProps.send({
-            tool: {
-              call_id,
-              name,
-              done: {
-                result,
-              },
-            },
-          });
-
-          return result;
-        },
-        description,
-        parse: zodParseJSON(schema),
-        parameters: zodToJsonSchema(schema) as JSONSchema,
+        name: mkToolFactoryProps.name,
+        function: mkToolFactoryProps.factory({
+          body: unboundedFactoryProps.body,
+          send: (msg) => {
+            // TODO:
+            // const tool_call_id = ...unboundedFactoryProps.toolBindings;
+            // chatTaskProps.send({})
+          },
+        }),
+        description: mkToolFactoryProps.description,
+        parse: zodParseJSON(mkToolFactoryProps.schema),
+        parameters: zodToJsonSchema(mkToolFactoryProps.schema) as JSONSchema,
       },
     };
-
     return tool;
   };
+}
 
 export function streamNDJSON(
   task: (controller: ReadableStreamDefaultController) => void
@@ -427,4 +409,64 @@ export function streamNDJSON(
 
   stream.pipeThrough(transform);
   return transform.readable.pipeThrough(byteTransformer);
+}
+
+export function createOption(
+  db: InstantAdminDatabase<AppSchema> | InstantCoreDatabase<AppSchema>,
+  name: string,
+  yes_prob: number,
+  image = ""
+) {
+  const yes_share_id = id();
+  const no_share_id = id();
+  const option_id = id();
+
+  const K = 1000 * 1000;
+  const yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
+  const noReserve = Math.ceil(K / yesReserve);
+  console.log("debug", yesReserve, noReserve, yesReserve * noReserve);
+  if (yesReserve * noReserve < K) {
+    throw new Error(
+      `Initial reserves is too low, wrong calculation ${yesReserve} * ${noReserve} < ${K}`
+    );
+  }
+
+  return {
+    option_id,
+    transactions: [
+      db.tx.shares[yes_share_id].update({
+        type: "yes",
+        reserve: yesReserve,
+      }),
+      db.tx.shares[no_share_id].update({
+        type: "no",
+        reserve: noReserve,
+      }),
+
+      db.tx.options[option_id]
+        .update({
+          name,
+          color: colors[hash(option_id) % colors.length],
+          image,
+        })
+        .link({
+          shares: [yes_share_id, no_share_id],
+        }),
+    ],
+  };
+}
+
+export async function triggerAddHistoryOption(option_id: string) {
+  const event = getRequestEvent();
+  const origin = event ? new URL(event.request.url).origin : "";
+  const res = await fetch(`${origin}/api/history__options/${option_id}`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    console.error(
+      "failed to trigger api history__options",
+      res.status,
+      res.statusText
+    );
+  }
 }

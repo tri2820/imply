@@ -28,12 +28,8 @@ export default function Nav() {
     const observerCallback = (entries: any) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting) {
-          // Element is in view
-          console.log(`${entry.target.className} is in view`);
           setShowLogo(false);
         } else {
-          // Element is no longer in view
-          console.log(`${entry.target.className} is out of view`);
           setShowLogo(true);
         }
       });

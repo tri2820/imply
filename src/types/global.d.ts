@@ -3,20 +3,19 @@
 
 import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
 import { z } from "zod";
-import { buyShare, calculateAttributes, sellShare } from "./shared/utils";
+import { buyShare, calculateAttributes, sellShare } from "~/shared/utils";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { InstaQLEntity, InstaQLSubscriptionState, PageInfoResponse } from "@instantdb/core";
 import { Cursor } from "@instantdb/core/dist/module/queryTypes";
 import { LineSeriesPartialOptions, UTCTimestamp } from "lightweight-charts";
-import { AppSchema } from "../instant.schema";
+import { AppSchema } from "~/../instant.schema";
+import { ToolName } from "~/shared/tools";
 
 /// <reference types="@solidjs/start/env" />
 
 export { };
 
 declare global {
-
-
     // API types
     type BuySellAction = {
         type: "buy" | "sell";
@@ -167,8 +166,12 @@ declare global {
         delta: string;
         tool: {
             call_id: string;
-            name: string;
+
         } & OneOf<{
+            arguments_delta: {
+                name: string;
+                delta: string;
+            }
             started: {
                 arguments: unknown;
             };
@@ -184,6 +187,24 @@ declare global {
         body: APICompleteBody;
     };
 
+    type ToolBindings = {
+        [index: string]: {
+            id: string;
+            openai_call_id?: string
+        }
+    }
+
+    type UnboundedFactoryProps = {
+        send: (msg: ChatTaskMessage) => void;
+        body: APICompleteBody;
+        toolBindings: ToolBindings
+    }
+
+    type FactoryProps = {
+        send: (msg: ChatTaskMessage) => void;
+        body: APICompleteBody;
+    }
+
     // Tool related types
     type ToolCalls = {
         [key: string]: {
@@ -194,11 +215,7 @@ declare global {
     };
 
     type Tool = RunnableToolFunctionWithParse<any>;
-    type ToolFunction<T extends z.ZodType<any, any, any>> = (
-        args: z.infer<T>
-    ) => any;
 
-    type ToolFactoryProps = ChatTaskProps;
 
     // Utility types
     type Refine<T, K extends keyof T, V> = Omit<T, K> & { [P in K]: V };
@@ -235,14 +252,15 @@ declare global {
         content: unknown;
     };
 
-    type ToolBlock = Refine<
+    type ToolBlock<T = any> = Refine<
         BaseBlock & {
             role: "tool";
         },
         "content",
         {
-            name: string;
-            arguments: unknown;
+            name: ToolName;
+            arguments_partial_str: string;
+            arguments?: T;
             result?: unknown;
         }
     >;
