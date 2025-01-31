@@ -7,13 +7,13 @@ const schema = z.object({
 });
 
 export type SearchNewsToolProps = z.infer<typeof schema>;
-export type SearchNewsToolResult = Awaited<ReturnType<typeof searchNews>>;
+export type SearchNewsToolResult = ExtractDoneType<typeof searchNews>;
 
 async function fetchNews(query: string) {
     const response = await fetch(
         `https://api.search.brave.com/res/v1/news/search?q=${encodeURIComponent(
             query
-        )}&count=10&search_lang=en&spellcheck=1`,
+        )}&count=5&search_lang=en&spellcheck=1`,
         {
             headers: {
                 "Accept": "application/json",
@@ -40,8 +40,9 @@ async function* searchNews({ query }: SearchNewsToolProps) {
             if (response.ok) {
                 break;
             }
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+
         } catch (e) {
+            await new Promise((resolve) => setTimeout(resolve, 1200));
             console.error(e);
         }
     }

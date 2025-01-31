@@ -1050,28 +1050,17 @@ export function seededUUIDv4(seedString: string) {
 
 export const prepare = (messages: ChatCompletionMessageParam[]) => {
   let newMessages: ChatCompletionMessageParam[] = [];
-  let remainingLength = 1000;
-  console.log("messages", messages);
+  let remainingLength = 14000;
   try {
     for (let i = messages.length - 1; i >= 0; i--) {
       const m = messages[i];
       let l = 0;
-
-      try {
-        if (m.role === "tool" && m.content) l += m.content.length;
-      } catch (e) {
-        console.error("Error 1", e);
-      }
-
-      try {
-        if (m.role === "assistant")
-          l +=
-            (m.content?.length ?? 0) +
-            (m.tool_calls ? JSON.stringify(m.tool_calls).length : 0);
-      } catch (e) {
-        console.error("Error 2", e);
-      }
-
+      if (m.role === "tool" && m.content) l += m.content.length;
+      if (m.role === "assistant")
+        l +=
+          (m.content?.length ?? 0) +
+          (m.tool_calls ? JSON.stringify(m.tool_calls).length : 0);
+      console.log("i l m", i, l, m);
       if (l > remainingLength && m.content) {
         // Add only the part of the content that fits
         const n = {

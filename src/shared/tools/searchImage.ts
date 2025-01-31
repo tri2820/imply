@@ -8,7 +8,7 @@ const schema = z.object({
 });
 
 export type SearchImageToolProps = z.infer<typeof schema>;
-export type SearchImageToolResult = Awaited<ReturnType<typeof searchImage>>;
+export type SearchImageToolResult = ExtractDoneType<typeof searchImage>;
 
 async function fetchImages(query: string) {
     const response = await fetch(
@@ -41,8 +41,9 @@ async function* searchImage({ query }: SearchImageToolProps) {
             if (response.ok) {
                 break;
             }
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+
         } catch (e) {
+            await new Promise((resolve) => setTimeout(resolve, 1200));
             console.error(e);
         }
     }

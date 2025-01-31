@@ -6,7 +6,7 @@ export enum ToolName {
     createMarket = "createMarket",
     searchNews = "searchNews",
     searchImage = "searchImage",
-    searchWeather = "searchWeather",
+    // searchWeather = "searchWeather",
 }
 
 export function makeTool<T extends z.ZodObject<any, any>>(props: {

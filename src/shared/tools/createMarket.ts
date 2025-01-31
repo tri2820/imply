@@ -26,7 +26,7 @@ const schema = z.object({
 });
 
 export type CreateMarketToolProps = z.infer<typeof schema>;
-export type CreateMarketToolResult = Awaited<ReturnType<typeof createMarket>>;
+export type CreateMarketToolResult = ExtractDoneType<typeof createMarket>;
 
 async function* createMarket({
     name,

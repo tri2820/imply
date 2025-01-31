@@ -5,15 +5,15 @@ import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
 import { ToolName } from "~/shared/tools";
+import MarketCard from "./MarketCard";
 import {
   CreateMarketToolProps,
   CreateMarketToolResult,
-} from "~/shared/tools/createMarketFactory";
+} from "~/shared/tools/createMarket";
 import {
   SearchNewsToolProps,
   SearchNewsToolResult,
-} from "~/shared/tools/searchNewsFactory";
-import MarketCard from "./MarketCard";
+} from "~/shared/tools/searchNews";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -155,8 +155,8 @@ function ToolBlockComp(props: { block: ToolBlock }) {
         </div>
       </button>
       <Show when={show()}>
-        {/* <Dynamic component={body} block={props.block} /> */}
-        <div>{JSON.stringify(props.block)}</div>
+        <Dynamic component={body} block={props.block} />
+        {/* <div>{JSON.stringify(props.block)}</div> */}
       </Show>
     </div>
   );

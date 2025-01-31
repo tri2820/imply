@@ -303,6 +303,10 @@ declare global {
     } & {
         [K in keyof Update]: Update[K];
     }>>
+    type ExtractDoneType<T extends (...args: any[]) => AsyncGenerator<any, any, any>> =
+        T extends (...args: any[]) => AsyncGenerator<infer U, any, any> ? U extends { done: infer D } ? D : never : never;
+
+
 
     type ToolYield = OneOf<{
         doing: {}

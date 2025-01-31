@@ -54,6 +54,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     try {
         while (true && MAX_ITER--) {
             messages = prepare(messages);
+            console.log('after prepare', i, messages);
             const tool_calls: NonNullable<NonNullable<Update['tool']>['done']>[] = []
             const model: ChatModel = getEnv("OPENAI_MODEL") ?? 'gpt-4o-mini';
             console.log('fetching completion...', model);
