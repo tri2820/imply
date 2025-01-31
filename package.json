@@ -22,6 +22,7 @@
     "openai": "^4.80.0",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.2",
+    "streaming-iterables": "^8.0.1",
     "vinxi": "^0.4.3",
     "zod": "^3.24.1",
     "zod-to-json-schema": "^3.24.1"

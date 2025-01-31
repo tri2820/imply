@@ -5,6 +5,7 @@ import { MIN_SHARE_AMOUNT, sellShare } from "~/shared/utils";
 import CheckBox from "./CheckBox";
 import OptionImage from "./OptionImage";
 import Spinner from "./Spinner";
+import Header from "./buysell/Header";
 
 export default function SellComp(props: BuySellProps) {
   const option = () => props.market.options.find((o) => o.id == optionId());
@@ -179,21 +180,7 @@ export default function SellComp(props: BuySellProps) {
         >
           {(o) => (
             <div>
-              <div class="flex items-start space-x-4">
-                <OptionImage />
-                <div>
-                  <div>{props.market.name}</div>
-                  <div class="flex items-center space-x-2">
-                    <div
-                      class="w-2 h-2 rounded-full flex-none"
-                      style={{ background: o().color }}
-                    />
-                    <div class="font-bold">
-                      {props.market.options.length == 1 ? "Yes" : o().name}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Header o={o} {...props} />
 
               <div class="space-y-2 mt-4">
                 <div class="font-bold">I want to sell </div>

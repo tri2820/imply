@@ -51,6 +51,7 @@ export default function AIComp() {
       ...blocks(),
       [userBlock.id]: userBlock,
     };
+    setBlocks(blocks_1);
 
     const onlyAssistantOrUser = blocksToList(blocks_1).filter(
       (b) => b.role == "user" || b.role == "assistant"
@@ -78,20 +79,6 @@ export default function AIComp() {
 
     history = history.toReversed();
 
-    let assistantBlock: Block = {
-      id: id(),
-      role: "assistant",
-      content: "",
-      created_at: new Date(Date.now() + 1000).toISOString(),
-      updated_at: new Date(Date.now() + 1000).toISOString(),
-    };
-
-    const blocks_2 = {
-      ...blocks_1,
-      [assistantBlock.id]: assistantBlock,
-    };
-    setBlocks(blocks_2);
-
     const controller = new AbortController();
     const { signal } = controller;
     setAbortController(controller);
@@ -106,25 +93,14 @@ export default function AIComp() {
     });
 
     if (!resp.body) return;
-    const state: SharedState = {
-      needSplit: false,
-      assistantBlock,
-    };
-    for await (const value of readNDJSON(resp.body)) {
-      await accept(state, value as ChatTaskMessage);
+    const g = readNDJSON(resp.body);
+
+    for await (const value of g) {
+      const y = value as ChatStreamYield;
+      accept(y);
     }
 
     setAbortController(undefined);
-
-    console.log("assistantBlock", assistantBlock);
-
-    // Commit last Assitant block
-    // Sometimes the assistant block is empty because the assitant call tool first
-    if (assistantBlock.content) {
-      await db.transact([
-        db.tx.blocks[assistantBlock.id].update(assistantBlock),
-      ]);
-    }
   }
 
   // onMount(() => {

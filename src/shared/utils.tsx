@@ -14,6 +14,9 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import { AppSchema } from "../../instant.schema";
 import { getRequestEvent } from "solid-js/web";
 import { ToolName } from "./tools";
+import { Stream } from "openai/streaming.mjs";
+import { ChatCompletionChunk } from "openai/resources/index.mjs";
+import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 
 export const MIN_USD_AMOUNT = 10;
 export const MIN_SHARE_AMOUNT = 1;
@@ -350,7 +353,7 @@ export function readNDJSON(body: ReadableStream) {
 
 // ----
 
-function zodParseJSON<T>(schema: ZodSchema<T>) {
+export function zodParseJSON<T>(schema: ZodSchema<T>) {
   return (input: string): T => schema.parse(JSON.parse(input));
 }
 
@@ -400,21 +403,26 @@ export function mkToolFactory<
   };
 }
 
-export function streamNDJSON(
-  task: (controller: ReadableStreamDefaultController) => void
-) {
+async function* t() {
+  yield "a";
+}
+
+export function streamNDJSON(gen: AsyncGenerator) {
   // Use the async generator function to create a stream of JSON
   const transform = stringifyMultiJsonStream();
-  const stream = new ReadableStream({
-    async start(controller) {
-      task(controller);
+  const byteTransformer = new TransformStream<string, Uint8Array>({
+    transform(chunk, c) {
+      const encodedChunk = new TextEncoder().encode(chunk);
+      c.enqueue(encodedChunk);
     },
   });
 
-  const byteTransformer = new TransformStream<string, Uint8Array>({
-    transform(chunk, controller) {
-      const encodedChunk = new TextEncoder().encode(chunk);
-      controller.enqueue(encodedChunk);
+  const stream = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of gen) {
+        controller.enqueue(chunk);
+      }
+      controller.close();
     },
   });
 
@@ -433,7 +441,8 @@ export function createOption(
   const option_id = id();
 
   const K = 1000 * 1000;
-  const yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
+  let yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
+  if (yesReserve < 1) yesReserve = 1;
   const noReserve = Math.ceil(K / yesReserve);
   console.log("debug", yesReserve, noReserve, yesReserve * noReserve);
   if (yesReserve * noReserve < K) {
@@ -844,3 +853,259 @@ export function getRandomKaomoji(count = 6) {
   const shuffled = kaomojis.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
+
+// Take in a stream of chunks
+// combine them into higher level updates
+export async function* parseOpenAIChunk(
+  chunks: Stream<ChatCompletionChunk>
+): AsyncGenerator<ParsedMessage> {
+  const done: ParsedMessage["done"] = {
+    finish_reason: null,
+  };
+
+  const tool_calls: {
+    created_at: string;
+    id: string;
+    name: string;
+    arguments_str: string;
+    arguments?: unknown;
+  }[] = [];
+  let content = {
+    created_at: new Date().toISOString(),
+    id: id(),
+    content: "",
+  };
+  let last_tool_call_indexes: number[] = [];
+  type Status = undefined | "started" | "done";
+  let statuses: { [id: string]: Status } = {};
+
+  function checkContentDone(): ParsedMessage | undefined {
+    if (statuses["content"] == "started") {
+      statuses["content"] = "done";
+      return {
+        doing: {
+          content: {
+            done: {
+              ...content,
+              updated_at: new Date().toISOString(),
+            },
+          },
+        },
+      };
+    }
+  }
+
+  function checkToolsDone(indices: number[]) {
+    const dones: ParsedMessage[] = [];
+    const doneIndices = last_tool_call_indexes.filter(
+      (index) => !indices.includes(index)
+    );
+
+    for (const doneIndex of doneIndices) {
+      const tool_call = tool_calls[doneIndex];
+      dones.push({
+        doing: {
+          tool: {
+            done: {
+              created_at: tool_call.created_at,
+              updated_at: new Date().toISOString(),
+              name: tool_call.name,
+              id: tool_call.id,
+              arguments: JSON.parse(tool_call.arguments_str),
+            },
+          },
+        },
+      });
+    }
+    last_tool_call_indexes = indices;
+    return dones;
+  }
+
+  for await (const chunk of chunks) {
+    const delta = chunk.choices[0].delta;
+    done.finish_reason = chunk.choices[0].finish_reason;
+
+    if (delta.tool_calls) {
+      const d = checkContentDone();
+      if (d) yield d;
+      for (const done of checkToolsDone(delta.tool_calls.map((t) => t.index)))
+        yield done;
+
+      for (const tool_call of delta.tool_calls) {
+        if (!tool_call.function) throw new Error("No function");
+        const prev = tool_calls[tool_call.index];
+        if (!prev) {
+          tool_calls[tool_call.index] = {
+            created_at: new Date().toISOString(),
+            id: tool_call.id!,
+            name: tool_call.function!.name!,
+            arguments_str: "",
+          };
+          statuses[tool_calls[tool_call.index].id] = "started";
+          yield {
+            doing: {
+              tool: {
+                started: {
+                  created_at: new Date().toISOString(),
+                  id: tool_calls[tool_call.index].id,
+                  name: tool_calls[tool_call.index].name,
+                },
+              },
+            },
+          };
+        } else {
+          if (tool_call.function.arguments) {
+            tool_calls[tool_call.index] = {
+              ...prev,
+              arguments_str: prev.arguments_str + tool_call.function.arguments,
+            };
+
+            yield {
+              doing: {
+                tool: {
+                  delta: {
+                    created_at: tool_calls[tool_call.index].created_at,
+                    updated_at: new Date().toISOString(),
+                    name: tool_calls[tool_call.index].name,
+                    id: tool_calls[tool_call.index].id,
+                    arguments_delta: tool_call.function.arguments,
+                  },
+                },
+              },
+            };
+          }
+        }
+      }
+    }
+
+    if (delta.content) {
+      for (const done of checkToolsDone([])) yield done;
+      if (statuses["content"] == undefined) {
+        statuses["content"] = "started";
+        yield {
+          doing: {
+            content: {
+              started: {
+                created_at: new Date().toISOString(),
+                id: content.id,
+              },
+            },
+          },
+        };
+      }
+
+      content.content += delta.content;
+      yield {
+        doing: {
+          content: {
+            delta: {
+              created_at: content.created_at,
+              updated_at: new Date().toISOString(),
+              id: content.id,
+              text: delta.content,
+            },
+          },
+        },
+      };
+    }
+  }
+
+  for (const done of checkToolsDone([])) yield done;
+  const d = checkContentDone();
+  if (d) yield d;
+
+  yield {
+    done,
+  };
+}
+
+function hashStringToSeed(str: string) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) | 0; // Simple rolling hash
+  }
+  return hash >>> 0; // Ensure positive 32-bit integer
+}
+
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+export function seededUUIDv4(seedString: string) {
+  const seed = hashStringToSeed(seedString); // Convert string to seed
+  const rand = mulberry32(seed);
+
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (rand() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+export const prepare = (messages: ChatCompletionMessageParam[]) => {
+  let newMessages: ChatCompletionMessageParam[] = [];
+  let remainingLength = 1000;
+  console.log("messages", messages);
+  try {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const m = messages[i];
+      let l = 0;
+
+      try {
+        if (m.role === "tool" && m.content) l += m.content.length;
+      } catch (e) {
+        console.error("Error 1", e);
+      }
+
+      try {
+        if (m.role === "assistant")
+          l +=
+            (m.content?.length ?? 0) +
+            (m.tool_calls ? JSON.stringify(m.tool_calls).length : 0);
+      } catch (e) {
+        console.error("Error 2", e);
+      }
+
+      if (l > remainingLength && m.content) {
+        // Add only the part of the content that fits
+        const n = {
+          ...m,
+          content: m.content.slice(0, remainingLength),
+        } as ChatCompletionMessageParam;
+        newMessages.push(n);
+        break;
+      }
+
+      // Add the full content if it fits
+      newMessages.push(m);
+      remainingLength -= l;
+    }
+  } catch (e) {
+    console.error("Something wrong", e);
+  }
+
+  return [systemMessage(), ...newMessages.toReversed()];
+};
+
+export const systemMessage = (): ChatCompletionMessageParam => ({
+  role: "system",
+  content: `You are the native AI of Imply.app - the prediction market platform for everyone (no topic is off the table!). 
+          The app uses play money (still called USD).
+
+          Your job is to:
+          - Important: Guess how accurate user's predictions are (e.g. "Your prediction is quite *improbable*! I give it 22% probability. (￣～￣;)"). To do this you need to research the news.
+          - Help users create prediction markets.
+
+            Current time is ${new Date().toISOString()}.
+            Do not yap. Be concise!
+            Use bold ** to highlight important words! Use kaomojis! ${getRandomKaomoji().join(
+              " "
+            )}
+            If the input is too vague, give concrete examples on how to make the topic specific (e.g. X will happen on this exact date D).`,
+});

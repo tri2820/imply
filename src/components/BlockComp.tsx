@@ -109,7 +109,7 @@ function ToolBlockBody_searchNews(props: {
                   <div class="flex items-center  mt-2">
                     <For each={result()}>
                       {(site) => (
-                        <img src={favicon(site.origin)} class="w-4 h-4" />
+                        <img src={favicon(site.host)} class="w-4 h-4" />
                       )}
                     </For>
                   </div>
@@ -130,6 +130,7 @@ function ToolBlockComp(props: { block: ToolBlock }) {
   const body = {
     [ToolName.createMarket]: ToolBlockBody_createMarket,
     [ToolName.searchNews]: ToolBlockBody_searchNews,
+    [ToolName.searchImage]: () => <div>image</div>,
   }[props.block.content.name];
 
   const doing = () => props.block.content.result === undefined;
@@ -154,7 +155,8 @@ function ToolBlockComp(props: { block: ToolBlock }) {
         </div>
       </button>
       <Show when={show()}>
-        <Dynamic component={body} block={props.block} />
+        {/* <Dynamic component={body} block={props.block} /> */}
+        <div>{JSON.stringify(props.block)}</div>
       </Show>
     </div>
   );

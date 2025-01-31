@@ -4,8 +4,10 @@
 import { InstaQLEntity, InstaQLSubscriptionState, PageInfoResponse } from "@instantdb/core";
 import { Cursor } from "@instantdb/core/dist/module/queryTypes";
 import { LineSeriesPartialOptions, UTCTimestamp } from "lightweight-charts";
+import OpenAI from "openai";
 import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { ChatCompletionChunk } from "openai/src/resources/index.js";
 import { AppSchema } from "~/../instant.schema";
 import { ToolName } from "~/shared/tools";
 import { buyShare, calcAttributes, sellShare } from "~/shared/utils";
@@ -158,32 +160,11 @@ declare global {
         }
     >;
 
+
     // Chat related types
     type ChatTaskMessage = OneOf<{
-        forward: ChatCompletionMessageParam;
-        delta: string;
-        tool: {
-            call_id: string;
-
-        } & OneOf<{
-            arguments_delta: {
-                name: string;
-                delta: string;
-            }
-            started: {
-                arguments: unknown;
-            };
-
-            done: {
-                result: unknown;
-            };
-        }>;
+        chunk: ChatCompletionChunk
     }>;
-
-    type ChatTaskProps = {
-        send: (msg: ChatTaskMessage) => void;
-        body: APICompleteBody;
-    };
 
     type ToolBindings = {
         [index: string]: {
@@ -298,7 +279,83 @@ declare global {
     };
 
     type SharedState = {
-        needSplit: boolean;
         assistantBlock: AssistantBlock;
     };
+
+    // type SingleCompleteRequestResult = {
+    //     finish_reason: string | null;
+    //     content: string;
+    //     tool_calls: {
+    //         id: string
+    //         name: string
+    //         arguments_str: string
+    //         arguments?: unknown
+    //     }[]
+    // }
+
+
+
+
+
+
+    type ChatStreamYield = NonNullable<OneOf<{
+        tool_result: ToolYield & { id: string };
+    } & {
+        [K in keyof Update]: Update[K];
+    }>>
+
+    type ToolYield = OneOf<{
+        doing: {}
+        done: {}
+    }>
+    type Update = OneOf<{
+        tool: OneOf<{
+            started: {
+                created_at: string,
+                name: string,
+                id: string,
+            },
+            delta: {
+                created_at: string,
+                updated_at: string,
+                name: string,
+                id: string,
+                arguments_delta: string
+            }
+            done: {
+                created_at: string,
+                updated_at: string,
+                name: string,
+                id: string
+                arguments: unknown
+            }
+        }>
+
+        content: OneOf<{
+            started: {
+                created_at: string,
+                id: string
+            }
+
+            delta: {
+                created_at: string,
+                updated_at: string,
+                id: string
+                text: string
+            }
+
+            done: {
+                created_at: string,
+                updated_at: string,
+                id: string
+                content: string
+            }
+        }>
+    }>
+    type ParsedMessage = OneOf<{
+        doing: Update,
+        done: {
+            finish_reason: ChatCompletionChunk.Choice['finish_reason']
+        }
+    }>
 }
