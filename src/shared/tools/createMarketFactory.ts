@@ -105,10 +105,13 @@ export type CreateMarketToolResult = Awaited<ReturnType<ReturnType<typeof factor
 export const createMarketFactory = mkToolFactory({
     name: ToolName.createMarket,
     description: `Create a prediction market. 
+    The 'name' field has to be an extremely specific and clear question (e.g., "Will Bitcoin hit $200k by 2023?").
+
   The 'type' field determines the market structure:
   - 'binary' requires 'probability_yes' (0-1). Important: try to estimate it accurately.
   - 'multiple' requires 'options' with at least one entry.
-  - 'allow_multiple_correct' (for 'multiple') determines how options are treated:
+  
+  The 'allow_multiple_correct' field determines how options are treated:
   - **false**: Only one option can be true (e.g., "Who will win the tournament?").
   - **true**: Multiple options can be correct (e.g., "Will Bitcoin hit $200k?" for different months).
   

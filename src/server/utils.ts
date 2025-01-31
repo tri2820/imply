@@ -12,6 +12,7 @@ import {
 import schema from "~/../instant.schema";
 import { createMarketFactory } from "~/shared/tools/createMarketFactory";
 import { searchNewsFactory } from "~/shared/tools/searchNewsFactory";
+import { getRandomKaomoji } from "~/shared/utils";
 
 export function getEnv(key: string) {
   const event = getRequestEvent();
@@ -77,22 +78,31 @@ export async function chatTask(props: ChatTaskProps) {
     } as any;
   });
 
+  if (history.length === 1) {
+    history[0] = {
+      ...history[0],
+      content: `My prediction is: ${history[0].content}`,
+    }
+  }
   const messages: ChatCompletionMessageParam[] = [
     {
       role: "system",
-      content: `You are the native AI of Imply.app. This is a prediction market platform for everyone. The app uses play money (still called USD).
+      content: `You are the native AI of Imply.app - the prediction market platform for everyone (no topic is off the table!). 
+      The app uses play money (still called USD).
       
       Your job is to:
-      - research topics intensively and come up with hypotheses.
-      - give strong opinions on the prediction. 
-      - create new markets to gather data if none is available. 
-
+      - Important: Guess how accurate user's predictions are (e.g. "Your prediction is quite *improbable*! I give it 22% probability. (￣～￣;)"). To do this you need to research the news.
+      - Help users create prediction markets.
+      
         Current time is ${new Date().toISOString()}.
-        Do not yap. Be concise.
+        Do not yap. Be concise!
+        Use bold ** to highlight important words! Use kaomojis! ${getRandomKaomoji().join(" ")}
         If the input is too vague, give concrete examples on how to make the topic specific (e.g. X will happen on this exact date D).`,
     },
     ...history,
   ];
+
+
 
   console.log("messages", messages);
   const client = createOpenAI();
