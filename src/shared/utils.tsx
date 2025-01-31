@@ -374,11 +374,16 @@ export function mkToolFactory<
     });
 
     const fWrapper = (args: any) => {
-      const result = f(args);
-      // TODO: filter result (remove content that we don't want AI to see, but want to show in the UI)
-      // Send back result here
-      // CANNOT?
-      return result;
+      try {
+        const result = f(args);
+        // TODO: filter result (remove content that we don't want AI to see, but want to show in the UI)
+        // Send back result here
+        // CANNOT?
+        return result;
+      } catch (e) {
+        console.error(e);
+        return undefined;
+      }
     };
 
     const tool: Tool = {

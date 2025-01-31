@@ -1,4 +1,4 @@
-import { createSignal, For, onMount, Show } from "solid-js";
+import { createSignal, For, JSX, onMount, Show } from "solid-js";
 
 import CheckBoxItem from "./CheckboxItem";
 import MarketImage from "./MarketImage";
@@ -6,11 +6,20 @@ import OptionItem from "./OptionItem";
 import { markets } from "~/client/utils";
 import { calcAttributes, Color, noProb, prob } from "~/shared/utils";
 import { db } from "~/client/database";
+import {
+  BiRegularDownvote,
+  BiRegularUpvote,
+  BiSolidDownvote,
+  BiSolidUpvote,
+} from "solid-icons/bi";
 
 export default function MarketCard(props: {
   marketId?: string;
   queryAgain?: boolean;
 }) {
+  const [vote, setVote] = createSignal<"upvote" | "downvote" | "neutral">(
+    "neutral"
+  );
   const [marketResponse, setMarketResponse] = createSignal<MarketResponse>();
   const m = () => {
     const m = marketResponse()?.data.markets.at(0);
@@ -90,7 +99,7 @@ export default function MarketCard(props: {
                           }}
                         />
                       </div>
-                      <div class="flex flex-col items-stretch">
+                      {/* <div class="flex flex-col items-stretch">
                         <button
                           onClick={() => {
                             redirectToMarket();
@@ -99,7 +108,7 @@ export default function MarketCard(props: {
                         >
                           Predict
                         </button>
-                      </div>
+                      </div> */}
                     </>
                   );
                 }}
@@ -130,6 +139,55 @@ export default function MarketCard(props: {
               }
             </Show>
           </Show>
+
+          <div class="flex items-center space-x-1">
+            <div class="flex-1" />
+            <button
+              onClick={() => {
+                if (vote() == "upvote") {
+                  setVote("neutral");
+                  return;
+                }
+                setVote("upvote");
+              }}
+            >
+              <div
+                data-active={vote() == "upvote"}
+                class="flex space-x-0.5 text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-orange-400"
+              >
+                <div class="text-sm">0</div>
+                <Show
+                  when={vote() == "upvote"}
+                  fallback={<BiRegularUpvote class="w-5 h-5 " />}
+                >
+                  <BiSolidUpvote class="w-5 h-5 " />
+                </Show>
+              </div>
+            </button>
+
+            <button
+              onClick={() => {
+                if (vote() == "downvote") {
+                  setVote("neutral");
+                  return;
+                }
+                setVote("downvote");
+              }}
+            >
+              <div
+                data-active={vote() == "downvote"}
+                class="flex space-x-0.5 text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-indigo-400"
+              >
+                <div class="text-sm">0</div>
+                <Show
+                  when={vote() == "downvote"}
+                  fallback={<BiRegularDownvote class="w-5 h-5 " />}
+                >
+                  <BiSolidDownvote class="w-5 h-5 " />
+                </Show>
+              </div>
+            </button>
+          </div>
         </div>
       )}
     </Show>
