@@ -187,7 +187,9 @@ export default function BuyComp(props: BuySellProps) {
                       class="w-2 h-2 rounded-full flex-none"
                       style={{ background: o().color }}
                     />
-                    <div class="font-bold">{o().name}</div>
+                    <div class="font-bold">
+                      {props.market.options.length == 1 ? "Yes" : o().name}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -363,18 +363,29 @@ export function mkToolFactory<
   description: string;
 }) {
   return (unboundedFactoryProps: UnboundedFactoryProps) => {
+    const f = mkToolFactoryProps.factory({
+      body: unboundedFactoryProps.body,
+      send: (msg) => {
+        // TODO:
+        // const tool_call_id = ...unboundedFactoryProps.toolBindings;
+        // chatTaskProps.send({})
+        // CANNOT?
+      },
+    });
+
+    const fWrapper = (args: any) => {
+      const result = f(args);
+      // TODO: filter result (remove content that we don't want AI to see, but want to show in the UI)
+      // Send back result here
+      // CANNOT?
+      return result;
+    };
+
     const tool: Tool = {
       type: "function",
       function: {
         name: mkToolFactoryProps.name,
-        function: mkToolFactoryProps.factory({
-          body: unboundedFactoryProps.body,
-          send: (msg) => {
-            // TODO:
-            // const tool_call_id = ...unboundedFactoryProps.toolBindings;
-            // chatTaskProps.send({})
-          },
-        }),
+        function: fWrapper,
         description: mkToolFactoryProps.description,
         parse: zodParseJSON(mkToolFactoryProps.schema),
         parameters: zodToJsonSchema(mkToolFactoryProps.schema) as JSONSchema,

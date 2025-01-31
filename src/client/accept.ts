@@ -45,9 +45,7 @@ async function accept_delta(state: SharedState, delta: NonNullable<ChatTaskMessa
 }
 
 export async function accept_tool(state: SharedState, tool: NonNullable<ChatTaskMessage["tool"]>) {
-  console.log("toolMessage", tool);
   if (tool.arguments_delta) {
-    console.log("arguments_delta", tool.arguments_delta);
     state.needSplit = true;
 
     let toolBlock = blocks()[tool.call_id] as ToolBlock | undefined;
@@ -77,6 +75,7 @@ export async function accept_tool(state: SharedState, tool: NonNullable<ChatTask
 
 
   if (tool.started) {
+    console.log("toolMessage", tool);
     let toolBlock = blocks()[tool.call_id] as ToolBlock;
     toolBlock.content.arguments = tool.started.arguments;
     db.transact([db.tx.blocks[toolBlock.id].update(toolBlock)]);
@@ -89,6 +88,7 @@ export async function accept_tool(state: SharedState, tool: NonNullable<ChatTask
   }
 
   if (tool.done) {
+    console.log("toolMessage", tool);
     let toolBlock = blocks()[tool.call_id] as ToolBlock
     toolBlock.content.result = tool.done.result;
 
@@ -108,7 +108,7 @@ export async function accept(state: SharedState, json: ChatTaskMessage) {
 
   if (json.forward) {
     // Do nothing for now
-    console.log('forward', json.forward)
+    // console.log('forward', json.forward)
   }
 
   if (json.tool) {

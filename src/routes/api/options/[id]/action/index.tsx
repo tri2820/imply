@@ -1,12 +1,7 @@
 import { id } from "@instantdb/admin";
 import type { APIEvent } from "@solidjs/start/server";
-import {
-  createAdminDb,
-  getCookie,
-  triggerAddHistoryOption,
-  verifyJWT,
-} from "~/server/utils";
-import { buyShare, sellShare } from "~/shared/utils";
+import { createAdminDb, getCookie, verifyJWT } from "~/server/utils";
+import { buyShare, sellShare, triggerAddHistoryOption } from "~/shared/utils";
 
 export async function POST(event: APIEvent) {
   const optionId = event.params.id;

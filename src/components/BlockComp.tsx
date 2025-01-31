@@ -1,6 +1,6 @@
 import { marked } from "marked";
 import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
-import { createSignal, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
@@ -9,7 +9,10 @@ import {
   CreateMarketToolProps,
   CreateMarketToolResult,
 } from "~/shared/tools/createMarketFactory";
-import { SearchNewsToolProps } from "~/shared/tools/searchNewsFactory";
+import {
+  SearchNewsToolProps,
+  SearchNewsToolResult,
+} from "~/shared/tools/searchNewsFactory";
 import MarketCard from "./MarketCard";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
@@ -82,16 +85,41 @@ function ToolBlockBody_createMarket(props: {
 }
 
 function ToolBlockBody_searchNews(props: {
-  block: ToolBlock<SearchNewsToolProps>;
+  block: ToolBlock<SearchNewsToolProps, SearchNewsToolResult>;
 }) {
+  const favicon = (url: string) =>
+    `http://www.google.com/s2/favicons?domain=${url}&sz=128`;
   return (
     <Show
       when={props.block.content.result}
       fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
     >
-      <div class="py-2">
-        <div class="text-sm">{props.block.content.arguments?.query}</div>
-        <div>{JSON.stringify(props.block.content.result)}</div>
+      <div class="flex items-stretch">
+        <div class="flex-none mx-2 w-[2px] bg-neutral-800" />
+        <div class="py-2 flex-1">
+          <div class="text-sm text-neutral-400">
+            Searched for "{props.block.content.arguments?.query}"
+          </div>
+
+          <Show when={props.block.content.result}>
+            {(result) => (
+              <Show
+                when={result().length === 0}
+                fallback={
+                  <div class="flex items-center  mt-2">
+                    <For each={result()}>
+                      {(site) => (
+                        <img src={favicon(site.origin)} class="w-4 h-4" />
+                      )}
+                    </For>
+                  </div>
+                }
+              >
+                <div>No results found.</div>
+              </Show>
+            )}
+          </Show>
+        </div>
       </div>
     </Show>
   );
