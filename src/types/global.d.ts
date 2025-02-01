@@ -339,6 +339,7 @@ declare global {
             started: {
                 created_at: string,
                 id: string
+                text: string
             }
 
             delta: {
@@ -356,10 +357,23 @@ declare global {
             }
         }>
     }>
-    type ParsedMessage = OneOf<{
+    type HighLevelMessage = OneOf<{
         doing: Update,
         done: {
-            finish_reason: ChatCompletionChunk.Choice['finish_reason']
+            tool_called: boolean
         }
     }>
+
+
+    type ToolRecord = {
+        name: string;
+        created_at: string;
+        arguments_str: string;
+    }
+
+    type ContentRecord = {
+        content: string;
+        created_at?: string;
+        id: string;
+    }
 }

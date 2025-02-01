@@ -40,7 +40,7 @@ OPENAI_BASE_URL=
 2. **InstantDB**: Imply uses **InstantDB**. Since InstantDB is open-source, you can self-host it or use their free & unlimited cloud version. To set it up:
 
    ```sh
-   # In imply/ root folder
+   # In root folder
    npx instant-cli@latest push schema
    # Choose "Create a new app" and push the schema
    ```
@@ -55,6 +55,12 @@ OPENAI_BASE_URL=
 
 4. **BRAVE_SEARCH_API_KEY**: Get this from [Brave](https://brave.com/search/api/).
 5. **OPENAI_API_KEY**: API key to use with OpenAI SDK. Get this from [OpenAI](http://platform.openai.com/). If you decide to use **Gemini, Groq, or any compatible provider**, also provide the **OPENAI_MODEL** and **OPENAI_BASE_URL** keys. Otherwise, these are optional.
+   Example:
+   ```
+   OPENAI_API_KEY=<get from Google AI Studio>
+   OPENAI_MODEL=gemini-1.5-flash
+   OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+   ```
 
 ---
 

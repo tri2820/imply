@@ -66,6 +66,12 @@ async function* searchImage({ query }: SearchImageToolProps) {
             host: new URL(r.url).host,
         }));
 
+    // yield {
+    //     doing: {
+    //         data.results
+    //     }
+    // }
+
     yield {
         done: images,
     }

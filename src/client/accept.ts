@@ -10,7 +10,7 @@ async function accept_content(content: NonNullable<ChatStreamYield['content']>) 
     assistantBlock = {
       id: content.started.id,
       role: "assistant",
-      content: '',
+      content: content.started.text,
       created_at: content.started.created_at,
       updated_at: content.started.created_at,
     }
