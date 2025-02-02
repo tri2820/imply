@@ -12,28 +12,44 @@ import {
 
 export async function GET(event: APIEvent) {
   const profile_jwt = getCookie("profile_jwt");
+  const db = createAdminDb();
 
   if (profile_jwt) {
     try {
       const payload = await verifyJWT(profile_jwt);
-      return new Response(
-        JSON.stringify({
-          type: "existing",
-          profile_id: payload.profile_id,
-        } as JWTResult),
-        {
-          headers: { "Content-Type": "application/json" },
-          status: 200,
-        }
-      );
+
+      const resp = await db.query({
+        profiles: {
+          $: {
+            where: {
+              id: payload.profile_id as string,
+            },
+          },
+        },
+      });
+
+      const profile = resp.profiles.at(0);
+      if (profile) {
+        return new Response(
+          JSON.stringify({
+            type: "existing",
+            profile_id: payload.profile_id,
+          } as JWTResult),
+          {
+            headers: { "Content-Type": "application/json" },
+            status: 200,
+          }
+        );
+      } else {
+        console.warn("Profile not found", payload.profile_id);
+        // Proceed to create a new profile
+      }
     } catch (e) {
       console.log("JWT is invalid", e);
       setCookie("profile_jwt", "", { sameSite: "strict" });
       // Move forward to generate a new JWT
     }
   }
-
-  const db = createAdminDb();
 
   const profile_id = id();
   const balance_id = id();

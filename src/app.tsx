@@ -21,6 +21,7 @@ import { setProfileSubscription } from "./client/utils";
 
 export default function App() {
   function subscribeProfile(profile_id: string) {
+    console.log("subscribeProfile", profile_id);
     return db.subscribeQuery(
       {
         profiles: {

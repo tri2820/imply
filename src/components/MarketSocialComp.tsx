@@ -29,7 +29,6 @@ export default function MarketSocialComp(props: { marketId: string }) {
   createEffect(async () => {
     const p = profile();
     if (!p) return;
-    console.log("get votes for", p, props.marketId);
     const resp = await db.queryOnce({
       markets: {
         $: {
@@ -48,9 +47,7 @@ export default function MarketSocialComp(props: { marketId: string }) {
     });
 
     setMarketResponse(resp);
-    console.log("votes", resp);
     const vote = resp.data.markets.at(0)?.votes.at(0);
-    console.log("vote is", vote, market()?.num_votes);
     // At the start, theey are all the same
     if (vote) {
       setDBVote(vote.isUpvote ? 1 : -1);
