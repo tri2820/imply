@@ -12,6 +12,7 @@ import {
 } from "~/client/utils";
 import BuySellComp from "~/components/BuySellComp";
 import MarketImage from "~/components/MarketImage";
+import MarketSocialComp from "~/components/MarketSocialComp";
 import MarketChart from "~/components/MartketChart";
 import OptionImage from "~/components/OptionImage";
 import { dateF_dmy, dateF_h, prob, probToPercent } from "~/shared/utils";
@@ -87,6 +88,8 @@ export default function MarketPage() {
               </div>
 
               <MarketChart />
+
+              <MarketSocialComp marketId={params.id} />
 
               <div class="flex items-start space-x-2 py-2 text-sm text-neutral-500 px-4 ">
                 <BsInfoCircle class="w-3 h-3 mt-1" />

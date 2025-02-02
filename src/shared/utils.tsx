@@ -353,62 +353,6 @@ export function readNDJSON(body: ReadableStream) {
   return streamToIterable(stream);
 }
 
-// ----
-
-export function zodParseJSON<T>(schema: ZodSchema<T>) {
-  return (input: string): T => schema.parse(JSON.parse(input));
-}
-
-export function mkToolFactory<
-  T extends ZodType<any, any, any>
->(mkToolFactoryProps: {
-  name: ToolName;
-  schema: T;
-  factory: (factoryProps: FactoryProps) => (args: z.infer<T>) => any;
-  description: string;
-}) {
-  return (unboundedFactoryProps: UnboundedFactoryProps) => {
-    const f = mkToolFactoryProps.factory({
-      body: unboundedFactoryProps.body,
-      send: (msg) => {
-        // TODO:
-        // const tool_call_id = ...unboundedFactoryProps.toolBindings;
-        // chatTaskProps.send({})
-        // CANNOT?
-      },
-    });
-
-    const fWrapper = (args: any) => {
-      try {
-        const result = f(args);
-        // TODO: filter result (remove content that we don't want AI to see, but want to show in the UI)
-        // Send back result here
-        // CANNOT?
-        return result;
-      } catch (e) {
-        console.error(e);
-        return undefined;
-      }
-    };
-
-    const tool: Tool = {
-      type: "function",
-      function: {
-        name: mkToolFactoryProps.name,
-        function: fWrapper,
-        description: mkToolFactoryProps.description,
-        parse: zodParseJSON(mkToolFactoryProps.schema),
-        parameters: zodToJsonSchema(mkToolFactoryProps.schema) as JSONSchema,
-      },
-    };
-    return tool;
-  };
-}
-
-async function* t() {
-  yield "a";
-}
-
 export function streamNDJSON(gen: AsyncGenerator) {
   // Use the async generator function to create a stream of JSON
   const transform = stringifyMultiJsonStream();

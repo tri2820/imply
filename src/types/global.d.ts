@@ -2,13 +2,12 @@
 
 
 import { InstaQLEntity, InstaQLSubscriptionState, PageInfoResponse } from "@instantdb/core";
-import { Cursor } from "@instantdb/core/dist/module/queryTypes";
+import { Cursor, InstaQLParams } from "@instantdb/core/dist/module/queryTypes";
 import { LineSeriesPartialOptions, UTCTimestamp } from "lightweight-charts";
-import OpenAI from "openai";
 import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { ChatCompletionChunk } from "openai/src/resources/index.js";
 import { AppSchema } from "~/../instant.schema";
+import { db } from "~/client/database";
 import { ToolName } from "~/shared/tools";
 import { buyShare, calcAttributes, sellShare } from "~/shared/utils";
 
@@ -17,6 +16,28 @@ import { buyShare, calcAttributes, sellShare } from "~/shared/utils";
 export { };
 
 declare global {
+    // Utility types
+    type Refine<T, K extends keyof T, V> = Omit<T, K> & { [P in K]: V };
+
+    type OneOf<T> = {
+        [K in keyof T]: {
+            [P in keyof T]?: P extends K ? T[P] : never;
+        } & { [P in Exclude<keyof T, K>]?: undefined };
+    }[keyof T];
+
+    type ExtractType<K extends 'doing' | 'done', T extends (...args: any[]) => AsyncGenerator<any, any, any>> =
+        T extends (...args: any[]) => AsyncGenerator<infer U, any, any> ? U extends Record<K, infer D> ? D : never : never;
+
+    type DeepNonNullable<T> = T extends Function
+        ? T
+        : T extends Array<infer U>
+        ? Array<DeepNonNullable<NonNullable<U>>>
+        : T extends object
+        ? { [K in keyof T]-?: DeepNonNullable<NonNullable<T[K]>> }
+        : T;
+
+    type InstantDBQueryResponse<T extends InstaQLParams<AppSchema>> = Awaited<ReturnType<typeof db.queryOnce<T>>>;
+
     // API types
     type UpvoteDownvote = {
         type: 'upvote' | 'downvote' | 'remove'
@@ -39,6 +60,8 @@ declare global {
 
     type YesOrNo = "yes" | "no";
 
+
+
     // Market related types
     type Ext_Option = ReturnType<typeof calcAttributes>["options"][number];
 
@@ -60,40 +83,61 @@ declare global {
         };
     };
 
-    type MarketResponse = {
-        data: {
-            markets: (Market & {
-                options: (Option & { shares: Share[]; })[];
-            })[];
-        };
-        pageInfo: PageInfoResponse<{
-            markets: {
-                options: {};
+
+
+
+    // Now extract the type of the response using ReturnType and Awaited
+    type MarketSocialQueryRespose = InstantDBQueryResponse<{
+        markets: {
+            $: {
+                where: {
+                    id: string,
+                },
+            },
+            votes: {
                 $: {
-                    order: {
-                        serverCreatedAt: "desc";
-                    };
-                    after?: Cursor | undefined;
-                    first: number;
-                };
-            };
-        }>;
-    };
+                    where: {
+                        profile: string,
+                    },
+                },
+            },
+        },
+    }>;
+
+
+
+    type MarketResponse = InstantDBQueryResponse<{
+        markets: {
+            options: {
+                shares: {},
+            },
+            $: {
+                first: 8,
+                after: Cursor,
+                order: {
+                    num_upvotes: "desc",
+                },
+            },
+        },
+    }>
 
     // Profile related types
-    type ProfileResponse = {
-        data: {
-            profiles: (Profile & {
-                holdings: (Holding & {
-                    share: Share & {
-                        option: Option & {
-                            market: Market;
-                        };
-                    };
-                })[];
-            })[];
-        };
-    };
+    type ProfileResponse = DeepNonNullable<InstantDBQueryResponse<{
+        profiles: {
+            $: {
+                where: {
+                    id: string,
+                },
+            },
+            holdings: {
+                share: {
+                    option: {
+                        market: {},
+                    },
+                },
+            },
+        },
+    }>>
 
     // Subscription types
     type ProfileSubscription = InstaQLSubscriptionState<
@@ -171,44 +215,7 @@ declare global {
         chunk: ChatCompletionChunk
     }>;
 
-    type ToolBindings = {
-        [index: string]: {
-            id: string;
-            openai_call_id?: string
-        }
-    }
 
-    type UnboundedFactoryProps = {
-        send: (msg: ChatTaskMessage) => void;
-        body: APICompleteBody;
-        toolBindings: ToolBindings
-    }
-
-    type FactoryProps = {
-        send: (msg: ChatTaskMessage) => void;
-        body: APICompleteBody;
-    }
-
-    // Tool related types
-    type ToolCalls = {
-        [key: string]: {
-            name: string;
-            arguments: string;
-            created_at: string;
-        };
-    };
-
-    type Tool = RunnableToolFunctionWithParse<any>;
-
-
-    // Utility types
-    type Refine<T, K extends keyof T, V> = Omit<T, K> & { [P in K]: V };
-
-    type OneOf<T> = {
-        [K in keyof T]: {
-            [P in keyof T]?: P extends K ? T[P] : never;
-        } & { [P in Exclude<keyof T, K>]?: undefined };
-    }[keyof T];
 
     type Status<K> = OneOf<{
         idle: {};
@@ -268,7 +275,6 @@ declare global {
     >;
 
     type Block = ToolBlock | AssistantBlock | UserBlock;
-    type Role = Block["role"];
 
     // UI types
     type UIBlock = Block & {
@@ -285,39 +291,17 @@ declare global {
         options: LineSeriesPartialOptions;
     };
 
-    type SharedState = {
-        assistantBlock: AssistantBlock;
-    };
-
-    // type SingleCompleteRequestResult = {
-    //     finish_reason: string | null;
-    //     content: string;
-    //     tool_calls: {
-    //         id: string
-    //         name: string
-    //         arguments_str: string
-    //         arguments?: unknown
-    //     }[]
-    // }
-
-
-
-
-
-
     type ChatStreamYield = NonNullable<OneOf<{
         tool_result: ToolYield & { id: string };
     } & {
         [K in keyof Update]: Update[K];
     }>>
 
-    type ExtractType<K extends 'doing' | 'done', T extends (...args: any[]) => AsyncGenerator<any, any, any>> =
-        T extends (...args: any[]) => AsyncGenerator<infer U, any, any> ? U extends Record<K, infer D> ? D : never : never;
-
     type ToolYield = OneOf<{
         doing: {}
         done: {}
     }>
+
     type Update = OneOf<{
         tool: OneOf<{
             started: {
@@ -363,13 +347,13 @@ declare global {
             }
         }>
     }>
+
     type HighLevelMessage = OneOf<{
         doing: Update,
         done: {
             tool_called: boolean
         }
     }>
-
 
     type ToolRecord = {
         name: string;
@@ -382,4 +366,5 @@ declare global {
         created_at?: string;
         id: string;
     }
+
 }

@@ -221,7 +221,7 @@ function AssistantLabel() {
   );
 }
 
-function sectionType(role: Role) {
+function sectionType(role: Block["role"]) {
   if (role == "user") return 1;
   return 0;
 }
