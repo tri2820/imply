@@ -446,7 +446,7 @@ export function createOption(
   let yesReserve = Math.ceil(Math.pow((K * (1 - yes_prob)) / yes_prob, 0.5));
   if (yesReserve < 1) yesReserve = 1;
   const noReserve = Math.ceil(K / yesReserve);
-  console.log("debug", yesReserve, noReserve, yesReserve * noReserve);
+  console.log("debug", yes_prob, yesReserve, noReserve, yesReserve * noReserve);
   if (yesReserve * noReserve < K) {
     throw new Error(
       `Initial reserves is too low, wrong calculation ${yesReserve} * ${noReserve} < ${K}`

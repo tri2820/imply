@@ -5,13 +5,13 @@ import { makeTool, ToolName } from ".";
 import { createOption, triggerAddHistoryOption } from "../utils";
 
 const schema = z.object({
-    name: z.string().describe('Has to be an extremely specific and clear question (e.g., "Will Bitcoin hit $200k by 2023?").'),
+    name: z.string(),
     description: z.string(),
-    rule: z.string().describe('Should be clear and unambiguous. Mention specific data source for market resolution.'),
+    rule: z.string(),
     type: z.enum(["binary", "multiple"]),
 
     // Binary market fields
-    probability_yes: z.number().min(0).max(1).optional(),
+    probability_yes: z.number().optional(),
 
     // Multiple market fields
     allow_multiple_correct: z.boolean().optional(),
@@ -19,7 +19,7 @@ const schema = z.object({
         .array(
             z.object({
                 name: z.string(),
-                probability_yes: z.number().min(0).max(1),
+                probability_yes: z.number(),
             })
         )
         .optional(),
@@ -105,5 +105,10 @@ export const createMarketTool = makeTool({
   The 'allow_multiple_correct' field determines how options are treated:
   - **false**: Only one option can be true (e.g., "Who will win the tournament?").
   - **true**: Multiple options can be correct (e.g., "Will Bitcoin hit $200k?" for different months).
+
+  - name: Extremely specific question (e.g., "Will Bitcoin hit $200k by 2023?").
+  - rules: Clear and unambiguous. Mention specific data source for market resolution.
+
+  Probability must be in range [0, 1].
   `,
 });
