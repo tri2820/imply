@@ -115,7 +115,7 @@ declare global {
                 first: 8,
                 after: Cursor,
                 order: {
-                    num_upvotes: "desc",
+                    num_votes: "desc",
                 },
             },
         },

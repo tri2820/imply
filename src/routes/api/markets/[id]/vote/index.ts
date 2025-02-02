@@ -43,13 +43,15 @@ export async function POST(event: APIEvent) {
         });
     const vote = market.votes.at(0);
     if (action.type === 'remove') {
+        // Already removed
         if (!vote)
             return new Response(null, { status: 200 });
+
+        // Remove the vote
         await db.transact([
             db.tx.votes[vote.id].delete(),
             db.tx.markets[market.id].update({
-                num_downvotes: market.num_downvotes - (vote.isUpvote ? 0 : 1),
-                num_upvotes: market.num_upvotes - (vote.isUpvote ? 1 : 0),
+                num_votes: market.num_votes + (vote.isUpvote ? -1 : 1),
             })
         ]);
         return new Response(null, { status: 200 });
@@ -59,12 +61,13 @@ export async function POST(event: APIEvent) {
         isUpvote: action.type === 'upvote',
     }
 
+    // Already voted
     if (vote) {
         await db.transact([
             db.tx.votes[vote.id].update(new_vote),
             db.tx.markets[market.id].update({
-                num_downvotes: market.num_downvotes - (vote.isUpvote ? 0 : 1) + (action.type === 'upvote' ? 0 : 1),
-                num_upvotes: market.num_upvotes - (vote.isUpvote ? 1 : 0) + (action.type === 'upvote' ? 1 : 0),
+                // Remove then add
+                num_votes: market.num_votes + (vote.isUpvote ? -1 : 1) + (action.type === 'upvote' ? 1 : -1),
             })
         ]);
         return new Response(null, { status: 200 });
@@ -78,8 +81,8 @@ export async function POST(event: APIEvent) {
             profile: payload.profile_id,
         }),
         db.tx.markets[market.id].update({
-            num_downvotes: (market.num_downvotes ?? 0) + (action.type === 'downvote' ? 1 : 0),
-            num_upvotes: (market.num_upvotes ?? 0) + (action.type === 'upvote' ? 1 : 0),
+            // Just add
+            num_votes: (market.num_votes ?? 0) + (action.type === 'upvote' ? 1 : -1),
         })])
 
 

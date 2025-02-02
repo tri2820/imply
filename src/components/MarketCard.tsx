@@ -139,7 +139,9 @@ export default function MarketCard(props: {
             </Show>
           </Show>
 
-          <MarketSocialComp marketId={props.marketId} />
+          <div class="pt-2 ">
+            <MarketSocialComp marketId={props.marketId} />
+          </div>
         </div>
       )}
     </Show>

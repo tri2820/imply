@@ -68,7 +68,7 @@ export async function loadMarkets() {
           first: 8,
           ...(lastCursor && { after: lastCursor }),
           order: {
-            num_upvotes: "desc",
+            num_votes: "desc",
           },
         },
       },

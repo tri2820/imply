@@ -16,36 +16,14 @@ export default function MarketSocialComp(props: { marketId: string }) {
   const [marketResponse, setMarketResponse] =
     createSignal<MarketSocialQueryRespose>();
   const market = () => marketResponse()?.data.markets.at(0);
-  const [vote, setVote] = createSignal<"upvote" | "downvote" | "neutral">(
-    "neutral"
-  );
-  const [counted, setCounted] = createSignal<"upvote" | "downvote" | "neutral">(
-    "neutral"
-  );
+  const [dbvote, setDBVote] = createSignal<1 | 0 | -1>(0);
+  const [vote, setVote] = createSignal<1 | 0 | -1>(0);
 
-  const num_downvote = () =>
-    numF(
-      (market()?.num_downvotes ?? 0) +
-        (vote() == "downvote"
-          ? counted() == "downvote"
-            ? 0
-            : 1
-          : counted() == "downvote"
-          ? -1
-          : 0)
-    );
-
-  const num_upvote = () =>
-    numF(
-      (market()?.num_upvotes ?? 0) +
-        (vote() == "upvote"
-          ? counted() == "upvote"
-            ? 0
-            : 1
-          : counted() == "upvote"
-          ? -1
-          : 0)
-    );
+  const num_votes = () => {
+    const n = market()?.num_votes ?? 0;
+    const diff = dbvote() - vote();
+    return numF(n - diff);
+  };
 
   // We need to check if the user has liked this post before or not
   createEffect(async () => {
@@ -68,18 +46,18 @@ export default function MarketSocialComp(props: { marketId: string }) {
         },
       },
     });
-    type Resp = typeof resp;
 
     setMarketResponse(resp);
     console.log("votes", resp);
     const vote = resp.data.markets.at(0)?.votes.at(0);
-    setVote(vote ? (vote.isUpvote ? "upvote" : "downvote") : "neutral");
+    console.log("vote is", vote, market()?.num_votes);
+    // At the start, theey are all the same
     if (vote) {
-      setCounted(vote.isUpvote ? "upvote" : "downvote");
-      setVote(vote.isUpvote ? "upvote" : "downvote");
+      setDBVote(vote.isUpvote ? 1 : -1);
+      setVote(vote.isUpvote ? 1 : -1);
     } else {
-      setCounted("neutral");
-      setVote("neutral");
+      setDBVote(0);
+      setVote(0);
     }
   });
 
@@ -88,65 +66,70 @@ export default function MarketSocialComp(props: { marketId: string }) {
       {(m) => (
         <div class="flex items-center space-x-1">
           <div class="flex-1" />
-          <button
-            onClick={() => {
-              console.log("vote", vote());
-              if (vote() == "upvote") {
-                setVote("neutral");
-                api_vote(m().id, {
-                  type: "remove",
-                });
-                return;
-              }
-              setVote("upvote");
-              api_vote(m().id, {
-                type: "upvote",
-              });
-            }}
-          >
-            <div
-              data-active={vote() == "upvote"}
-              class="flex space-x-0.5 text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-orange-400"
-            >
-              <div class="text-sm">{num_upvote()}</div>
-              <Show
-                when={vote() == "upvote"}
-                fallback={<BiRegularUpvote class="w-5 h-5 " />}
-              >
-                <BiSolidUpvote class="w-5 h-5 " />
-              </Show>
-            </div>
-          </button>
+          <div class="bg-neutral-800 flex items-center flex-none rounded-full">
+            <button
+              onClick={() => {
+                console.log("vote", vote());
+                if (vote() == 1) {
+                  setVote(0);
+                  api_vote(m().id, {
+                    type: "remove",
+                  });
+                  return;
+                }
 
-          <button
-            onClick={() => {
-              if (vote() == "downvote") {
-                setVote("neutral");
+                setVote(1);
                 api_vote(m().id, {
-                  type: "remove",
+                  type: "upvote",
                 });
-                return;
-              }
-
-              setVote("downvote");
-              api_vote(m().id, {
-                type: "downvote",
-              });
-            }}
-          >
-            <div
-              data-active={vote() == "downvote"}
-              class="flex space-x-0.5 text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-indigo-400"
+              }}
             >
-              <div class="text-sm">{num_downvote()}</div>
-              <Show
-                when={vote() == "downvote"}
-                fallback={<BiRegularDownvote class="w-5 h-5 " />}
+              <div
+                data-active={vote() == 1}
+                class="text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-2 hover:text-white rounded-full data-[active=true]:text-orange-400"
               >
-                <BiSolidDownvote class="w-5 h-5 " />
-              </Show>
+                <Show
+                  when={vote() == 1}
+                  fallback={<BiRegularUpvote class="w-5 h-5 " />}
+                >
+                  <BiSolidUpvote class="w-5 h-5 " />
+                </Show>
+              </div>
+            </button>
+
+            <div class="w-6 text-center ">
+              <div class="text-sm font-bold">{num_votes()}</div>
             </div>
-          </button>
+
+            <button
+              onClick={() => {
+                if (vote() == -1) {
+                  setVote(0);
+                  api_vote(m().id, {
+                    type: "remove",
+                  });
+                  return;
+                }
+
+                setVote(-1);
+                api_vote(m().id, {
+                  type: "downvote",
+                });
+              }}
+            >
+              <div
+                data-active={vote() == -1}
+                class="text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-2 hover:text-white rounded-full data-[active=true]:text-indigo-400"
+              >
+                <Show
+                  when={vote() == -1}
+                  fallback={<BiRegularDownvote class="w-5 h-5 " />}
+                >
+                  <BiSolidDownvote class="w-5 h-5 " />
+                </Show>
+              </div>
+            </button>
+          </div>
         </div>
       )}
     </Show>
