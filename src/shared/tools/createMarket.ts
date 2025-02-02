@@ -109,6 +109,6 @@ export const createMarketTool = makeTool({
   - name: Extremely specific question (e.g., "Will Bitcoin hit $200k by 2023?").
   - rules: Clear and unambiguous. Mention specific data source for market resolution.
 
-  Probability must be in range [0, 1].
+  Important: Probability must be in range [0, 1].
   `,
 });

@@ -68,13 +68,13 @@ export async function loadMarkets() {
           first: 8,
           ...(lastCursor && { after: lastCursor }),
           order: {
-            serverCreatedAt: "desc",
+            num_upvotes: "desc",
           },
         },
       },
     });
 
-    console.log("resp", resp);
+    console.log("loadMarkets resp", resp);
     setMarketResponses((prev) => [...prev, resp]);
   } catch (e) {}
   setLoadMarketsState("idle");

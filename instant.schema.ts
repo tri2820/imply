@@ -29,7 +29,8 @@ const _schema = i.schema({
 
       // social
       // faster (don't have to aggregate)
-      num_upvotes: i.number(),
+      // Only indexed and type-checked attrs can be used to order by.
+      num_upvotes: i.number().indexed(),
       num_downvotes: i.number(),
     }),
     holdings: i.entity({

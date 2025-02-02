@@ -438,6 +438,14 @@ export function createOption(
   yes_prob: number,
   image = ""
 ) {
+  if (yes_prob > 1) {
+    console.warn(
+      "Damn it AI gave a probability in range [0, 100] instead of [0, 1]"
+    );
+    // Hack: Attemp fixing
+    yes_prob = yes_prob / 100;
+  }
+
   const yes_share_id = id();
   const no_share_id = id();
   const option_id = id();
