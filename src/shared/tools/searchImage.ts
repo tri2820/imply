@@ -7,7 +7,7 @@ const schema = z.object({
     query: z.string(),
 });
 
-export type SearchImageToolProps = z.infer<typeof schema>;
+export type SearchImageToolArgs = z.infer<typeof schema>;
 export type SearchImageToolDone = ExtractType<'done', typeof searchImage>;
 export type SearchImageToolDoing = ExtractType<'doing', typeof searchImage>;
 
@@ -15,7 +15,7 @@ async function fetchImages(query: string) {
     const response = await fetch(
         `https://api.search.brave.com/res/v1/images/search?q=${encodeURIComponent(
             query
-        )}&count=20&search_lang=en&safesearch=strict&spellcheck=1`,
+        )}&count16&search_lang=en&safesearch=strict&spellcheck=1`,
         {
             headers: {
                 "Accept": "application/json",
@@ -33,7 +33,7 @@ async function fetchImages(query: string) {
     return response;
 }
 
-async function* searchImage({ query }: SearchImageToolProps) {
+async function* searchImage({ query }: SearchImageToolArgs) {
     let n = 3;
     let response: Response | undefined = undefined;
     while (n--) {
@@ -62,6 +62,7 @@ async function* searchImage({ query }: SearchImageToolProps) {
     const images = data.results
         .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
         .map((r) => ({
+            id: id(),
             title: r.title,
             host: new URL(r.url).host,
         }));

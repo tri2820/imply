@@ -9,6 +9,7 @@ const schema = z.object({
     description: z.string(),
     rule: z.string(),
     type: z.enum(["binary", "multiple"]),
+    image_id: z.string(),
 
     // Binary market fields
     probability_yes: z.number().optional(),
@@ -25,7 +26,7 @@ const schema = z.object({
         .optional(),
 });
 
-export type CreateMarketToolProps = z.infer<typeof schema>;
+export type CreateMarketToolArgs = z.infer<typeof schema>;
 export type CreateMarketToolDone = ExtractType<'done', typeof createMarket>;
 
 async function* createMarket({
@@ -36,7 +37,8 @@ async function* createMarket({
     allow_multiple_correct,
     description,
     rule,
-}: CreateMarketToolProps) {
+    image_id
+}: CreateMarketToolArgs, extraArgs: ExtraArgs) {
     const db = createAdminDb();
     const market_id = id();
 
@@ -61,13 +63,17 @@ async function* createMarket({
         throw new Error("No marketOptions");
     }
 
+    const image_url = image_id;
+    console.log('image_url', image_url);
+    console.log('extraArgs', extraArgs)
+
     const transactions: Parameters<typeof db.transact>[0] = [
         ...marketOptions.flatMap((o) => o.transactions),
         db.tx.markets[market_id]
             .update({
                 name,
                 description,
-                image: "",
+                image: image_url,
                 allow_multiple_correct,
                 created_at: new Date().toISOString(),
                 resolve_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
@@ -92,11 +98,15 @@ async function* createMarket({
     }
 }
 
+
 export const createMarketTool = makeTool({
     name: ToolName.createMarket,
     zodObj: schema,
     function: createMarket,
     description: `Create a prediction market. 
+    Important:
+    - For image_id, you need to use the tool searchImage first to obtain suitable image_id.
+    - Probability must be in range [0, 1].
 
   The 'type' field determines the market structure:
   - 'binary' requires 'probability_yes'. Important: try to estimate it accurately.
@@ -107,8 +117,5 @@ export const createMarketTool = makeTool({
   - **true**: Multiple options can be correct (e.g., "Will Bitcoin hit $200k?" for different months).
 
   - name: Extremely specific question (e.g., "Will Bitcoin hit $200k by 2023?").
-  - rules: Clear and unambiguous. Mention specific data source for market resolution.
-
-  Important: Probability must be in range [0, 1].
-  `,
+  - rules: Clear and unambiguous. Mention specific data source for market resolution.`,
 });

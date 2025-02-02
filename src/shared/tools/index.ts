@@ -13,10 +13,10 @@ export function makeTool<T extends z.ZodObject<any, any>>(props: {
     name: string,
     zodObj: T,
     description?: string,
-    function: (args: z.infer<T>) => AsyncGenerator<ToolYield>
+    function: (args: z.infer<T>, extraArgs: ExtraArgs) => AsyncGenerator<ToolYield>
 }): {
     definition: ChatCompletionTool
-    function: (args: any) => AsyncGenerator<ToolYield>
+    function: (args: any, extraArgs: ExtraArgs) => AsyncGenerator<ToolYield>
 } {
     const parameters = zodToJsonSchema(props.zodObj)
     return {

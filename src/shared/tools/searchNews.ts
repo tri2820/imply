@@ -6,7 +6,7 @@ const schema = z.object({
     query: z.string(),
 });
 
-export type SearchNewsToolProps = z.infer<typeof schema>;
+export type SearchNewsToolArgs = z.infer<typeof schema>;
 export type SearchNewsToolDone = ExtractType<'done', typeof searchNews>;
 
 async function fetchNews(query: string) {
@@ -31,7 +31,7 @@ async function fetchNews(query: string) {
     return response;
 }
 
-async function* searchNews({ query }: SearchNewsToolProps) {
+async function* searchNews({ query }: SearchNewsToolArgs) {
     let n = 3;
     let response: Response | undefined = undefined;
     while (n--) {

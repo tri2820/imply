@@ -7,17 +7,17 @@ import IconComp from "./IconComp";
 import { ToolName } from "~/shared/tools";
 import MarketCard from "./MarketCard";
 import {
-  CreateMarketToolProps,
+  CreateMarketToolArgs,
   CreateMarketToolDone,
 } from "~/shared/tools/createMarket";
 import {
-  SearchNewsToolProps,
+  SearchNewsToolArgs,
   SearchNewsToolDone,
 } from "~/shared/tools/searchNews";
 import {
   SearchImageToolDoing,
   SearchImageToolDone,
-  SearchImageToolProps,
+  SearchImageToolArgs,
 } from "~/shared/tools/searchImage";
 import MaybeImage from "./Image";
 
@@ -74,7 +74,7 @@ function ToolBlockBody_ArgumentsString(props: { block: ToolBlock }) {
 }
 
 function ToolBlockBody_createMarket(props: {
-  block: ToolBlock<CreateMarketToolProps, CreateMarketToolDone>;
+  block: ToolBlock<CreateMarketToolArgs, CreateMarketToolDone>;
 }) {
   return (
     <Show
@@ -91,7 +91,7 @@ function ToolBlockBody_createMarket(props: {
 }
 
 function ToolBlockBody_searchNews(props: {
-  block: ToolBlock<SearchNewsToolProps, SearchNewsToolDone>;
+  block: ToolBlock<SearchNewsToolArgs, SearchNewsToolDone>;
 }) {
   const favicon = (url: string) =>
     `http://www.google.com/s2/favicons?domain=${url}&sz=128`;
@@ -133,7 +133,7 @@ function ToolBlockBody_searchNews(props: {
 
 function ToolBlockBody_searchImage(props: {
   block: ToolBlock<
-    SearchImageToolProps,
+    SearchImageToolArgs,
     SearchImageToolDone,
     SearchImageToolDoing
   >;

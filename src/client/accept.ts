@@ -85,7 +85,7 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
 
 }
 
-export async function accept_tool_result(tool: NonNullable<ChatStreamYield['tool_result']>) {
+export async function accept_tool_yield(tool: NonNullable<ChatStreamYield['tool_yield']>) {
   let toolBlock: ToolBlock | undefined;
   if (tool.doing) {
     console.log('tool.doing', tool.doing)
@@ -121,7 +121,7 @@ export async function accept(y: ChatStreamYield) {
     accept_tool(y.tool)
   }
 
-  if (y.tool_result) {
-    accept_tool_result(y.tool_result)
+  if (y.tool_yield) {
+    accept_tool_yield(y.tool_yield)
   }
 }

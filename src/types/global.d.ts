@@ -291,8 +291,12 @@ declare global {
         options: LineSeriesPartialOptions;
     };
 
+    type ToolYieldWithId = ToolYield & {
+        id: string
+        name: ToolName
+    }
     type ChatStreamYield = NonNullable<OneOf<{
-        tool_result: ToolYield & { id: string };
+        tool_yield: ToolYieldWithId;
     } & {
         [K in keyof Update]: Update[K];
     }>>
@@ -367,4 +371,9 @@ declare global {
         id: string;
     }
 
+    type MemStorage = {
+        [tool_call_id: string]: ToolYieldWithId
+    }
+
+    type ExtraArgs = { memStorage: MemStorage }
 }

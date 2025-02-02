@@ -9,6 +9,7 @@ import { Stream } from "openai/streaming.mjs";
 import { createMarketTool } from "~/shared/tools/createMarket";
 import { getRandomKaomoji } from "~/shared/utils";
 import { getEnv } from "./utils";
+import { ToolName } from "~/shared/tools";
 
 export function createOpenAI() {
     const apiKey = getEnv("OPENAI_API_KEY");
@@ -262,7 +263,6 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
     let keep_assistant_content_short = 200;
     const above_end_i = foundToolCall ? maybeToolCall_i : messages.length;
     for (let i = 0; i < above_end_i; i++) {
-        console.log('iter', i, messages[i]);
         const prepared_m = { ...messages[i] }
         if (prepared_m.role === 'assistant') {
             // Hack: Do not keep track of assistant old calls
@@ -332,6 +332,11 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
     let messages = history;
     console.log('before', JSON.stringify(messages));
+
+    const extraArgs: ExtraArgs = {
+        memStorage: {}
+    }
+
     // Safe guard
     let MAX_ITER = 5;
     try {
@@ -355,6 +360,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
             let tool_called = false
 
+            // STEP 1: Build arguments for tool calls or generate content
             for await (const update of parseOpenAIChunk(completion)) {
 
                 if (update.doing) {
@@ -398,31 +404,38 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
             }
 
             messages.push(m)
+            // STEP 2: Actually execute the tool logic
             if (tool_called) {
-                console.log(">> needs process tool_calls", messages);
                 const generators = tool_calls.map((async function* f(tool_call) {
                     const toolLogic = tools.find(t => t.definition.function.name === tool_call.name)?.function;
                     if (!toolLogic) {
                         throw new Error(`Tool ${tool_call.name} not found`);
                     }
-                    const toolG = toolLogic(tool_call.arguments);
+
+                    const toolG = toolLogic(tool_call.arguments, extraArgs);
+
                     for await (const tool_yield of toolG) {
-                        yield { id: tool_call.id, ...tool_yield }
+                        yield { id: tool_call.id, ...tool_yield, name: tool_call.name as ToolName }
                     }
                 }))
 
                 const g = parallelMerge(...generators)
                 console.log('waiting for tool calls...');
-                for await (const tool_result of g) {
+                for await (const tool_yield of g) {
+                    console.log('add to memStorage', tool_yield.id, tool_yield);
+                    extraArgs.memStorage[tool_yield.id] = tool_yield
+
                     yield {
-                        tool_result
+                        tool_yield
                     }
-                    if (tool_result.done) {
-                        console.log('add tool result message', tool_result.done);
+
+                    // AI only see done messages
+                    if (tool_yield.done) {
+                        console.log('add tool result message', tool_yield.done);
                         messages.push({
                             role: 'tool',
-                            content: JSON.stringify(tool_result.done),
-                            tool_call_id: tool_result.id
+                            content: JSON.stringify(tool_yield.done),
+                            tool_call_id: tool_yield.id
                         })
                     }
                 }
