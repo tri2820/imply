@@ -4,11 +4,12 @@
 
 <p align="center">
 
-[![](https://dcbadge.limes.pink/api/server/yJt8WQNFeJ)](https://discord.gg/yJt8WQNFeJ)
+[![](https://dcbadge.limes.pink/api/server/XakeDSQSxc)](https://discord.gg/XakeDSQSxc)
 
 </p>
 
 ## Imply
+
 [Imply](https://imply.app) is a platform to host and resolve prediction markets. We focus on making prediction markets user-friendly and ready for mass adoption through AI.
 
 ### Currently working on:
@@ -36,4 +37,4 @@ Imply is released under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ## Support
 
-For any questions or support, join our [Discord](https://discord.gg/yJt8WQNFeJ) or email **oss@imply.app**.
+For any questions or support, join our [Discord](https://discord.gg/XakeDSQSxc) or email **oss@imply.app**.

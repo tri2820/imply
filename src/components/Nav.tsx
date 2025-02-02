@@ -103,7 +103,7 @@ export default function Nav() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://discord.gg/yJt8WQNFeJ"
+            href="https://discord.gg/XakeDSQSxc"
             class="text-neutral-500 hover:text-white transition-all"
           >
             <BsDiscord class="w-4 h-4" />
