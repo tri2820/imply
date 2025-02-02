@@ -59,7 +59,7 @@ export default function MarketCard(props: {
       {(m) => (
         <div class="border border-neutral-800 p-4 rounded bg-neutral-900 no-scrollbar space-y-2 flex flex-col">
           <div class="flex items-center space-x-3">
-            <MarketImage size="sm" />
+            <MarketImage src={m().image} size="sm" />
             <a href={`/market/${props.marketId}`} class="font-bold">
               {m().name}
             </a>

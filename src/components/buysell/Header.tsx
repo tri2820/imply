@@ -14,7 +14,7 @@ export default function Header(
     <div class="flex items-start space-x-4">
       <Show
         when={props.market.options.length > 1}
-        fallback={<MarketImage size="sm" />}
+        fallback={<MarketImage src={props.market.image} size="sm" />}
       >
         <OptionImage />
       </Show>

@@ -3,7 +3,6 @@ import { createEffect, createSignal, Show } from "solid-js";
 import { optionId, setType, type } from "~/client/utils";
 import { buyShare, MIN_USD_AMOUNT, noProb } from "~/shared/utils";
 import CheckBoxItem from "./CheckboxItem";
-import OptionImage from "./OptionImage";
 import Spinner from "./Spinner";
 import Header from "./buysell/Header";
 

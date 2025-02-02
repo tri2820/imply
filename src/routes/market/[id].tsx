@@ -83,7 +83,7 @@ export default function MarketPage() {
           <div class=" flex flex-col  lg:flex-row lg:items-start items-stretch lg:space-x-2">
             <div class="flex-1 overflow-hidden">
               <div class="flex items-center space-x-8  px-4 py-4">
-                <MarketImage />
+                <MarketImage src={m().image} />
                 <h1 class="text-3xl font-bold">{m().name}</h1>
               </div>
 

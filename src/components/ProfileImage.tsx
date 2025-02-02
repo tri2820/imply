@@ -25,9 +25,11 @@ export default function ProfileImage(props: {
   }[props.size ?? "md"];
 
   return (
-    <div
+    <img
+      src="/profile.svg"
+      alt="profile image"
       class={
-        " bg-neutral-800 border rounded-full border-neutral-800 flex-none " +
+        " bg-neutral-800 border rounded-full border-neutral-800 flex-none overflow-hiden" +
         sizeClass
       }
     />

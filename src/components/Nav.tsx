@@ -9,7 +9,7 @@ import {
 } from "solid-js";
 import { bigLogoEl, profile } from "~/client/utils";
 import ProfileImage from "./ProfileImage";
-import { BsDiscord } from "solid-icons/bs";
+import { BsDiscord, BsGithub } from "solid-icons/bs";
 import IconComp from "./IconComp";
 
 export default function Nav() {
@@ -58,7 +58,7 @@ export default function Nav() {
   return (
     <div class=" sticky top-0 z-50 w-full ">
       <nav class="flex-none bg-neutral-900 border-b border-neutral-800">
-        <div class="flex items-center space-x-2 px-4 py-1 h-14">
+        <div class="flex items-center space-x-4 px-2 py-1 h-14">
           {/* <ul class=" flex items-center py-4 px-2 text-white flex-1 ">
           <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
             <a href="/">Predict</a>
@@ -78,6 +78,24 @@ export default function Nav() {
               <img src="/name.svg" class="h-8" />
             </a>
           </button>
+
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://discord.gg/XakeDSQSxc"
+            class="text-neutral-500 hover:text-white transition-all"
+          >
+            <BsDiscord class="w-4 h-4" />
+          </a>
+
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/tri2820/imply"
+            class="text-neutral-500 hover:text-white transition-all"
+          >
+            <BsGithub class="w-4 h-4" />
+          </a>
           <div class="flex-1" />
 
           <Show when={profile()}>
@@ -99,15 +117,6 @@ export default function Nav() {
               </div>
             )}
           </Show>
-
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://discord.gg/XakeDSQSxc"
-            class="text-neutral-500 hover:text-white transition-all"
-          >
-            <BsDiscord class="w-4 h-4" />
-          </a>
         </div>
       </nav>
       {/* <div class="flex flex-col items-center bg-neutral-800">
