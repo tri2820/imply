@@ -19,8 +19,6 @@ export function makeTool<T extends z.ZodObject<any, any>>(props: {
     function: (args: any) => AsyncGenerator<ToolYield>
 } {
     const parameters = zodToJsonSchema(props.zodObj)
-    console.log('parameters', props.name, parameters,)
-
     return {
         definition: {
             "type": "function",

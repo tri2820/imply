@@ -237,7 +237,7 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
     const isToolResult = (m: ChatCompletionMessageParam) => m.role == 'tool'
     let maybeToolCall_i = messages.length - 1;
     while (maybeToolCall_i >= 0 && isToolResult(messages[maybeToolCall_i])) { maybeToolCall_i-- }
-    const foundToolCall = isToolCall(messages[maybeToolCall_i]);
+    const foundToolCall = maybeToolCall_i >= 0 && isToolCall(messages[maybeToolCall_i]);
 
     let budget = 14000;
     const prepared_belows: ChatCompletionMessageParam[] = []
@@ -260,8 +260,9 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
 
     const prepared_aboves: ChatCompletionMessageParam[] = []
     let keep_assistant_content_short = 200;
-    const above_end_i = maybeToolCall_i + (foundToolCall ? 1 : 0);
+    const above_end_i = foundToolCall ? maybeToolCall_i : messages.length;
     for (let i = 0; i < above_end_i; i++) {
+        console.log('iter', i, messages[i]);
         const prepared_m = { ...messages[i] }
         if (prepared_m.role === 'assistant') {
             // Hack: Do not keep track of assistant old calls
@@ -330,7 +331,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     ]
 
     let messages = history;
-    let i = 0;
+    console.log('before', JSON.stringify(messages));
     // Safe guard
     let MAX_ITER = 5;
     try {
@@ -417,7 +418,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                         tool_result
                     }
                     if (tool_result.done) {
-
+                        console.log('add tool result message', tool_result.done);
                         messages.push({
                             role: 'tool',
                             content: JSON.stringify(tool_result.done),

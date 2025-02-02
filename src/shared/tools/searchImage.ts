@@ -62,7 +62,6 @@ async function* searchImage({ query }: SearchImageToolProps) {
     const images = data.results
         .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
         .map((r) => ({
-            id: id(),
             title: r.title,
             host: new URL(r.url).host,
         }));

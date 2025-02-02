@@ -884,3 +884,5 @@ export function seededUUIDv4(seedString: string) {
     return v.toString(16);
   });
 }
+
+export const numF = Intl.NumberFormat("en", { notation: "compact" }).format;

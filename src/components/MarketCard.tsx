@@ -1,4 +1,4 @@
-import { createSignal, For, onMount, Show } from "solid-js";
+import { createEffect, createSignal, For, onMount, Show } from "solid-js";
 
 import {
   BiRegularDownvote,
@@ -7,19 +7,23 @@ import {
   BiSolidUpvote,
 } from "solid-icons/bi";
 import { db } from "~/client/database";
-import { api_vote, markets } from "~/client/utils";
-import { calcAttributes, Color, noProb, prob } from "~/shared/utils";
+import { api_vote, markets, profile } from "~/client/utils";
+import { calcAttributes, Color, noProb, numF, prob } from "~/shared/utils";
 import CheckBoxItem from "./CheckboxItem";
 import MarketImage from "./MarketImage";
 import OptionItem from "./OptionItem";
 
 export default function MarketCard(props: {
-  marketId?: string;
+  marketId: string;
   queryAgain?: boolean;
 }) {
   const [vote, setVote] = createSignal<"upvote" | "downvote" | "neutral">(
     "neutral"
   );
+  const [counted, setCounted] = createSignal<"upvote" | "downvote" | "neutral">(
+    "neutral"
+  );
+
   const [marketResponse, setMarketResponse] = createSignal<MarketResponse>();
   const m = () => {
     const m = marketResponse()?.data.markets.at(0);
@@ -30,8 +34,65 @@ export default function MarketCard(props: {
 
   const market = () => m() ?? m0();
 
+  const num_downvote = () =>
+    numF(
+      (market()?.num_downvotes ?? 0) +
+        (vote() == "downvote"
+          ? counted() == "downvote"
+            ? 0
+            : 1
+          : counted() == "downvote"
+          ? -1
+          : 0)
+    );
+
+  const num_upvote = () =>
+    numF(
+      (market()?.num_upvotes ?? 0) +
+        (vote() == "upvote"
+          ? counted() == "upvote"
+            ? 0
+            : 1
+          : counted() == "upvote"
+          ? -1
+          : 0)
+    );
+
+  // We need to check if the user has liked this post before or not
+  createEffect(async () => {
+    const p = profile();
+    if (!p) return;
+    console.log("get votes for", p, props.marketId);
+    const resp = await db.queryOnce({
+      markets: {
+        $: {
+          where: {
+            id: props.marketId,
+          },
+        },
+        votes: {
+          $: {
+            where: {
+              profile: p.id,
+            },
+          },
+        },
+      },
+    });
+    console.log("votes", resp);
+    const vote = resp.data.markets.at(0)?.votes.at(0);
+    setVote(vote ? (vote.isUpvote ? "upvote" : "downvote") : "neutral");
+    if (vote) {
+      setCounted(vote.isUpvote ? "upvote" : "downvote");
+      setVote(vote.isUpvote ? "upvote" : "downvote");
+    } else {
+      setCounted("neutral");
+      setVote("neutral");
+    }
+  });
+
   onMount(async () => {
-    if (!props.queryAgain || !props.marketId) return;
+    if (!props.queryAgain) return;
     const resp = await db.queryOnce({
       markets: {
         options: {
@@ -163,7 +224,7 @@ export default function MarketCard(props: {
                 data-active={vote() == "upvote"}
                 class="flex space-x-0.5 text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-orange-400"
               >
-                <div class="text-sm">{m().num_upvotes ?? 0}</div>
+                <div class="text-sm">{num_upvote()}</div>
                 <Show
                   when={vote() == "upvote"}
                   fallback={<BiRegularUpvote class="w-5 h-5 " />}
@@ -193,7 +254,7 @@ export default function MarketCard(props: {
                 data-active={vote() == "downvote"}
                 class="flex space-x-0.5 text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-indigo-400"
               >
-                <div class="text-sm">{m().num_downvotes ?? 0}</div>
+                <div class="text-sm">{num_downvote()}</div>
                 <Show
                   when={vote() == "downvote"}
                   fallback={<BiRegularDownvote class="w-5 h-5 " />}
