@@ -12,19 +12,23 @@ async function accept_content(content: NonNullable<ChatStreamYield['content']>) 
       id: content.started.id,
       role: "assistant",
       content: content.started.text,
-      created_at: content.started.created_at,
-      updated_at: content.started.created_at,
+      // created_at: content.started.created_at,
+      // updated_at: content.started.created_at,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     }
   }
 
   if (content.delta) {
     assistantBlock = blocks()[content.delta.id] as AssistantBlock;
     assistantBlock.content += content.delta.text;
-    assistantBlock.updated_at = content.delta.updated_at;
+    // assistantBlock.updated_at = content.delta.updated_at;
+    assistantBlock.updated_at = new Date().toISOString()
   }
 
   if (content.done) {
     assistantBlock = blocks()[content.done.id] as AssistantBlock;
+    assistantBlock.updated_at = new Date().toISOString()
     const instantdb_id = seededUUIDv4(assistantBlock.id);
     db.transact([db.tx.blocks[instantdb_id].update(assistantBlock)]);
   }
@@ -53,8 +57,10 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
         arguments_partial_str: '',
         name: tool.started.name as ToolName,
       },
-      created_at: tool.started.created_at,
-      updated_at: tool.started.created_at
+      // created_at: tool.started.created_at,
+      // updated_at: tool.started.created_at
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   }
 
@@ -62,7 +68,8 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
   if (tool.delta) {
     toolBlock = blocks()[tool.delta.id] as ToolBlock;
     toolBlock.content.arguments_partial_str += tool.delta.arguments_delta;
-    toolBlock.updated_at = tool.delta.updated_at;
+    // toolBlock.updated_at = tool.delta.updated_at;
+    toolBlock.updated_at = new Date().toISOString()
   }
 
 
