@@ -1,8 +1,8 @@
 import { id } from "@instantdb/admin";
 import { z } from "zod";
-import { createAdminDb } from "~/server/utils";
-import { makeTool, ToolName } from ".";
-import { createOption, triggerAddHistoryOption } from "../utils";
+import { createAdminDb } from "~/server/utils";;
+import { createOption, notEmpty, triggerAddHistoryOption } from "../utils";
+import { makeTool, ToolName } from "./utils";
 
 const schema = z.object({
     name: z.string(),
@@ -63,17 +63,34 @@ async function* createMarket({
         throw new Error("No marketOptions");
     }
 
-    const image_url = image_id;
-    console.log('image_url', image_url);
-    console.log('extraArgs', extraArgs)
+    function isSearchImageDoing(
+        v: ToolYieldWithId
+    ): v is Extract<ToolYieldWithId, { name: ToolName.searchImage }> {
+        return (
+            v.name === ToolName.searchImage &&
+            !!v.doing
+        );
+    }
 
+    const img_result = Object.values(extraArgs.memStorage).flatMap(call => call).filter(isSearchImageDoing).flatMap(v => v.doing?.data.results)
+        .filter(notEmpty).find(v => v.image_id === image_id);
+    if (!img_result) {
+        yield {
+            done: {
+                error: { type: 'image_id_not_found' }
+            }
+        }
+        return
+    }
+
+    console.log('img_result', img_result)
     const transactions: Parameters<typeof db.transact>[0] = [
         ...marketOptions.flatMap((o) => o.transactions),
         db.tx.markets[market_id]
             .update({
                 name,
                 description,
-                image: image_url,
+                image: img_result.thumbnail.src,
                 allow_multiple_correct,
                 created_at: new Date().toISOString(),
                 resolve_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),

@@ -8,16 +8,9 @@ import {
 } from "json-stream-es";
 import { LineType, UTCTimestamp } from "lightweight-charts";
 
-import { JSONSchema } from "openai/lib/jsonschema.mjs";
-import { z, ZodSchema, ZodType } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import { AppSchema } from "../../instant.schema";
 import { getRequestEvent } from "solid-js/web";
-import { ToolName } from "./tools";
-import { Stream } from "openai/streaming.mjs";
-import { ChatCompletionChunk } from "openai/resources/index.mjs";
-import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
-import { ToolCall } from "openai/src/resources/beta/threads/runs/steps.js";
+import { AppSchema } from "../../instant.schema";
+import { ToolName } from "./tools/utils";
 
 export const MIN_USD_AMOUNT = 10;
 export const MIN_SHARE_AMOUNT = 1;

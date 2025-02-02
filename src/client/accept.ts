@@ -1,4 +1,5 @@
-import { ToolName } from "~/shared/tools";
+
+import { ToolName } from "~/shared/tools/utils";
 import { db } from "./database";
 import { blocks, setBlocks } from "./utils";
 import { seededUUIDv4 } from "~/shared/utils";
@@ -85,20 +86,19 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
 
 }
 
-export async function accept_tool_yield(tool: NonNullable<ChatStreamYield['tool_yield']>) {
+export async function accept_tool_yield(tool: ToolYieldWithId) {
   let toolBlock: ToolBlock | undefined;
-  if (tool.doing) {
-    console.log('tool.doing', tool.doing)
-    toolBlock = blocks()[tool.id] as ToolBlock
-    toolBlock.content.doings = [...toolBlock.content.doings, tool.doing];
-  }
-
   if (tool.done) {
     toolBlock = blocks()[tool.id] as ToolBlock
     toolBlock.content.result = tool.done;
     const instantdb_id = seededUUIDv4(toolBlock.id);
     db.transact([db.tx.blocks[instantdb_id].update(toolBlock)]);
+  } else if (tool.doing) {
+    console.log('tool.doing', tool.doing)
+    toolBlock = blocks()[tool.id] as ToolBlock
+    toolBlock.content.doings = [...toolBlock.content.doings, tool.doing];
   }
+
 
   if (toolBlock) {
     setBlocks((blocks) => {

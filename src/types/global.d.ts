@@ -1,14 +1,14 @@
 
 
 
-import { InstaQLEntity, InstaQLSubscriptionState, PageInfoResponse } from "@instantdb/core";
+import { InstaQLEntity, InstaQLSubscriptionState } from "@instantdb/core";
 import { Cursor, InstaQLParams } from "@instantdb/core/dist/module/queryTypes";
 import { LineSeriesPartialOptions, UTCTimestamp } from "lightweight-charts";
-import { RunnableToolFunctionWithParse } from "openai/lib/RunnableFunction.mjs";
 import { ChatCompletionChunk } from "openai/src/resources/index.js";
 import { AppSchema } from "~/../instant.schema";
 import { db } from "~/client/database";
-import { ToolName } from "~/shared/tools";
+import { tools } from "~/shared/tools";
+import { ToolName } from "~/shared/tools/utils";
 import { buyShare, calcAttributes, sellShare } from "~/shared/utils";
 
 /// <reference types="@solidjs/start/env" />
@@ -293,7 +293,6 @@ declare global {
 
     type ToolYieldWithId = ToolYield & {
         id: string
-        name: ToolName
     }
     type ChatStreamYield = NonNullable<OneOf<{
         tool_yield: ToolYieldWithId;
@@ -301,29 +300,33 @@ declare global {
         [K in keyof Update]: Update[K];
     }>>
 
-    type ToolYield = OneOf<{
-        doing: {}
-        done: {}
-    }>
+    type UnwrapAsyncGenerator<T> = T extends AsyncGenerator<infer Y, any, any>
+        ? Y
+        : never;
+
+    type _ToolYield = (typeof tools)[0];
+    type ToolYield<T extends _ToolYield = _ToolYield> = T extends any
+        ? { name: T['name'] } & UnwrapAsyncGenerator<ReturnType<T['function']>>
+        : never;
 
     type Update = OneOf<{
         tool: OneOf<{
             started: {
                 created_at: string,
-                name: string,
+                name: ToolName,
                 id: string,
             },
             delta: {
                 created_at: string,
                 updated_at: string,
-                name: string,
+                name: ToolName,
                 id: string,
                 arguments_delta: string
             }
             done: {
                 created_at: string,
                 updated_at: string,
-                name: string,
+                name: ToolName,
                 id: string
                 arguments: unknown
             }
@@ -360,7 +363,7 @@ declare global {
     }>
 
     type ToolRecord = {
-        name: string;
+        name: ToolName;
         created_at: string;
         arguments_str: string;
     }
@@ -372,7 +375,7 @@ declare global {
     }
 
     type MemStorage = {
-        [tool_call_id: string]: ToolYieldWithId
+        [tool_call_id: string]: ToolYieldWithId[]
     }
 
     type ExtraArgs = { memStorage: MemStorage }

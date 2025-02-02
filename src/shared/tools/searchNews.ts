@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { makeTool, ToolName } from ".";
 import { getEnv } from "~/server/utils";
+import { makeTool, ToolName } from "./utils";
 
 const schema = z.object({
     query: z.string(),
@@ -24,7 +24,7 @@ async function fetchNews(query: string) {
     );
 
     if (!response.ok) {
-        console.error("response error", response);
+        console.error("response error, retry");
         throw new Error("Failed to fetch news");
     }
 

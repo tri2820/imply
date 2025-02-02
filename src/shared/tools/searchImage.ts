@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { makeTool, ToolName } from ".";
 import { getEnv } from "~/server/utils";
 import { id } from "@instantdb/admin";
+import { makeTool, ToolName } from "./utils";
 
 const schema = z.object({
     query: z.string(),
@@ -15,7 +15,7 @@ async function fetchImages(query: string) {
     const response = await fetch(
         `https://api.search.brave.com/res/v1/images/search?q=${encodeURIComponent(
             query
-        )}&count16&search_lang=en&safesearch=strict&spellcheck=1`,
+        )}&count4&search_lang=en&safesearch=strict&spellcheck=1`,
         {
             headers: {
                 "Accept": "application/json",
@@ -26,7 +26,7 @@ async function fetchImages(query: string) {
     );
 
     if (!response.ok) {
-        console.error("response error", response);
+        console.warn("response error, retry");
         throw new Error("Failed to fetch images");
     }
 
@@ -59,17 +59,28 @@ async function* searchImage({ query }: SearchImageToolArgs) {
         medium: 0.5,
         low: 0,
     };
-    const images = data.results
-        .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
+
+    const dataBindId = {
+        ...data,
+        results: data.results
+            .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
+            .map((r) => ({
+                ...r,
+                image_id: id(),
+            }))
+    }
+
+    // only extract a small surface to give the AI (save token)
+    const images = dataBindId.results
         .map((r) => ({
-            id: id(),
+            image_id: r.image_id,
             title: r.title,
             host: new URL(r.url).host,
         }));
 
     yield {
         doing: {
-            data
+            data: dataBindId
         }
     }
 

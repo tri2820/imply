@@ -2,14 +2,13 @@ import OpenAI from "openai";
 import { ChatCompletionChunk, ChatCompletionMessageToolCall, ChatModel } from "openai/resources/index.mjs";
 import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 import { parallelMerge } from 'streaming-iterables';
-import { searchImageTool } from "~/shared/tools/searchImage";
-import { searchNewsTool } from "~/shared/tools/searchNews";
 
 import { Stream } from "openai/streaming.mjs";
-import { createMarketTool } from "~/shared/tools/createMarket";
+
 import { getRandomKaomoji } from "~/shared/utils";
 import { getEnv } from "./utils";
-import { ToolName } from "~/shared/tools";
+import { tools } from "~/shared/tools";
+import { ToolName } from "~/shared/tools/utils";
 
 export function createOpenAI() {
     const apiKey = getEnv("OPENAI_API_KEY");
@@ -113,7 +112,7 @@ export async function* parseOpenAIChunk(
                 let now: ToolRecord;
                 if (!prev) {
                     now = {
-                        name: tool_call.function.name!,
+                        name: tool_call.function.name! as ToolName,
                         arguments_str: tool_call.function.arguments ?? '',
                         created_at: new Date().toISOString()
                     }
@@ -322,17 +321,11 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
     const client = createOpenAI();
 
-    const tools = [
-        // searchWeatherTool,
-        createMarketTool,
-        searchNewsTool,
-        searchImageTool,
-
-    ]
 
     let messages = history;
-    console.log('before', JSON.stringify(messages));
-
+    // Only tools in the same "inference" can share memory
+    // To share memory accross inferences we need to store memStorage to something persistent 
+    // like an in-memory database like Redis or a real database (Postgres, InstantDB)
     const extraArgs: ExtraArgs = {
         memStorage: {}
     }
@@ -342,7 +335,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     try {
         while (MAX_ITER--) {
             messages = prepare(messages);
-            console.log('prepared messages', JSON.stringify(messages));
+            // console.log('prepared messages', JSON.stringify(messages));
             const tool_calls: NonNullable<NonNullable<Update['tool']>['done']>[] = []
             const model: ChatModel = getEnv("OPENAI_MODEL") ?? 'gpt-4o-mini';
             console.log('fetching completion...', model);
@@ -415,15 +408,15 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                     const toolG = toolLogic(tool_call.arguments, extraArgs);
 
                     for await (const tool_yield of toolG) {
-                        yield { id: tool_call.id, ...tool_yield, name: tool_call.name as ToolName }
+                        yield { id: tool_call.id, ...tool_yield, name: tool_call.name } as ToolYieldWithId
                     }
                 }))
 
                 const g = parallelMerge(...generators)
                 console.log('waiting for tool calls...');
                 for await (const tool_yield of g) {
-                    console.log('add to memStorage', tool_yield.id, tool_yield);
-                    extraArgs.memStorage[tool_yield.id] = tool_yield
+                    console.log('add to memStorage', tool_yield.id, `${JSON.stringify(tool_yield).slice(0, 40)}...`);
+                    extraArgs.memStorage[tool_yield.id] = [...(extraArgs.memStorage[tool_yield.id] ?? []), tool_yield]
 
                     yield {
                         tool_yield
@@ -431,7 +424,6 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
                     // AI only see done messages
                     if (tool_yield.done) {
-                        console.log('add tool result message', tool_yield.done);
                         messages.push({
                             role: 'tool',
                             content: JSON.stringify(tool_yield.done),

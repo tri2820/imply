@@ -1,10 +1,10 @@
 import { marked } from "marked";
 import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
-import { createSignal, For, Show } from "solid-js";
+import { createSignal, For, JSX, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
-import { ToolName } from "~/shared/tools";
+
 import MarketCard from "./MarketCard";
 import {
   CreateMarketToolArgs,
@@ -20,6 +20,7 @@ import {
   SearchImageToolArgs,
 } from "~/shared/tools/searchImage";
 import MaybeImage from "./Image";
+import { ToolName } from "~/shared/tools/utils";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -78,12 +79,12 @@ function ToolBlockBody_createMarket(props: {
 }) {
   return (
     <Show
-      when={props.block.content.result}
+      when={props.block.content.result?.market_id}
       fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
     >
-      {(result) => (
+      {(market_id) => (
         <div class="mt-2">
-          <MarketCard marketId={result().market_id} queryAgain />
+          <MarketCard marketId={market_id()} queryAgain />
         </div>
       )}
     </Show>
@@ -178,9 +179,9 @@ function ToolBlockBody_searchImage(props: {
 function ToolBlockComp(props: { block: ToolBlock }) {
   const [show, setShow] = createSignal(true);
   const body = {
-    [ToolName.createMarket]: ToolBlockBody_createMarket,
-    [ToolName.searchNews]: ToolBlockBody_searchNews,
-    [ToolName.searchImage]: ToolBlockBody_searchImage,
+    [ToolName.createMarket as string]: ToolBlockBody_createMarket,
+    [ToolName.searchNews as string]: ToolBlockBody_searchNews,
+    [ToolName.searchImage as string]: ToolBlockBody_searchImage,
   }[props.block.content.name];
 
   const doing = () => props.block.content.result === undefined;
