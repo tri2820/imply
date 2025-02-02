@@ -2,13 +2,11 @@
 <img src="/public/banner.png">
 </p>
 
-<p align="center">
-<div>
-
-[![](https://dcbadge.limes.pink/api/server/XakeDSQSxc)](https://discord.gg/XakeDSQSxc)
-
+<div align="center">
+  <a href="https://discord.gg/XakeDSQSxc">
+    <img src="https://dcbadge.limes.pink/api/server/XakeDSQSxc" alt="Discord">
+  </a>
 </div>
-</p>
 
 ## Imply
 
