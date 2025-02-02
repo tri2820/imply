@@ -231,7 +231,7 @@ declare global {
         content: unknown;
     };
 
-    type ToolBlock<T = any, K = any> = Refine<
+    type ToolBlock<T = any, K = any, D = any> = Refine<
         BaseBlock & {
             role: "tool";
         },
@@ -241,6 +241,7 @@ declare global {
             arguments_partial_str: string;
             arguments?: T;
             result?: K;
+            doings: D[]
         }
     >;
 
@@ -303,10 +304,9 @@ declare global {
     } & {
         [K in keyof Update]: Update[K];
     }>>
-    type ExtractDoneType<T extends (...args: any[]) => AsyncGenerator<any, any, any>> =
-        T extends (...args: any[]) => AsyncGenerator<infer U, any, any> ? U extends { done: infer D } ? D : never : never;
 
-
+    type ExtractType<K extends 'doing' | 'done', T extends (...args: any[]) => AsyncGenerator<any, any, any>> =
+        T extends (...args: any[]) => AsyncGenerator<infer U, any, any> ? U extends Record<K, infer D> ? D : never : never;
 
     type ToolYield = OneOf<{
         doing: {}

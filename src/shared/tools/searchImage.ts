@@ -8,7 +8,8 @@ const schema = z.object({
 });
 
 export type SearchImageToolProps = z.infer<typeof schema>;
-export type SearchImageToolResult = ExtractDoneType<typeof searchImage>;
+export type SearchImageToolDone = ExtractType<'done', typeof searchImage>;
+export type SearchImageToolDoing = ExtractType<'doing', typeof searchImage>;
 
 async function fetchImages(query: string) {
     const response = await fetch(
@@ -66,11 +67,11 @@ async function* searchImage({ query }: SearchImageToolProps) {
             host: new URL(r.url).host,
         }));
 
-    // yield {
-    //     doing: {
-    //         data.results
-    //     }
-    // }
+    yield {
+        doing: {
+            data
+        }
+    }
 
     yield {
         done: images,

@@ -48,6 +48,7 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
       role: 'tool',
       id: tool.started.id,
       content: {
+        doings: [],
         arguments_partial_str: '',
         name: tool.started.name as ToolName,
       },
@@ -87,8 +88,9 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>) {
 export async function accept_tool_result(tool: NonNullable<ChatStreamYield['tool_result']>) {
   let toolBlock: ToolBlock | undefined;
   if (tool.doing) {
-    // toolBlock = blocks()[tool.id] as ToolBlock
-    // Nothing for now
+    console.log('tool.doing', tool.doing)
+    toolBlock = blocks()[tool.id] as ToolBlock
+    toolBlock.content.doings = [...toolBlock.content.doings, tool.doing];
   }
 
   if (tool.done) {

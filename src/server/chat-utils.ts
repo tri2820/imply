@@ -312,14 +312,12 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
         } as any;
     });
 
-
-    // if (history.length === 1) {
-    //     history[0] = {
-    //         ...history[0],
-    //         content: `My prediction is: ${history[0].content}`,
-    //     }
-    // }
-
+    if (history.length === 1) {
+        history[0] = {
+            ...history[0],
+            content: `My prediction is: ${history[0].content}`,
+        }
+    }
 
     const client = createOpenAI();
 
@@ -331,10 +329,9 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
     ]
 
-
-
     let messages = history;
     let i = 0;
+    // Safe guard
     let MAX_ITER = 5;
     try {
         while (MAX_ITER--) {

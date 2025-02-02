@@ -110,6 +110,7 @@ export function generateBlocks(): Blocks {
     "2643e820-b1a4-423e-86ea-d5c9884caef4": {
       id: "2643e820-b1a4-423e-86ea-d5c9884caef4",
       content: {
+        doings: [],
         arguments_partial_str: "",
         name: ToolName.createMarket,
         arguments: {

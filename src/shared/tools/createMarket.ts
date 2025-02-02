@@ -1,8 +1,8 @@
+import { id } from "@instantdb/admin";
 import { z } from "zod";
+import { createAdminDb } from "~/server/utils";
 import { makeTool, ToolName } from ".";
 import { createOption, triggerAddHistoryOption } from "../utils";
-import { createAdminDb } from "~/server/utils";
-import { id } from "@instantdb/admin";
 
 const schema = z.object({
     name: z.string().describe('Has to be an extremely specific and clear question (e.g., "Will Bitcoin hit $200k by 2023?").'),
@@ -26,7 +26,7 @@ const schema = z.object({
 });
 
 export type CreateMarketToolProps = z.infer<typeof schema>;
-export type CreateMarketToolResult = ExtractDoneType<typeof createMarket>;
+export type CreateMarketToolDone = ExtractType<'done', typeof createMarket>;
 
 async function* createMarket({
     name,

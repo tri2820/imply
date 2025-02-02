@@ -8,12 +8,18 @@ import { ToolName } from "~/shared/tools";
 import MarketCard from "./MarketCard";
 import {
   CreateMarketToolProps,
-  CreateMarketToolResult,
+  CreateMarketToolDone,
 } from "~/shared/tools/createMarket";
 import {
   SearchNewsToolProps,
-  SearchNewsToolResult,
+  SearchNewsToolDone,
 } from "~/shared/tools/searchNews";
+import {
+  SearchImageToolDoing,
+  SearchImageToolDone,
+  SearchImageToolProps,
+} from "~/shared/tools/searchImage";
+import MaybeImage from "./Image";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -49,7 +55,7 @@ function UserBlockComp(props: { block: UserBlock }) {
   return (
     <div class="flex  w-full my-1 ">
       <div class="flex-1" />
-      <div class="py-2 bg-neutral-800 px-4 rounded-lg max-w-80">
+      <div class="py-2 bg-neutral-800 px-4 rounded-3xl max-w-80">
         <div class="text-lg">{props.block.content}</div>
       </div>
     </div>
@@ -68,7 +74,7 @@ function ToolBlockBody_ArgumentsString(props: { block: ToolBlock }) {
 }
 
 function ToolBlockBody_createMarket(props: {
-  block: ToolBlock<CreateMarketToolProps, CreateMarketToolResult>;
+  block: ToolBlock<CreateMarketToolProps, CreateMarketToolDone>;
 }) {
   return (
     <Show
@@ -85,7 +91,7 @@ function ToolBlockBody_createMarket(props: {
 }
 
 function ToolBlockBody_searchNews(props: {
-  block: ToolBlock<SearchNewsToolProps, SearchNewsToolResult>;
+  block: ToolBlock<SearchNewsToolProps, SearchNewsToolDone>;
 }) {
   const favicon = (url: string) =>
     `http://www.google.com/s2/favicons?domain=${url}&sz=128`;
@@ -125,12 +131,56 @@ function ToolBlockBody_searchNews(props: {
   );
 }
 
+function ToolBlockBody_searchImage(props: {
+  block: ToolBlock<
+    SearchImageToolProps,
+    SearchImageToolDone,
+    SearchImageToolDoing
+  >;
+}) {
+  const data = () => props.block.content.doings.at(0)?.data;
+  return (
+    <Show
+      when={props.block.content.result}
+      fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
+    >
+      <div class="flex items-stretch">
+        <div class="flex-none mx-2 w-[2px] bg-neutral-800" />
+        <div class="mt-2 flex-1">
+          <div class="text-sm text-neutral-400">
+            Searched for "{props.block.content.arguments?.query}"
+          </div>
+
+          <Show when={data()}>
+            {(d) => (
+              <div class="py-2 grid grid-cols-4  gap-2">
+                <For each={d().results.slice(0, 16)}>
+                  {(r) => (
+                    <div class=" rounded overflow-hidden ">
+                      <a href={r.url} target="_blank" rel="noopener noreferrer">
+                        <MaybeImage
+                          class="w-full aspect-square object-cover"
+                          src={r.thumbnail.src}
+                        />
+                      </a>
+                    </div>
+                  )}
+                </For>
+              </div>
+            )}
+          </Show>
+        </div>
+      </div>
+    </Show>
+  );
+}
+
 function ToolBlockComp(props: { block: ToolBlock }) {
   const [show, setShow] = createSignal(true);
   const body = {
     [ToolName.createMarket]: ToolBlockBody_createMarket,
     [ToolName.searchNews]: ToolBlockBody_searchNews,
-    [ToolName.searchImage]: () => <div>image</div>,
+    [ToolName.searchImage]: ToolBlockBody_searchImage,
   }[props.block.content.name];
 
   const doing = () => props.block.content.result === undefined;

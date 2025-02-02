@@ -7,7 +7,7 @@ const schema = z.object({
 });
 
 export type SearchNewsToolProps = z.infer<typeof schema>;
-export type SearchNewsToolResult = ExtractDoneType<typeof searchNews>;
+export type SearchNewsToolDone = ExtractType<'done', typeof searchNews>;
 
 async function fetchNews(query: string) {
     const response = await fetch(

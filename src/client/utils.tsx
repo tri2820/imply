@@ -243,3 +243,5 @@ export const scrollToEnd = () => {
     behavior: "smooth",
   });
 };
+
+export const [toolTmpStorage, setToolTmpStorage] = createSignal({});
