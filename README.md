@@ -3,11 +3,11 @@
 </p>
 
 <p align="center">
-
 <div>
-[![](https://dcbadge.limes.pink/api/server/XakeDSQSxc)](https://discord.gg/XakeDSQSxc)
-</div>
 
+[![](https://dcbadge.limes.pink/api/server/XakeDSQSxc)](https://discord.gg/XakeDSQSxc)
+
+</div>
 </p>
 
 ## Imply
