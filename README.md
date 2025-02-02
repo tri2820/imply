@@ -15,13 +15,13 @@
 ### Currently working on:
 
 - [x] 📈 Prediction markets
-  - [x] Automated Market Markers (CPMM)
-  - [x] Real-time price update
-  - [ ] Simplified UI/UX
+  - [x] ⚙️ Automated Market Markers (CPMM)
+  - [x] ⏱️ Real-time price update
+  - [ ] 🖥️ Simplified trading UI/UX
 - [x] 🤖 AI Agents
-  - [x] AI can research & create prediction markets
-  - [ ] AI can resolve markets (e.g. verifying sources)
-  - [ ] AI can buy/sell shares on users' behalf
+  - [x] 📚 AI can research & create prediction markets
+  - [ ] 🔍 AI can resolve markets (e.g. verifying sources)
+  - [ ] 💼 AI can buy/sell shares on users' behalf
 
 <p align="center">
   <img src="/public/screenshot.jpg" />
