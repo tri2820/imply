@@ -88,7 +88,7 @@ export default function MarketPage() {
 
               <MarketChart />
 
-              <div class="flex items-start space-x-2 py-2 text-sm text-neutral-500 px-4">
+              <div class="flex items-start space-x-2 py-2 text-sm text-neutral-500 px-4 ">
                 <BsInfoCircle class="w-3 h-3 mt-1" />
                 <div>
                   <div>
@@ -101,8 +101,19 @@ export default function MarketPage() {
                 </div>
               </div>
 
+              <div class="px-4 py-2 space-y-2">
+                <div>
+                  <div class="text-xl font-bold">Description</div>
+                  <div>{m().description}</div>
+                </div>
+                <div>
+                  <div class="text-xl font-bold">Rule</div>
+                  <div>{m().rule}</div>
+                </div>
+              </div>
+
               <Show when={m().options.length > 1}>
-                <div class="max-h-72 overflow-y-auto no-scrollbar py-4 lg:px-4">
+                <div class="max-h-72 overflow-y-auto no-scrollbar py-4 lg:px-4 ">
                   <For each={m().options}>
                     {(o) => (
                       <div
