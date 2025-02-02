@@ -245,3 +245,19 @@ export const scrollToEnd = () => {
 };
 
 export const [toolTmpStorage, setToolTmpStorage] = createSignal({});
+
+export async function api_vote(market_id: string, vote: UpvoteDownvote) {
+  console.log("call vote", market_id);
+  const resp = await fetch(`/api/markets/${market_id}/vote`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(vote),
+  });
+
+  console.log("resp", resp, resp.ok);
+  console.log("j", await resp.text());
+
+  return resp;
+}

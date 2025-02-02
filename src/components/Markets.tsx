@@ -1,10 +1,11 @@
 import { TbLoader } from "solid-icons/tb";
-import { For, onMount, Show } from "solid-js";
+import { createEffect, For, onMount, Show } from "solid-js";
 import {
   loadMarkets,
   loadMarketsState,
   markets,
   marketsHasNextPage,
+  profile,
 } from "~/client/utils";
 import Spinner from "./Spinner";
 import MarketCard from "./MarketCard";

@@ -18,6 +18,10 @@ export { };
 
 declare global {
     // API types
+    type UpvoteDownvote = {
+        type: 'upvote' | 'downvote' | 'remove'
+    }
+
     type BuySellAction = {
         type: "buy" | "sell";
         amount: number;
@@ -59,7 +63,7 @@ declare global {
     type MarketResponse = {
         data: {
             markets: (Market & {
-                options: (Option & { shares: Share[] })[];
+                options: (Option & { shares: Share[]; })[];
             })[];
         };
         pageInfo: PageInfoResponse<{
@@ -119,6 +123,7 @@ declare global {
                 };
                 options: {
                     shares: {};
+
                 };
             };
         }
@@ -221,6 +226,7 @@ declare global {
     type Profile = InstaQLEntity<AppSchema, "profiles">;
     type Holding = InstaQLEntity<AppSchema, "holdings">;
     type Share = InstaQLEntity<AppSchema, "shares">;
+    type Vote = InstaQLEntity<AppSchema, "votes">;
     type Option = InstaQLEntity<AppSchema, "options">;
     type Market = InstaQLEntity<AppSchema, "markets">;
     type HistoryOption = InstaQLEntity<AppSchema, "history__options">;

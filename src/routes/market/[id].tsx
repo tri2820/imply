@@ -5,6 +5,7 @@ import { db } from "~/client/database";
 import {
   market,
   optionId,
+  profile,
   setHistoryOptionSubscription,
   setMarketSubscription,
   setOptionId,

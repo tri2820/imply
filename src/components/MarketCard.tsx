@@ -1,17 +1,17 @@
-import { createSignal, For, JSX, onMount, Show } from "solid-js";
+import { createSignal, For, onMount, Show } from "solid-js";
 
-import CheckBoxItem from "./CheckboxItem";
-import MarketImage from "./MarketImage";
-import OptionItem from "./OptionItem";
-import { markets } from "~/client/utils";
-import { calcAttributes, Color, noProb, prob } from "~/shared/utils";
-import { db } from "~/client/database";
 import {
   BiRegularDownvote,
   BiRegularUpvote,
   BiSolidDownvote,
   BiSolidUpvote,
 } from "solid-icons/bi";
+import { db } from "~/client/database";
+import { api_vote, markets } from "~/client/utils";
+import { calcAttributes, Color, noProb, prob } from "~/shared/utils";
+import CheckBoxItem from "./CheckboxItem";
+import MarketImage from "./MarketImage";
+import OptionItem from "./OptionItem";
 
 export default function MarketCard(props: {
   marketId?: string;
@@ -27,6 +27,7 @@ export default function MarketCard(props: {
     return calcAttributes(m);
   };
   const m0 = () => markets().find((m) => m?.id == props.marketId);
+
   const market = () => m() ?? m0();
 
   onMount(async () => {
@@ -144,18 +145,25 @@ export default function MarketCard(props: {
             <div class="flex-1" />
             <button
               onClick={() => {
+                console.log("vote", vote());
                 if (vote() == "upvote") {
                   setVote("neutral");
+                  api_vote(m().id, {
+                    type: "remove",
+                  });
                   return;
                 }
                 setVote("upvote");
+                api_vote(m().id, {
+                  type: "upvote",
+                });
               }}
             >
               <div
                 data-active={vote() == "upvote"}
                 class="flex space-x-0.5 text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-orange-400"
               >
-                <div class="text-sm">0</div>
+                <div class="text-sm">{m().num_upvotes ?? 0}</div>
                 <Show
                   when={vote() == "upvote"}
                   fallback={<BiRegularUpvote class="w-5 h-5 " />}
@@ -169,16 +177,23 @@ export default function MarketCard(props: {
               onClick={() => {
                 if (vote() == "downvote") {
                   setVote("neutral");
+                  api_vote(m().id, {
+                    type: "remove",
+                  });
                   return;
                 }
+
                 setVote("downvote");
+                api_vote(m().id, {
+                  type: "downvote",
+                });
               }}
             >
               <div
                 data-active={vote() == "downvote"}
                 class="flex space-x-0.5 text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-1 hover:text-white rounded-full data-[active=true]:text-indigo-400"
               >
-                <div class="text-sm">0</div>
+                <div class="text-sm">{m().num_downvotes ?? 0}</div>
                 <Show
                   when={vote() == "downvote"}
                   fallback={<BiRegularDownvote class="w-5 h-5 " />}

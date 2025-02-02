@@ -26,6 +26,11 @@ const _schema = i.schema({
       resolve_at: i.date(),
       stop_trading_at: i.date(),
       rule: i.string(),
+
+      // social
+      // faster (don't have to aggregate)
+      num_upvotes: i.number(),
+      num_downvotes: i.number(),
     }),
     holdings: i.entity({
       amount: i.number(),
@@ -50,12 +55,40 @@ const _schema = i.schema({
       content: i.json(),
       role: i.string(),
     }),
+
+    votes: i.entity({
+      isUpvote: i.boolean(),
+    })
   },
   // You can define links here.
   // For example, if `posts` should have many `comments`.
   // More in the docs:
   // https://www.instantdb.com/docs/modeling-data#3-links
   links: {
+    profile_votes: {
+      forward: {
+        on: "profiles",
+        has: "many",
+        label: "votes",
+      },
+      reverse: {
+        on: "votes",
+        has: "one",
+        label: "profile",
+      },
+    },
+    market_votes: {
+      forward: {
+        on: "markets",
+        has: "many",
+        label: "votes",
+      },
+      reverse: {
+        on: "votes",
+        has: "one",
+        label: "market",
+      },
+    },
     options_shares: {
       forward: {
         on: "options",
@@ -112,7 +145,7 @@ const _schema = i.schema({
 
 // This helps Typescript display nicer intellisense
 type _AppSchema = typeof _schema;
-interface AppSchema extends _AppSchema {}
+interface AppSchema extends _AppSchema { }
 const schema: AppSchema = _schema;
 
 export type { AppSchema };

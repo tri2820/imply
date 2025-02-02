@@ -1,6 +1,6 @@
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
+import { onCleanup, onMount, Suspense } from "solid-js";
 
 import "./app.css";
 
@@ -16,8 +16,53 @@ import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import "@fontsource/poppins/900.css";
 import Nav from "./components/Nav";
+import { db } from "./client/database";
+import { setProfileSubscription } from "./client/utils";
 
 export default function App() {
+  function subscribeProfile(profile_id: string) {
+    return db.subscribeQuery(
+      {
+        profiles: {
+          $: {
+            where: {
+              id: profile_id,
+            },
+          },
+          holdings: {
+            share: {
+              // get the type
+            },
+          },
+        },
+      },
+      (resp) => {
+        console.log("profile sub resp", resp);
+        setProfileSubscription(resp);
+      }
+    );
+  }
+
+  onMount(async () => {
+    let unsub: Function;
+    onCleanup(() => {
+      unsub?.();
+    });
+
+    try {
+      const resp = await fetch("/api/profiles/jwt", {
+        method: "GET",
+      });
+      console.log("profile_jwt resp", resp);
+      if (!resp.ok) throw new Error("fetch profile_jwt failed");
+      const json: JWTResult = await resp.json();
+      console.log("profile", json);
+      unsub = subscribeProfile(json.profile_id);
+    } catch (e) {
+      console.error("error fetch profiles key", e);
+    }
+  });
+
   return (
     <Router
       root={(props) => (

@@ -58,7 +58,7 @@ export default function Nav() {
   return (
     <div class=" sticky top-0 z-50 w-full ">
       <nav class="flex-none bg-neutral-900 border-b border-neutral-800">
-        <div class="flex items-center space-x-2 px-4 py-1 ">
+        <div class="flex items-center space-x-2 px-4 py-1 h-14">
           {/* <ul class=" flex items-center py-4 px-2 text-white flex-1 ">
           <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
             <a href="/">Predict</a>

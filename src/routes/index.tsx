@@ -1,53 +1,9 @@
-import { onCleanup, onMount, Show } from "solid-js";
-import { setProfileSubscription, userChatted } from "~/client/utils";
+import { Show } from "solid-js";
+import { userChatted } from "~/client/utils";
 import AIComp from "../components/AIComp";
 import Markets from "../components/Markets";
-import { db } from "~/client/database";
 
 export default function Home() {
-  function subscribeProfile(profile_id: string) {
-    return db.subscribeQuery(
-      {
-        profiles: {
-          $: {
-            where: {
-              id: profile_id,
-            },
-          },
-          holdings: {
-            share: {
-              // get the type
-            },
-          },
-        },
-      },
-      (resp) => {
-        console.log("profile sub resp", resp);
-        setProfileSubscription(resp);
-      }
-    );
-  }
-
-  onMount(async () => {
-    let unsub: Function;
-    onCleanup(() => {
-      unsub?.();
-    });
-
-    try {
-      const resp = await fetch("/api/profiles/jwt", {
-        method: "GET",
-      });
-      console.log("profile_jwt resp", resp);
-      if (!resp.ok) throw new Error("fetch profile_jwt failed");
-      const json: JWTResult = await resp.json();
-      console.log("profile", json);
-      unsub = subscribeProfile(json.profile_id);
-    } catch (e) {
-      console.error("error fetch profiles key", e);
-    }
-  });
-
   return (
     <div
       class="
