@@ -37,4 +37,4 @@ Imply is released under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ## Support
 
-For any questions or support, join our [Discord](https://discord.gg/XakeDSQSxc) or email **oss@imply.app**.
+For any questions or support, join our [Discord](https://discord.gg/XakeDSQSxc) or email **hi@imply.app**.
