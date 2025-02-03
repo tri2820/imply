@@ -11,7 +11,7 @@ const schema = z.object({
     rule: z.string(),
     type: z.enum(["binary", "multiple"]),
     thumbnail_query: z.string(),
-
+    resolve_at: z.date(),
     // Binary market fields
     probability_yes: z.number().optional(),
 
@@ -38,6 +38,7 @@ async function* createMarket({
     allow_multiple_correct,
     description,
     rule,
+    resolve_at,
     thumbnail_query
 }: CreateMarketToolArgs, extraArgs: ExtraArgs) {
     const db = createAdminDb();
@@ -82,25 +83,6 @@ async function* createMarket({
         throw new Error("Failed to fetch news");
     }
 
-    // function isSearchImagesDoing(
-    //     v: ToolYieldWithId
-    // ): v is Extract<ToolYieldWithId, { name: ToolName.searchImages }> {
-    //     return (
-    //         v.name === ToolName.searchImages &&
-    //         !!v.doing
-    //     );
-    // }
-
-    // const img_result = Object.values(extraArgs.memStorage).flatMap(call => call).filter(isSearchImagesDoing).flatMap(v => v.doing?.data.results)
-    //     .filter(notEmpty).find(v => v.image_uuid === image_uuid);
-    // if (!img_result) {
-    //     yield {
-    //         done: {
-    //             error: { type: 'image_uuid_not_found' }
-    //         }
-    //     }
-    //     return
-    // }
     let image_response: Response | undefined = undefined;
 
     image_response = await retry_if_fail(() => { return fetchImages(thumbnail_query) });
@@ -109,9 +91,12 @@ async function* createMarket({
     }
 
     const data = await image_response.json() as BraveSearchImagesRoot;
-    const img_result = data.results[0];
+    const img_result = data.results[Math.floor(Math.random() * 3)];
 
     console.log('img_result', img_result)
+    const res_at = new Date(resolve_at).toISOString();
+    const stop_trading_at = new Date(new Date(resolve_at).getTime() - 2 * 24 * 60 * 60 * 1000).toISOString();
+
     const transactions: Parameters<typeof db.transact>[0] = [
         ...marketOptions.flatMap((o) => o.transactions),
         db.tx.markets[market_id]
@@ -121,8 +106,8 @@ async function* createMarket({
                 image: img_result.thumbnail.src,
                 allow_multiple_correct,
                 created_at: new Date().toISOString(),
-                resolve_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-                stop_trading_at: new Date(Date.now() + (3 - 1) * 24 * 60 * 60 * 1000).toISOString(),
+                resolve_at: res_at,
+                stop_trading_at,
                 rule,
                 num_votes: 0,
             })

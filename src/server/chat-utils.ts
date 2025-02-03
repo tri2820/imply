@@ -17,6 +17,10 @@ function createClient() {
     const client = new OpenAI({
         apiKey,
         baseURL,
+        defaultHeaders: {
+            "HTTP-Referer": "https://imply.app",
+            "X-Title": "Imply",
+        }
     });
     return client
 }
@@ -594,7 +598,9 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                 console.log('waiting for tool calls...');
                 for await (const tool_yield of g) {
                     console.log('add to memStorage', tool_yield.id, `${JSON.stringify(tool_yield).slice(0, 40)}...`);
-                    extraArgs.memStorage[tool_yield.id] = [...(extraArgs.memStorage[tool_yield.id] ?? []), tool_yield]
+
+                    // Temporary disable due to Cloudflare Workers resource limit
+                    // extraArgs.memStorage[tool_yield.id] = [...(extraArgs.memStorage[tool_yield.id] ?? []), tool_yield]
 
                     yield {
                         tool_yield,
