@@ -1,26 +1,8 @@
 # Self-Hosting Guide
 
-This document outlines the steps required to run **Imply** on your own. Imply is a web app built using the JavaScript framework **Solid Start**. In production, we deploy it to **Cloudflare Pages**, but it can be deployed anywhere (e.g., **Vercel**, **bare metal**, etc.).
+This document outlines the steps required to run **Imply**, either via Docker (recommended) or by building yourself. Both methods require setting up the `.env` file.
 
-If you don't have **Bun** installed, we recommend doing so.
-
-**Happy self-hosting!**
-
----
-
-## 1. Clone & Install Dependencies
-
-```sh
-git clone https://github.com/tri2820/imply
-cd imply
-bun i
-```
-
----
-
-## 2. Set Up `.env` Keys
-
-Create an `.env` file with the following keys:
+## Create an `.env` file with the following keys:
 
 ```sh
 BUN_VERSION=
@@ -46,7 +28,7 @@ INSTANT_APP_ADMIN_TOKEN=
 2. **InstantDB**: Imply uses **InstantDB**. Since InstantDB is open-source, you can self-host it or use their free & unlimited cloud version. To set it up:
 
    ```sh
-   # In root folder
+   # In the root folder
    npx instant-cli@latest push schema
    # Choose "Create a new app" and push the schema
    ```
@@ -60,28 +42,45 @@ INSTANT_APP_ADMIN_TOKEN=
    ```
 
 4. **BRAVE_SEARCH_API_KEY**: Get a free key from [Brave](https://brave.com/search/api/).
-5. **OPENAI_API_KEY**: API key to use with OpenAI SDK. **OPENAI_MODEL** and **OPENAI_BASE_URL** are optional. In production, we use Open Router to mix & match multiple models, so our `.env` looks like this.
 
-```
+5. **OPENAI_API_KEY**: API key to use with OpenAI SDK. **OPENAI_MODEL** and **OPENAI_BASE_URL** are optional. In production, we use Open Router to mix & match multiple models, so our `.env` looks like this:
+
+```sh
 OPENAI_API_KEY=<Get from OpenRouter>
 OPENAI_BASE_URL=https://openrouter.ai/api/v1
 OPENAI_MODEL=openai/gpt-4o-mini
 REASONING_MODEL=deepseek/deepseek-r1
 ```
 
-## 3. Running the App
+## Method 1: Via Docker
 
-### Locally
+The easiest way to get Imply running on your machine is via Docker.
+
+```sh
+docker run -d --name imply --env-file .env -p 3000:3000 implyapp/imply
+```
+
+## Method 2: Cloning and Building
+
+Imply is a web app built using the JavaScript framework **Solid Start**.  
+If you don't have **Bun** installed, we recommend doing so.
+
+### 1. Clone & Install Dependencies
+
+```sh
+git clone https://github.com/tri2820/imply
+cd imply
+bun i
+```
+
+### 2. Add the `.env` file
+
+Make sure you have the `.env` file created as described in the previous section & put it in the root folder.
+
+### 3. Build & Run the App
 
 ```sh
 cp app.config.bun.ts app.config.ts
 bun run build
 bun run start:bun
 ```
-
-### Deploy to Cloudflare Pages
-
-1. **Framework preset**: None
-2. **Build command**: `bun i && bun run build`
-3. **Build output directory**: `dist`
-4. **Environment variables**: Copy over the keys from the `.env` file

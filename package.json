@@ -37,5 +37,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "patchedDependencies": {
+    "nitropack@2.10.4": "patches/nitropack@2.10.4.patch"
   }
 }

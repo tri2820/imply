@@ -1,0 +1,15 @@
+diff --git a/node_modules/nitropack/.bun-tag-d7ccf2a00e004218 b/.bun-tag-d7ccf2a00e004218
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/dist/presets/bun/runtime/bun.mjs b/dist/presets/bun/runtime/bun.mjs
+index e46d1616dc6d6efa473e2d53a0884efc83fd7867..209bf44fbf2ef69763d13e055f0e6bee84e83857 100644
+--- a/dist/presets/bun/runtime/bun.mjs
++++ b/dist/presets/bun/runtime/bun.mjs
+@@ -5,6 +5,7 @@ import wsAdapter from "crossws/adapters/bun";
+ const nitroApp = useNitroApp();
+ const ws = import.meta._websocket ? wsAdapter(nitroApp.h3App.websocket) : void 0;
+ const server = Bun.serve({
++  idleTimeout: 0,
+   port: process.env.NITRO_PORT || process.env.PORT || 3e3,
+   websocket: import.meta._websocket ? ws.websocket : void 0,
+   async fetch(req, server2) {
