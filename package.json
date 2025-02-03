@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start",
-    "start:bun": "bunx --bun vinxi start"
+    "start": "bunx --bun vinxi start"
   },
   "dependencies": {
     "@fontsource-variable/lexend": "^5.1.2",
@@ -29,7 +28,6 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@types/js-cookie": "^3.0.6",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3"

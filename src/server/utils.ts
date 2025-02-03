@@ -16,8 +16,9 @@ export function getEnv(key: string) {
 
 export function createAdminDb() {
   const INSTANT_APP_ADMIN_TOKEN = getEnv("INSTANT_APP_ADMIN_TOKEN");
+  const INSTANTDB_APP_ID = getEnv("INSTANTDB_APP_ID");
   const db = init({
-    appId: import.meta.env.VITE_INSTANTDB_APP_ID,
+    appId: INSTANTDB_APP_ID,
     adminToken: INSTANT_APP_ADMIN_TOKEN,
     schema,
   });

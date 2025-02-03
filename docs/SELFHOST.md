@@ -36,7 +36,7 @@ BRAVE_SEARCH_API_KEY=
 
 # Database
 JWT_SECRET_KEY=
-VITE_INSTANTDB_APP_ID=
+INSTANTDB_APP_ID=
 INSTANT_APP_ADMIN_TOKEN=
 ```
 
@@ -51,7 +51,7 @@ INSTANT_APP_ADMIN_TOKEN=
    # Choose "Create a new app" and push the schema
    ```
 
-   Afterward, visit the **InstantDB dashboard** to get `VITE_INSTANTDB_APP_ID` and `INSTANT_APP_ADMIN_TOKEN`.
+   Afterward, visit the **InstantDB dashboard** to get `INSTANTDB_APP_ID` and `INSTANT_APP_ADMIN_TOKEN`.
 
 3. **JWT_SECRET_KEY**: Generate this key with the following command:
 

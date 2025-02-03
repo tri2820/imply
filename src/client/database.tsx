@@ -1,11 +1,18 @@
 import { init } from "@instantdb/core";
-import schema from "../../instant.schema";
-
+import schema, { AppSchema } from "../../instant.schema";
+import { getEnv } from "~/server/utils";
 
 // Initialize the database
 // ---------
-export const db = init({
-  appId: import.meta.env.VITE_INSTANTDB_APP_ID,
-  schema,
-  devtool: false,
-});
+// @ts-ignore
+let db: ReturnType<typeof init<AppSchema>> = undefined;
+if (typeof window !== "undefined") {
+  db = init({
+    // @ts-ignore
+    appId: window.env.INSTANTDB_APP_ID,
+    schema,
+    devtool: false,
+  });
+}
+
+export { db };

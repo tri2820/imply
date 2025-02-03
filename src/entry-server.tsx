@@ -1,5 +1,6 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
+import { getEnv } from "./server/utils";
 
 export default createHandler(() => (
   <StartServer
@@ -59,6 +60,14 @@ export default createHandler(() => (
           <meta name="twitter:creator" content="@tri2820" />
 
           {assets}
+
+          <script>
+            {`
+              window.env = {
+                INSTANTDB_APP_ID: "${getEnv("INSTANTDB_APP_ID")}",
+              }; console.log('window.env', window.env)
+            `}
+          </script>
         </head>
         <body>
           <div id="app">{children}</div>

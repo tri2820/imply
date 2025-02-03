@@ -27,3 +27,8 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
+
+.wrangler
+wrangler.json
+wrangler.toml
+.*.vars
