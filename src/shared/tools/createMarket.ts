@@ -40,7 +40,7 @@ async function* createMarket({
     rule,
     resolve_at,
     thumbnail_query
-}: CreateMarketToolArgs, extraArgs: ExtraArgs) {
+}: CreateMarketToolArgs) {
     const db = createAdminDb();
     const market_id = id();
 

@@ -324,35 +324,6 @@ export async function* parseOpenAIChunk(
     }
 }
 
-function hashStringToSeed(str: string) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        hash = (hash * 31 + str.charCodeAt(i)) | 0; // Simple rolling hash
-    }
-    return hash >>> 0; // Ensure positive 32-bit integer
-}
-
-function mulberry32(seed: number) {
-    return function () {
-        seed |= 0;
-        seed = (seed + 0x6d2b79f5) | 0;
-        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-}
-
-export function seededUUIDv4(seedString: string) {
-    const seed = hashStringToSeed(seedString); // Convert string to seed
-    const rand = mulberry32(seed);
-
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-        const r = (rand() * 16) | 0;
-        const v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-}
-
 export const prepare = (messages: ChatCompletionMessageParam[]) => {
     const isToolCall = (m: ChatCompletionMessageParam) => m.role == 'assistant' && m.tool_calls && m.tool_calls.length > 0
     const isToolResult = (m: ChatCompletionMessageParam) => m.role == 'tool'
@@ -477,9 +448,9 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     // Only tools in the same "inference" can share memory
     // To share memory accross inferences we need to store memStorage to something persistent 
     // like an in-memory database like Redis or a real database (Postgres, InstantDB)
-    const extraArgs: ExtraArgs = {
-        memStorage: {}
-    }
+    // const extraArgs: ExtraArgs = {
+    //     memStorage: {}
+    // }
 
     // Safe guard
     let MAX_ITER = 5;
@@ -528,7 +499,6 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
             }
 
             tool_called = []
-
 
             // STEP 1: Build arguments for tool calls or generate content
             const chunks = await getCompletionWithTools(messages, just_need_announce)
@@ -587,7 +557,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                     }
                     tool_called.push(tool_call.name)
 
-                    const toolG = toolLogic(tool_call.arguments, extraArgs);
+                    const toolG = toolLogic(tool_call.arguments);
 
                     for await (const tool_yield of toolG) {
                         yield { id: tool_call.id, ...tool_yield, name: tool_call.name } as ToolYieldWithId
@@ -597,11 +567,6 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                 const g = parallelMerge(...generators)
                 console.log('waiting for tool calls...');
                 for await (const tool_yield of g) {
-                    console.log('add to memStorage', tool_yield.id, `${JSON.stringify(tool_yield).slice(0, 40)}...`);
-
-                    // Temporary disable due to Cloudflare Workers resource limit
-                    // extraArgs.memStorage[tool_yield.id] = [...(extraArgs.memStorage[tool_yield.id] ?? []), tool_yield]
-
                     yield {
                         tool_yield,
                         agent_step: 'tool_call_and_content'
