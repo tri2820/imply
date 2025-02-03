@@ -7,6 +7,7 @@ import {
   blocks,
   blocksToList,
   listBlocks,
+  profile,
   scrollToEnd,
   setAbortController,
   setBigLogoEl,
@@ -46,7 +47,11 @@ export default function AIComp() {
     };
 
     // Log the user's message
-    db.transact([db.tx.blocks[userBlock.id].update(userBlock)]);
+    db.transact([
+      db.tx.blocks[userBlock.id].update(userBlock).link({
+        profile: profile()?.id,
+      }),
+    ]);
 
     const blocks_1 = {
       ...blocks(),

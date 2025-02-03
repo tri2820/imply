@@ -68,8 +68,7 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
 
       <Show when={blockShow()[props.block.id] ?? true}>
         <div
-          data-forward={props.block.agent_step == "reasoning_and_foward"}
-          class="prose prose-invert prose-neutral max-w-none data-[forward=true]:prose-sm mt-2"
+          class="prose prose-invert prose-neutral max-w-none mt-2"
           innerHTML={html()}
         />
       </Show>
@@ -106,7 +105,7 @@ function ReasoningBlockComp(props: { block: ReasoningBlock }) {
       </button>
 
       <Show when={blockShow()[props.block.id] ?? true}>
-        <div class="text-sm mt-2 ">{props.block.content}</div>
+        <div class="mt-2 ">{props.block.content}</div>
       </Show>
     </div>
   );

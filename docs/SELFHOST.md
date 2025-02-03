@@ -23,15 +23,21 @@ bun i
 Create an `.env` file with the following keys:
 
 ```sh
-# .env
 BUN_VERSION=
+
+# AI
+OPENAI_API_KEY=
+OPENAI_BASE_URL=
+OPENAI_MODEL=
+REASONING_MODEL=
+
+# Internet
+BRAVE_SEARCH_API_KEY=
+
+# Database
+JWT_SECRET_KEY=
 VITE_INSTANTDB_APP_ID=
 INSTANT_APP_ADMIN_TOKEN=
-JWT_SECRET_KEY=
-BRAVE_SEARCH_API_KEY=
-OPENAI_API_KEY=
-OPENAI_MODEL=
-OPENAI_BASE_URL=
 ```
 
 ### 🔑 Key Details:
@@ -53,18 +59,19 @@ OPENAI_BASE_URL=
    bun -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
    ```
 
-4. **BRAVE_SEARCH_API_KEY**: Get this from [Brave](https://brave.com/search/api/).
-5. **OPENAI_API_KEY**: API key to use with OpenAI SDK. Get this from [OpenAI](http://platform.openai.com/). If you decide to use **Gemini, Groq, or any compatible provider**, also provide the **OPENAI_MODEL** and **OPENAI_BASE_URL** keys. Otherwise, these are optional.
-   Example:
-   ```
-   OPENAI_API_KEY=<get from Google AI Studio>
-   OPENAI_MODEL=gemini-1.5-flash
-   OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
-   ```
+4. **BRAVE_SEARCH_API_KEY**: Get a free key from [Brave](https://brave.com/search/api/).
+5. **OPENAI_API_KEY**: API key to use with OpenAI SDK. **OPENAI_MODEL** and **OPENAI_BASE_URL** are optional. In production, we use Open Router to mix & match multiple models, so our `.env` looks like this.
 
----
+```
+OPENAI_API_KEY=<Get from OpenRouter>
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
+OPENAI_MODEL=openai/gpt-4o-mini
+REASONING_MODEL=deepseek/deepseek-r1
+```
 
-## 3. Running the App Locally
+## 3. Running the App
+
+### Locally
 
 ```sh
 cp app.config.bun.ts app.config.ts
@@ -72,9 +79,7 @@ bun run build
 bun run start:bun
 ```
 
----
-
-## 4. Deploy to Cloudflare Pages
+### Deploy to Cloudflare Pages
 
 1. **Framework preset**: None
 2. **Build command**: `bun i && bun run build`

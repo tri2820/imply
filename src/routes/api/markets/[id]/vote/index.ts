@@ -82,7 +82,7 @@ export async function POST(event: APIEvent) {
         }),
         db.tx.markets[market.id].update({
             // Just add
-            num_votes: (market.num_votes ?? 0) + (action.type === 'upvote' ? 1 : -1),
+            num_votes: market.num_votes + (action.type === 'upvote' ? 1 : -1),
         })])
 
 

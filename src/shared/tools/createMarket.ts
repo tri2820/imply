@@ -124,6 +124,7 @@ async function* createMarket({
                 resolve_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
                 stop_trading_at: new Date(Date.now() + (3 - 1) * 24 * 60 * 60 * 1000).toISOString(),
                 rule,
+                num_votes: 0,
             })
             .link({
                 options: marketOptions.map((o) => o.option_id),
