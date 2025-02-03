@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { getEnv } from "~/server/utils";
 import { makeTool, ToolName } from "./utils";
+import { retry_if_fail } from "../utils";
 
 const schema = z.object({
     query: z.string(),
 });
 
-export type SearchNewsToolArgs = z.infer<typeof schema>;
-export type SearchNewsToolDone = ExtractType<'done', typeof searchNews>;
+export type SearchWebToolArgs = z.infer<typeof schema>;
+export type SearchWebToolDone = ExtractType<'done', typeof searchWeb>;
 
 async function fetchNews(query: string) {
     const response = await fetch(
@@ -31,21 +32,11 @@ async function fetchNews(query: string) {
     return response;
 }
 
-async function* searchNews({ query }: SearchNewsToolArgs) {
-    let n = 10;
+
+async function* searchWeb({ query }: SearchWebToolArgs) {
+
     let response: Response | undefined = undefined;
-    while (n--) {
-        try {
-            response = await fetchNews(query);
-            if (response.ok) {
-                break;
-            }
-
-        } catch (e) {
-            await new Promise((resolve) => setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000)));
-        }
-    }
-
+    response = await retry_if_fail(() => { return fetchNews(query) });
     if (!response || !response.ok) {
         throw new Error("Failed to fetch news");
     }
@@ -64,8 +55,8 @@ async function* searchNews({ query }: SearchNewsToolArgs) {
     }
 }
 
-export const searchNewsTool = makeTool({
-    name: ToolName.searchNews,
+export const searchWebTool = makeTool({
+    name: ToolName.searchWeb,
     zodObj: schema,
-    function: searchNews,
+    function: searchWeb,
 });

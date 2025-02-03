@@ -1,8 +1,8 @@
 import { marked } from "marked";
 import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
-import { createSignal, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
-import { listBlocks } from "~/client/utils";
+import { blockShow, listBlocks, setBlockShow } from "~/client/utils";
 import IconComp from "./IconComp";
 
 import {
@@ -10,18 +10,14 @@ import {
   CreateMarketToolDone,
 } from "~/shared/tools/createMarket";
 import {
-  SearchImageToolArgs,
-  SearchImageToolDoing,
-  SearchImageToolDone,
-} from "~/shared/tools/searchImage";
-import {
-  SearchNewsToolArgs,
-  SearchNewsToolDone,
-} from "~/shared/tools/searchNews";
+  SearchImagesToolArgs,
+  SearchImagesToolDoing,
+  SearchImagesToolDone,
+} from "~/shared/tools/searchImages";
+import { SearchWebToolArgs, SearchWebToolDone } from "~/shared/tools/searchWeb";
 import { ToolName } from "~/shared/tools/utils";
 import MarketCard from "./MarketCard";
 import MarketImage from "./MarketImage";
-import { JSX } from "solid-js";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -45,26 +41,32 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
   // TODO: sanitize
   const html = () => marked.parse(props.block.content) as string;
 
-  const [show, setShow] = createSignal(true);
-
   return (
     <div
       ref={ref}
       class="overflow-x-auto my-1 rounded border border-neutral-800 p-4 bg-neutral-900"
     >
       <button
-        onClick={() => setShow((p) => !p)}
+        onClick={() =>
+          setBlockShow((p) => ({
+            ...p,
+            [props.block.id]: !p[props.block.id],
+          }))
+        }
         class="flex items-center space-x-2"
       >
         <div class="font-semibold">PLANNING WITH TOOLING AI</div>
         <div class="flex-none">
-          <Show when={show()} fallback={<BsChevronUp />}>
+          <Show
+            when={blockShow()[props.block.id] ?? true}
+            fallback={<BsChevronUp />}
+          >
             <BsChevronDown />
           </Show>
         </div>
       </button>
 
-      <Show when={show()}>
+      <Show when={blockShow()[props.block.id] ?? true}>
         <div
           data-forward={props.block.agent_step == "reasoning_and_foward"}
           class="prose prose-invert prose-neutral max-w-none data-[forward=true]:prose-sm mt-2"
@@ -77,7 +79,6 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
 
 function ReasoningBlockComp(props: { block: ReasoningBlock }) {
   let ref!: HTMLDivElement;
-  const [show, setShow] = createSignal(true);
 
   return (
     <div
@@ -85,18 +86,26 @@ function ReasoningBlockComp(props: { block: ReasoningBlock }) {
       class="overflow-x-auto my-2 p-4 border border-neutral-800 rounded bg-neutral-900"
     >
       <button
-        onClick={() => setShow((p) => !p)}
+        onClick={() =>
+          setBlockShow((p) => ({
+            ...p,
+            [props.block.id]: !p[props.block.id],
+          }))
+        }
         class="flex items-center space-x-2"
       >
         <div class="font-semibold">THINKING</div>
         <div class="flex-none">
-          <Show when={show()} fallback={<BsChevronUp />}>
+          <Show
+            when={blockShow()[props.block.id] ?? true}
+            fallback={<BsChevronUp />}
+          >
             <BsChevronDown />
           </Show>
         </div>
       </button>
 
-      <Show when={show()}>
+      <Show when={blockShow()[props.block.id] ?? true}>
         <div class="text-sm mt-2 ">{props.block.content}</div>
       </Show>
     </div>
@@ -158,8 +167,8 @@ function ToolBlockBody_createMarket(props: {
   );
 }
 
-function ToolBlockBody_searchNews(props: {
-  block: ToolBlock<SearchNewsToolArgs, SearchNewsToolDone>;
+function ToolBlockBody_searchWeb(props: {
+  block: ToolBlock<SearchWebToolArgs, SearchWebToolDone>;
 }) {
   const favicon = (url: string) =>
     `http://www.google.com/s2/favicons?domain=${url}&sz=128`;
@@ -199,11 +208,11 @@ function ToolBlockBody_searchNews(props: {
   );
 }
 
-function ToolBlockBody_searchImage(props: {
+function ToolBlockBody_searchImages(props: {
   block: ToolBlock<
-    SearchImageToolArgs,
-    SearchImageToolDone,
-    SearchImageToolDoing
+    SearchImagesToolArgs,
+    SearchImagesToolDone,
+    SearchImagesToolDoing
   >;
 }) {
   const data = () => props.block.content.doings.at(0)?.data;
@@ -241,11 +250,10 @@ function ToolBlockBody_searchImage(props: {
 }
 
 function ToolBlockComp(props: { block: ToolBlock }) {
-  const [show, setShow] = createSignal(true);
   const body = {
     [ToolName.createMarket as string]: ToolBlockBody_createMarket,
-    [ToolName.searchNews as string]: ToolBlockBody_searchNews,
-    [ToolName.searchImage as string]: ToolBlockBody_searchImage,
+    [ToolName.searchWeb as string]: ToolBlockBody_searchWeb,
+    [ToolName.searchImages as string]: ToolBlockBody_searchImages,
   }[props.block.content.name];
 
   const doing = () => props.block.content.result === undefined;
@@ -253,7 +261,10 @@ function ToolBlockComp(props: { block: ToolBlock }) {
     <div data-doing={doing()} class="my-1 data-[doing=true]:animate-pulse">
       <button
         onClick={() => {
-          setShow((p) => !p);
+          setBlockShow((p) => ({
+            ...p,
+            [props.block.id]: !p[props.block.id],
+          }));
         }}
         class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 rounded border border-neutral-800 flex items-center space-x-2"
       >
@@ -264,12 +275,15 @@ function ToolBlockComp(props: { block: ToolBlock }) {
           {props.block.content.name}
         </div>
         <div class="flex-none">
-          <Show when={show()} fallback={<BsChevronUp />}>
+          <Show
+            when={blockShow()[props.block.id] ?? true}
+            fallback={<BsChevronUp />}
+          >
             <BsChevronDown />
           </Show>
         </div>
       </button>
-      <Show when={show()}>
+      <Show when={blockShow()[props.block.id] ?? true}>
         <Dynamic component={body} block={props.block} />
         {/* <div>{JSON.stringify(props.block)}</div> */}
       </Show>

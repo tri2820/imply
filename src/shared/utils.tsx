@@ -796,3 +796,17 @@ export function seededUUIDv4(seedString: string) {
 }
 
 export const numF = Intl.NumberFormat("en", { notation: "compact" }).format;
+
+export async function retry_if_fail<T>(f: () => Promise<T>, n = 10) {
+  let i = 0;
+  while (true) {
+    try {
+      return await f();
+    } catch (e) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000))
+      );
+      if (i++ > n) throw e;
+    }
+  }
+}

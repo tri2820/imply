@@ -1,12 +1,12 @@
 import { createMarketTool } from "./createMarket";
-import { searchImageTool } from "./searchImage";
-import { searchNewsTool } from "./searchNews";
+import { searchImagesTool } from "./searchImages";
+import { searchWebTool } from "./searchWeb";
 
 
 export const tools = [
     // searchWeatherTool,
     createMarketTool,
-    searchNewsTool,
-    searchImageTool,
+    searchWebTool,
+    searchImagesTool,
 
 ]

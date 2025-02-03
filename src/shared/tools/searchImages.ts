@@ -2,16 +2,17 @@ import { z } from "zod";
 import { getEnv } from "~/server/utils";
 import { id } from "@instantdb/admin";
 import { makeTool, ToolName } from "./utils";
+import { retry_if_fail } from "../utils";
 
 const schema = z.object({
     query: z.string(),
 });
 
-export type SearchImageToolArgs = z.infer<typeof schema>;
-export type SearchImageToolDone = ExtractType<'done', typeof searchImage>;
-export type SearchImageToolDoing = ExtractType<'doing', typeof searchImage>;
+export type SearchImagesToolArgs = z.infer<typeof schema>;
+export type SearchImagesToolDone = ExtractType<'done', typeof searchImages>;
+export type SearchImagesToolDoing = ExtractType<'doing', typeof searchImages>;
 
-async function fetchImages(query: string) {
+export async function fetchImages(query: string) {
     const response = await fetch(
         `https://api.search.brave.com/res/v1/images/search?q=${encodeURIComponent(
             query
@@ -33,26 +34,16 @@ async function fetchImages(query: string) {
     return response;
 }
 
-async function* searchImage({ query }: SearchImageToolArgs) {
-    let n = 10;
+async function* searchImages({ query }: SearchImagesToolArgs) {
+
     let response: Response | undefined = undefined;
-    while (n--) {
-        try {
-            response = await fetchImages(query);
-            if (response.ok) {
-                break;
-            }
 
-        } catch (e) {
-            await new Promise((resolve) => setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000)));
-        }
-    }
-
+    response = await retry_if_fail(() => { return fetchImages(query) });
     if (!response || !response.ok) {
         throw new Error("Failed to fetch images");
     }
 
-    const data = await response.json() as BraveSearchImageRoot;
+    const data = await response.json() as BraveSearchImagesRoot;
     const confidenceScore = {
         high: 1,
         medium: 0.5,
@@ -62,7 +53,7 @@ async function* searchImage({ query }: SearchImageToolArgs) {
     const dataBindId = {
         ...data,
         results: data.results
-            .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
+            .toSorted((a, b) => confidenceScore[a.confidence] - confidenceScore[b.confidence])
             .map((r) => ({
                 ...r,
                 image_uuid: id(),
@@ -88,8 +79,8 @@ async function* searchImage({ query }: SearchImageToolArgs) {
     }
 }
 
-export const searchImageTool = makeTool({
-    name: ToolName.searchImage,
+export const searchImagesTool = makeTool({
+    name: ToolName.searchImages,
     zodObj: schema,
-    function: searchImage,
+    function: searchImages,
 });

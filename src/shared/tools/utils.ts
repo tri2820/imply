@@ -4,8 +4,8 @@ import zodToJsonSchema from "zod-to-json-schema"
 
 export enum ToolName {
     createMarket = "createMarket",
-    searchNews = "searchNews",
-    searchImage = "searchImage",
+    searchWeb = "searchWeb",
+    searchImages = "searchImages",
 }
 
 export function makeTool<N extends ToolName, T extends z.ZodObject<any, any>, K>(props: {

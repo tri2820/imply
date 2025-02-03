@@ -181,13 +181,16 @@ export default function AIComp() {
             >
               {(ac) => (
                 <button
+                  disabled={ac() ? true : false}
                   onClick={() => {
-                    ac().abort();
-                    setAbortController(undefined);
+                    // https://github.com/solidjs/solid-start/issues/1753
+                    // ac().abort();
+                    // setAbortController(undefined);
                   }}
                   class="p-1 bg-white rounded-full text-black mr-2 mt-2 hover:opacity-50"
                 >
-                  <BsStopFill class="w-8 h-8" />
+                  {/* <BsStopFill class="w-8 h-8" /> */}
+                  <Spinner size="sm" />
                 </button>
               )}
             </Show>

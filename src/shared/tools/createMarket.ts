@@ -1,15 +1,16 @@
 import { id } from "@instantdb/admin";
 import { z } from "zod";
 import { createAdminDb } from "~/server/utils";;
-import { createOption, notEmpty, triggerAddHistoryOption } from "../utils";
+import { createOption, notEmpty, retry_if_fail, triggerAddHistoryOption } from "../utils";
 import { makeTool, ToolName } from "./utils";
+import { fetchImages } from "./searchImages";
 
 const schema = z.object({
     name: z.string(),
     description: z.string(),
     rule: z.string(),
     type: z.enum(["binary", "multiple"]),
-    image_uuid: z.string(),
+    thumbnail_query: z.string(),
 
     // Binary market fields
     probability_yes: z.number().optional(),
@@ -37,7 +38,7 @@ async function* createMarket({
     allow_multiple_correct,
     description,
     rule,
-    image_uuid
+    thumbnail_query
 }: CreateMarketToolArgs, extraArgs: ExtraArgs) {
     const db = createAdminDb();
     const market_id = id();
@@ -63,27 +64,54 @@ async function* createMarket({
         throw new Error("No marketOptions");
     }
 
-    function isSearchImageDoing(
-        v: ToolYieldWithId
-    ): v is Extract<ToolYieldWithId, { name: ToolName.searchImage }> {
-        return (
-            v.name === ToolName.searchImage &&
-            !!v.doing
-        );
-    }
-
-    const img_result = Object.values(extraArgs.memStorage).flatMap(call => call).filter(isSearchImageDoing).flatMap(v => v.doing?.data.results)
-        .filter(notEmpty).find(v => v.image_uuid === image_uuid);
-    if (!img_result) {
-        yield {
-            done: {
-                error: { type: 'image_uuid_not_found' }
+    let n = 5;
+    let response: Response | undefined = undefined;
+    while (n--) {
+        try {
+            response = await fetchImages(thumbnail_query);
+            if (response.ok) {
+                break;
             }
+
+        } catch (e) {
+            await new Promise((resolve) => setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000)));
         }
-        return
     }
 
-    // console.log('img_result', img_result)
+    if (!response || !response.ok) {
+        throw new Error("Failed to fetch news");
+    }
+
+    // function isSearchImagesDoing(
+    //     v: ToolYieldWithId
+    // ): v is Extract<ToolYieldWithId, { name: ToolName.searchImages }> {
+    //     return (
+    //         v.name === ToolName.searchImages &&
+    //         !!v.doing
+    //     );
+    // }
+
+    // const img_result = Object.values(extraArgs.memStorage).flatMap(call => call).filter(isSearchImagesDoing).flatMap(v => v.doing?.data.results)
+    //     .filter(notEmpty).find(v => v.image_uuid === image_uuid);
+    // if (!img_result) {
+    //     yield {
+    //         done: {
+    //             error: { type: 'image_uuid_not_found' }
+    //         }
+    //     }
+    //     return
+    // }
+    let image_response: Response | undefined = undefined;
+
+    image_response = await retry_if_fail(() => { return fetchImages(thumbnail_query) });
+    if (!image_response || !image_response.ok) {
+        throw new Error("Failed to fetch images");
+    }
+
+    const data = await image_response.json() as BraveSearchImagesRoot;
+    const img_result = data.results[0];
+
+    console.log('img_result', img_result)
     const transactions: Parameters<typeof db.transact>[0] = [
         ...marketOptions.flatMap((o) => o.transactions),
         db.tx.markets[market_id]
@@ -123,7 +151,6 @@ export const createMarketTool = makeTool({
     description: `Create a prediction market. 
     Important:
     - Probability must be in range [0, 1].
-    - TO obtain image_uuid you must use searchImage tool
 
     The 'type' field determines the market structure:
     - 'binary' requires 'probability_yes'. Important: try to estimate it accurately.

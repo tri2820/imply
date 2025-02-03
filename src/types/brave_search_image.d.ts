@@ -1,6 +1,6 @@
 export { }
 declare global {
-    export type BraveSearchImageRoot = {
+    export type BraveSearchImagesRoot = {
         type: string;
         query: {
             original: string;

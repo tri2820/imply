@@ -261,3 +261,7 @@ export async function api_vote(market_id: string, vote: UpvoteDownvote) {
 
   return resp;
 }
+
+export const [blockShow, setBlockShow] = createSignal<{
+  [blockId: string]: boolean;
+}>({});

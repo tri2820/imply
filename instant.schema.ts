@@ -138,6 +138,18 @@ const _schema = i.schema({
         label: "holdings",
       },
     },
+    profile_blocks: {
+      forward: {
+        on: "profiles",
+        has: "many",
+        label: "blocks",
+      },
+      reverse: {
+        on: "blocks",
+        has: "one",
+        label: "profile",
+      },
+    }
   },
   // If you use presence, you can define a room schema here
   // https://www.instantdb.com/docs/presence-and-topics#typesafety

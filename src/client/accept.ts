@@ -1,7 +1,7 @@
 
 import { ToolName } from "~/shared/tools/utils";
 import { db } from "./database";
-import { blocks, setBlocks } from "./utils";
+import { blocks, profile, setBlocks } from "./utils";
 import { seededUUIDv4 } from "~/shared/utils";
 
 async function accept_content(content: NonNullable<ChatStreamYield['content']>, agent_step: AgentStep) {
@@ -30,7 +30,9 @@ async function accept_content(content: NonNullable<ChatStreamYield['content']>, 
     assistantBlock = blocks()[content.done.id] as AssistantBlock;
     assistantBlock.updated_at = new Date().toISOString()
     const instantdb_id = seededUUIDv4(assistantBlock.id);
-    db.transact([db.tx.blocks[instantdb_id].update(assistantBlock)]);
+    db.transact([db.tx.blocks[instantdb_id].update(assistantBlock).link({
+      profile: profile()?.id
+    })]);
   }
 
   if (assistantBlock) {
@@ -72,7 +74,9 @@ async function accept_reasoning(reasoning: NonNullable<ChatStreamYield['reasonin
     reasoningBlock = blocks()[reasoning.done.id] as ReasoningBlock;
     reasoningBlock.updated_at = new Date().toISOString()
     const instantdb_id = seededUUIDv4(reasoningBlock.id);
-    db.transact([db.tx.blocks[instantdb_id].update(reasoningBlock)]);
+    db.transact([db.tx.blocks[instantdb_id].update(reasoningBlock).link({
+      profile: profile()?.id
+    })]);
   }
 
   if (reasoningBlock) {
@@ -122,7 +126,9 @@ export async function accept_tool(tool: NonNullable<ChatStreamYield['tool']>, ag
     toolBlock = blocks()[tool.done.id] as ToolBlock
     toolBlock.content.arguments = tool.done.arguments;
     const instantdb_id = seededUUIDv4(toolBlock.id);
-    db.transact([db.tx.blocks[instantdb_id].update(toolBlock)]);
+    db.transact([db.tx.blocks[instantdb_id].update(toolBlock).link({
+      profile: profile()?.id
+    })]);
   }
 
   if (toolBlock) {
@@ -145,7 +151,9 @@ export async function accept_tool_yield(tool: ToolYieldWithId, agent_step: Agent
     toolBlock = blocks()[tool.id] as ToolBlock
     toolBlock.content.result = tool.done;
     const instantdb_id = seededUUIDv4(toolBlock.id);
-    db.transact([db.tx.blocks[instantdb_id].update(toolBlock)]);
+    db.transact([db.tx.blocks[instantdb_id].update(toolBlock).link({
+      profile: profile()?.id
+    })]);
   } else if (tool.doing) {
     console.log('tool.doing', tool.doing)
     toolBlock = blocks()[tool.id] as ToolBlock

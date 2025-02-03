@@ -164,7 +164,7 @@ export async function* parseOpenAIChunk(
     let tool_called = false;
 
     for await (const chunk of chunks) {
-        console.log("chunk", JSON.stringify(chunk));
+        // console.log("chunk", JSON.stringify(chunk));
 
         const delta: ChatCompletionChunk.Choice.Delta & { reasoning?: string } = chunk.choices[0].delta;
 
@@ -367,7 +367,7 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
             // Hack: try divide the budget among the tool results
             const max_each = Math.ceil(belowBudget / (messages.length - i));
             const saved = Math.max(prepared_tool_result.content.length - max_each, 0)
-            prepared_tool_result.content = prepared_tool_result.content.slice(0, max_each);
+            prepared_tool_result.content = prepared_tool_result.content.slice(-max_each);
             belowBudget += saved - max_each;
             prepared_belows.push(prepared_tool_result)
         }
@@ -384,7 +384,7 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
             // Hack: Do not keep track of assistant old calls
             if (prepared_m.tool_calls) continue
             if (prepared_m.content) {
-                prepared_m.content = prepared_m.content.slice(0, Math.max(budget, keep_assistant_content_short));
+                prepared_m.content = prepared_m.content.slice(-Math.max(budget, keep_assistant_content_short));
                 budget -= prepared_m.content.length;
             }
 
@@ -393,7 +393,7 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
         }
 
         if (prepared_m.role === 'user') {
-            prepared_m.content = prepared_m.content.slice(0, budget);
+            prepared_m.content = prepared_m.content.slice(-budget);
 
             prepared_aboves.push(prepared_m)
             if (budget == 0) break;
@@ -413,7 +413,7 @@ export const systemMessage = (): { [key: string]: ChatCompletionMessageParam } =
         role: "system",
         content: `You are the native PLANNING AI of Imply.app
         Your response will be forward to the TOOLING AI instead directly to the user. Give details step by step instruction. TOOLING AI's response will then be forward back to you.
-        Example flow: PLANNING AI -> asks search news -> TOOLING AI calls search news -> search news result -> PLANNING AI -> asks searchImage for thumbnails and createMarket -> PLANNING AI ...
+        Example flow: PLANNING AI -> asks search news -> TOOLING AI calls search news -> search news result -> PLANNING AI -> asks createMarket -> PLANNING AI ...
 
         Imply.app is a prediction market platform for everyone (no topic is off-limits!). 
         The app uses play money (still called USD).
@@ -434,6 +434,8 @@ export const systemMessage = (): { [key: string]: ChatCompletionMessageParam } =
         Your job is to work together with PLANNING AI to:
         1. Estimate probabilities: Guess how accurate predictions are.
         2. Help create prediction markets.
+
+        Important: Write a detailed description for why you think the initial probability is so. Give a context to the market.
 
         Current time: ${new Date().toISOString()}.
         `,
