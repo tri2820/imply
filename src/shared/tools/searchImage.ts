@@ -15,7 +15,7 @@ async function fetchImages(query: string) {
     const response = await fetch(
         `https://api.search.brave.com/res/v1/images/search?q=${encodeURIComponent(
             query
-        )}&count4&search_lang=en&safesearch=strict&spellcheck=1`,
+        )}&count=6&search_lang=en&safesearch=strict&spellcheck=1`,
         {
             headers: {
                 "Accept": "application/json",
@@ -34,7 +34,7 @@ async function fetchImages(query: string) {
 }
 
 async function* searchImage({ query }: SearchImageToolArgs) {
-    let n = 3;
+    let n = 10;
     let response: Response | undefined = undefined;
     while (n--) {
         try {
@@ -44,8 +44,7 @@ async function* searchImage({ query }: SearchImageToolArgs) {
             }
 
         } catch (e) {
-            await new Promise((resolve) => setTimeout(resolve, 1200));
-            console.error(e);
+            await new Promise((resolve) => setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000)));
         }
     }
 
@@ -66,14 +65,14 @@ async function* searchImage({ query }: SearchImageToolArgs) {
             .toSorted((a, b) => confidenceScore[b.confidence] - confidenceScore[a.confidence])
             .map((r) => ({
                 ...r,
-                image_id: id(),
+                image_uuid: id(),
             }))
     }
 
     // only extract a small surface to give the AI (save token)
     const images = dataBindId.results
         .map((r) => ({
-            image_id: r.image_id,
+            image_uuid: r.image_uuid,
             title: r.title,
             host: new URL(r.url).host,
         }));

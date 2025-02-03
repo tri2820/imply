@@ -16,11 +16,13 @@ export function makeTool<N extends ToolName, T extends z.ZodObject<any, any>, K>
 }): {
     name: N
     definition: ChatCompletionTool
+    description?: string
     function: (args: any, extraArgs: ExtraArgs) => K
 } {
     const parameters = zodToJsonSchema(props.zodObj)
     return {
         name: props.name,
+        description: props.description,
         definition: {
             "type": "function",
             "function": {

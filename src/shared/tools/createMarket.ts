@@ -9,7 +9,7 @@ const schema = z.object({
     description: z.string(),
     rule: z.string(),
     type: z.enum(["binary", "multiple"]),
-    image_id: z.string(),
+    image_uuid: z.string(),
 
     // Binary market fields
     probability_yes: z.number().optional(),
@@ -37,7 +37,7 @@ async function* createMarket({
     allow_multiple_correct,
     description,
     rule,
-    image_id
+    image_uuid
 }: CreateMarketToolArgs, extraArgs: ExtraArgs) {
     const db = createAdminDb();
     const market_id = id();
@@ -73,17 +73,17 @@ async function* createMarket({
     }
 
     const img_result = Object.values(extraArgs.memStorage).flatMap(call => call).filter(isSearchImageDoing).flatMap(v => v.doing?.data.results)
-        .filter(notEmpty).find(v => v.image_id === image_id);
+        .filter(notEmpty).find(v => v.image_uuid === image_uuid);
     if (!img_result) {
         yield {
             done: {
-                error: { type: 'image_id_not_found' }
+                error: { type: 'image_uuid_not_found' }
             }
         }
         return
     }
 
-    console.log('img_result', img_result)
+    // console.log('img_result', img_result)
     const transactions: Parameters<typeof db.transact>[0] = [
         ...marketOptions.flatMap((o) => o.transactions),
         db.tx.markets[market_id]
@@ -122,17 +122,17 @@ export const createMarketTool = makeTool({
     function: createMarket,
     description: `Create a prediction market. 
     Important:
-    - For image_id, you need to use the tool searchImage first to obtain suitable image_id.
     - Probability must be in range [0, 1].
+    - TO obtain image_uuid you must use searchImage tool
 
-  The 'type' field determines the market structure:
-  - 'binary' requires 'probability_yes'. Important: try to estimate it accurately.
-  - 'multiple' requires 'options' with at least one entry.
-  
-  The 'allow_multiple_correct' field determines how options are treated:
-  - **false**: Only one option can be true (e.g., "Who will win the tournament?").
-  - **true**: Multiple options can be correct (e.g., "Will Bitcoin hit $200k?" for different months).
+    The 'type' field determines the market structure:
+    - 'binary' requires 'probability_yes'. Important: try to estimate it accurately.
+    - 'multiple' requires 'options' with at least one entry.
+    
+    The 'allow_multiple_correct' field determines how options are treated:
+    - **false**: Only one option can be true (e.g., "Who will win the tournament?").
+    - **true**: Multiple options can be correct (e.g., "Will Bitcoin hit $200k?" for different months).
 
-  - name: Extremely specific question (e.g., "Will Bitcoin hit $200k by 2023?").
-  - rules: Clear and unambiguous. Mention specific data source for market resolution.`,
+    - name: Extremely specific question (e.g., "Will Bitcoin hit $200k by 2023?").
+    - rules: Clear and unambiguous. Mention specific data source for market resolution.`,
 });

@@ -239,10 +239,13 @@ declare global {
     type HistoryOption = InstaQLEntity<AppSchema, "history__options">;
     type Conversation = InstaQLEntity<AppSchema, "conversations">;
 
+    type AgentStep = 'reasoning_and_foward' | 'tool_call_and_content'
     // Block types
     type BaseBlock = InstaQLEntity<AppSchema, "blocks"> & {
         content: unknown;
-    };
+    } & {
+        agent_step?: AgentStep,
+    }
 
     type ToolBlock<T = any, K = any, D = any> = Refine<
         BaseBlock & {
@@ -257,6 +260,16 @@ declare global {
             doings: D[]
         }
     >;
+
+
+    type ReasoningBlock = Refine<
+        BaseBlock & {
+            role: "reasoning";
+        },
+        "content",
+        string
+    >;
+
 
     type AssistantBlock = Refine<
         BaseBlock & {
@@ -274,7 +287,7 @@ declare global {
         string
     >;
 
-    type Block = ToolBlock | AssistantBlock | UserBlock;
+    type Block = ToolBlock | AssistantBlock | UserBlock | ReasoningBlock;
 
     // UI types
     type UIBlock = Block & {
@@ -295,10 +308,12 @@ declare global {
         id: string
     }
     type ChatStreamYield = NonNullable<OneOf<{
-        tool_yield: ToolYieldWithId;
-    } & {
-        [K in keyof Update]: Update[K];
-    }>>
+        tool_yield: ToolYieldWithId
+    } & ({
+        [K in keyof Update]: Update[K]
+    }
+        )>>
+        & { agent_step: AgentStep }
 
     type UnwrapAsyncGenerator<T> = T extends AsyncGenerator<infer Y, any, any>
         ? Y
@@ -310,6 +325,28 @@ declare global {
         : never;
 
     type Update = OneOf<{
+        reasoning: OneOf<{
+            started: {
+                created_at: string,
+                id: string
+                text: string
+            }
+
+            delta: {
+                created_at: string,
+                updated_at: string,
+                id: string
+                text: string
+            }
+
+            done: {
+                created_at: string,
+                updated_at: string,
+                id: string
+                content: string
+            }
+        }>,
+
         tool: OneOf<{
             started: {
                 created_at: string,
@@ -369,6 +406,13 @@ declare global {
     }
 
     type ContentRecord = {
+        content: string;
+        created_at?: string;
+        id: string;
+    }
+
+
+    type ReasoningRecord = {
         content: string;
         created_at?: string;
         id: string;

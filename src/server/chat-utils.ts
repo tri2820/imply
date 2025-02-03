@@ -5,20 +5,20 @@ import { parallelMerge } from 'streaming-iterables';
 
 import { Stream } from "openai/streaming.mjs";
 
-import { getRandomKaomoji } from "~/shared/utils";
-import { getEnv } from "./utils";
 import { tools } from "~/shared/tools";
 import { ToolName } from "~/shared/tools/utils";
+import { getRandomKaomoji } from "~/shared/utils";
+import { getEnv } from "./utils";
+import { getRequestEvent } from "solid-js/web";
 
-export function createOpenAI() {
+function createClient() {
     const apiKey = getEnv("OPENAI_API_KEY");
     const baseURL = getEnv("OPENAI_BASE_URL");
     const client = new OpenAI({
         apiKey,
         baseURL,
     });
-
-    return client;
+    return client
 }
 
 function check_if_tools_done(
@@ -61,21 +61,95 @@ function check_if_content_done(content_record: ContentRecord): HighLevelMessage 
     }
 }
 
+
+function check_if_reasoning_done(reasoning_record: ReasoningRecord): HighLevelMessage | undefined {
+    if (reasoning_record.created_at) return {
+        doing: {
+            reasoning: {
+                done: {
+                    content: reasoning_record.content,
+                    created_at: reasoning_record.created_at,
+                    id: reasoning_record.id,
+                    updated_at: new Date().toISOString()
+                }
+            }
+        }
+    }
+}
+
+
+async function getCompletionWithTools(messages: ChatCompletionMessageParam[], content_only: boolean) {
+    const event = getRequestEvent();
+
+    // Use OpenAI to structure the tool call output
+    const client = createClient()
+    const model: ChatModel = getEnv("OPENAI_MODEL") ?? 'openai/gpt-4o-mini'
+    const completion = await client.chat.completions.
+        // @ts-ignore
+        create({
+            model,
+            messages: [
+                content_only ? systemMessage().content : systemMessage().tools,
+                ...messages
+            ],
+            tools: content_only ? undefined : tools.map((t) => t.definition),
+            stream: true,
+
+        });
+
+    event?.request.signal.addEventListener('abort', () => {
+        console.log('getCompletionWithTools abort')
+        completion.controller.abort()
+    })
+
+    return completion
+}
+
+async function getReasoningCompletion(messages: ChatCompletionMessageParam[]) {
+    const event = getRequestEvent();
+
+    // Use DeepSeek to reasoning and chat with user
+    const client = createClient()
+    const model: ChatModel = getEnv("REASONING_MODEL") ?? 'deepseek/deepseek-r1:free'
+    const completion = await client.chat.completions.
+
+        // @ts-ignore
+        create({
+            model,
+            messages: [
+                systemMessage().reasoning,
+                ...messages
+            ],
+            // tools: tools.map((t) => t.definition),
+            stream: true,
+            include_reasoning: true
+        });
+
+
+    event?.request.signal.addEventListener('abort', () => {
+        console.log('getReasoningCompletion abort')
+        completion.controller.abort()
+    })
+    return completion
+}
+
+
 // Take in a stream of chunks
 // combine them into higher level updates
 export async function* parseOpenAIChunk(
     chunks: Stream<ChatCompletionChunk>
 ): AsyncGenerator<HighLevelMessage> {
     const this_id = new Date().toISOString();
+    const reasoning_record: ReasoningRecord = {
+        id: `${this_id}/reasoning`,
+        content: ''
+    }
 
-    const content_record: {
-        content: string;
-        created_at?: string;
-        id: string;
-    } = {
+    const content_record: ContentRecord = {
         id: `${this_id}/content`,
         content: ''
     }
+
     const tool_records:
         { [id: string]: ToolRecord }
         = {
@@ -87,15 +161,17 @@ export async function* parseOpenAIChunk(
     // FAST SIGNALING
     // Detects when a tool call is done and yield immediately
     let prev_tool_ids: string[] = []
-
-
     let tool_called = false;
-    for await (const chunk of chunks) {
-        // console.log("chunk", JSON.stringify(chunk));
 
-        const delta = chunk.choices[0].delta;
+    for await (const chunk of chunks) {
+        console.log("chunk", JSON.stringify(chunk));
+
+        const delta: ChatCompletionChunk.Choice.Delta & { reasoning?: string } = chunk.choices[0].delta;
+
+
         if (delta.tool_calls) {
             // FAST CHECK
+            const r = check_if_reasoning_done(reasoning_record); if (r) yield r;
             const m = check_if_content_done(content_record); if (m) yield m;
             const now_tool_ids = delta.tool_calls.map(to_id)
             yield* check_if_tools_done(tool_records, prev_tool_ids, now_tool_ids)
@@ -157,7 +233,9 @@ export async function* parseOpenAIChunk(
 
         if (delta.content) {
             // FAST CHECK
+            const r = check_if_reasoning_done(reasoning_record); if (r) yield r;
             yield* check_if_tools_done(tool_records, prev_tool_ids, [])
+
 
             if (content_record.created_at) {
                 yield {
@@ -165,7 +243,7 @@ export async function* parseOpenAIChunk(
                         content: {
                             delta: {
                                 created_at: content_record.created_at,
-                                id: `${this_id}/content`,
+                                id: content_record.id,
                                 text: delta.content,
                                 updated_at: new Date().toISOString()
                             }
@@ -180,8 +258,8 @@ export async function* parseOpenAIChunk(
                     doing: {
                         content: {
                             started: {
+                                id: content_record.id,
                                 created_at,
-                                id: `${this_id}/content`,
                                 text: delta.content
                             }
                         }
@@ -191,9 +269,48 @@ export async function* parseOpenAIChunk(
 
             content_record.content += delta.content;
         }
+
+        if (delta.reasoning) {
+            // FAST CHECK
+            const m = check_if_content_done(content_record); if (m) yield m;
+            yield* check_if_tools_done(tool_records, prev_tool_ids, [])
+
+            if (reasoning_record.created_at) {
+                yield {
+                    doing: {
+                        reasoning: {
+                            delta: {
+                                created_at: reasoning_record.created_at,
+                                id: reasoning_record.id,
+                                text: delta.reasoning,
+                                updated_at: new Date().toISOString()
+                            }
+                        }
+                    }
+                }
+            } else {
+                const created_at = new Date().toISOString()
+                reasoning_record.content = delta.reasoning;
+                reasoning_record.created_at = created_at
+                yield {
+                    doing: {
+                        reasoning: {
+                            started: {
+                                id: reasoning_record.id,
+                                created_at,
+                                text: delta.reasoning
+                            }
+                        }
+                    }
+                }
+            }
+
+            reasoning_record.content += delta.reasoning;
+        }
     }
 
 
+    const r = check_if_reasoning_done(reasoning_record); if (r) yield r;
     const m = check_if_content_done(content_record); if (m) yield m;
     yield* check_if_tools_done(tool_records, prev_tool_ids, [])
     yield {
@@ -291,20 +408,48 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
     ]
 };
 
-export const systemMessage = (): ChatCompletionMessageParam => ({
-    role: "system",
-    content: `You are the native AI of Imply.app—a prediction market platform for everyone (no topic is off-limits!). The app uses play money (still called USD).
+export const systemMessage = (): { [key: string]: ChatCompletionMessageParam } => ({
+    reasoning: {
+        role: "system",
+        content: `You are the native PLANNING AI of Imply.app
+        Your response will be forward to the TOOLING AI instead directly to the user. Give details step by step instruction. TOOLING AI's response will then be forward back to you.
+        Example flow: PLANNING AI -> asks search news -> TOOLING AI calls search news -> search news result -> PLANNING AI -> asks searchImage for thumbnails and createMarket -> PLANNING AI ...
 
-    Your job:
-1. Estimate probabilities: Guess how accurate predictions are (e.g., "That's quite improbable! I give it 22% probability. (￣～￣;)").
-2. Help create prediction markets.
+        Imply.app is a prediction market platform for everyone (no topic is off-limits!). 
+        The app uses play money (still called USD).
+        
+        Current time: ${new Date().toISOString()}
+        Your job is to work together with the TOOLING AI to estimate probabilities & help create prediction markets.
+        Do not be creative! Research properly!
+        
+        
 
-Current time: ${new Date().toISOString()}
-Use bold text and kaomojis! ${getRandomKaomoji().join(" ")}
-If input is vague, give concrete examples (e.g., specify an exact date for events).
-Important: 
-- Research by reading news before you estimate!
-- Be creative and give suggestions instead of asking user to specify!`,
+        Tools you can ask TOOLING AI to use: ${tools.map(t => t.definition)}. 
+    `,
+    },
+    tools: {
+        role: "system",
+        content: `You are the native TOOLING AI of Imply.app—a prediction market platform for everyone (no topic is off-limits!). The app uses play money (still called USD).
+    
+        Your job is to work together with PLANNING AI to:
+        1. Estimate probabilities: Guess how accurate predictions are.
+        2. Help create prediction markets.
+
+        Current time: ${new Date().toISOString()}.
+        `,
+    },
+    content: {
+        role: "system",
+        content: `You are the native AI of Imply.app—a prediction market platform for everyone (no topic is off-limits!). The app uses play money (still called USD).
+    
+        Your job is to work together with PLANNING AI to:
+        1. Estimate probabilities: Guess how accurate predictions are (e.g., "That's quite improbable! I give it 22% probability. (￣～￣;)").
+        2. Help create prediction markets.
+    
+        Current time: ${new Date().toISOString()}
+        Use bold text and kaomojis! ${getRandomKaomoji().join(" ")}
+        DO NOT OUTPUT LINKS IN YOUR RESPONSE.`,
+    },
 });
 
 export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYield> {
@@ -322,9 +467,6 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
         }
     }
 
-    const client = createOpenAI();
-
-
     let messages = history;
     // Only tools in the same "inference" can share memory
     // To share memory accross inferences we need to store memStorage to something persistent 
@@ -335,37 +477,67 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
     // Safe guard
     let MAX_ITER = 5;
+    let tool_called: ToolName[] = []
     try {
         while (MAX_ITER--) {
             messages = prepare(messages);
             // console.log('prepared messages', JSON.stringify(messages));
             const tool_calls: NonNullable<NonNullable<Update['tool']>['done']>[] = []
-            const model: ChatModel = getEnv("OPENAI_MODEL") ?? 'gpt-4o-mini';
-            console.log('fetching completion...', model);
-            const completion = await client.chat.completions.create({
-                model,
-                messages: [
-                    systemMessage(),
-                    ...messages
-                ],
-                tools: tools.map((t) => t.definition),
-                stream: true,
-                // GEMENI does not support parallel_tool_calls
-                // parallel_tool_calls: true
-            });
+            let tool_args = false;
+            let reasoning_text = ''
+            const just_need_announce = tool_called.includes(ToolName.createMarket)
 
-            let tool_called = false
+            // STEP 0: Planning with Reasoning Model
+            // Do nothing reasoning if just created market, just announce to user
+            if (just_need_announce) {
+                console.log('createMarket tool called');
+            } else {
+                console.log('reasoning...');
+                for await (const update of parseOpenAIChunk(
+                    await getReasoningCompletion(messages)
+                )) {
+                    if (update.doing) {
+
+                        yield {
+                            ...update.doing,
+                            agent_step: 'reasoning_and_foward'
+                        }
+
+                        if (update.doing.reasoning?.done) {
+                            reasoning_text = update.doing.reasoning.done.content
+                        }
+
+                        if (update.doing.content?.done) {
+                            const msg: ChatCompletionMessageParam = {
+                                role: "assistant",
+                                content: `<think>
+                ${reasoning_text}
+                </think>
+                ${update.doing.content.done.content}`
+                            }
+                            messages.push(msg)
+                        }
+                    }
+                }
+            }
+
+            tool_called = []
+
 
             // STEP 1: Build arguments for tool calls or generate content
-            for await (const update of parseOpenAIChunk(completion)) {
+            const chunks = await getCompletionWithTools(messages, just_need_announce)
 
+            for await (const update of parseOpenAIChunk(chunks)) {
                 if (update.doing) {
-                    yield update.doing
+                    yield {
+                        ...update.doing,
+                        agent_step: 'tool_call_and_content'
+                    }
 
                     if (update.doing.tool?.done) {
                         console.log('update tool done', update.doing.tool.done);
                         tool_calls.push(update.doing.tool.done)
-                        tool_called = true
+                        tool_args = true
                     }
 
                     if (update.doing.content?.done) {
@@ -378,7 +550,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                 }
 
                 if (update.done) {
-                    tool_called = update.done.tool_called
+                    tool_args = update.done.tool_called
                 }
             }
 
@@ -401,12 +573,13 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
 
             messages.push(m)
             // STEP 2: Actually execute the tool logic
-            if (tool_called) {
+            if (tool_args) {
                 const generators = tool_calls.map((async function* f(tool_call) {
                     const toolLogic = tools.find(t => t.definition.function.name === tool_call.name)?.function;
                     if (!toolLogic) {
                         throw new Error(`Tool ${tool_call.name} not found`);
                     }
+                    tool_called.push(tool_call.name)
 
                     const toolG = toolLogic(tool_call.arguments, extraArgs);
 
@@ -422,7 +595,8 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                     extraArgs.memStorage[tool_yield.id] = [...(extraArgs.memStorage[tool_yield.id] ?? []), tool_yield]
 
                     yield {
-                        tool_yield
+                        tool_yield,
+                        agent_step: 'tool_call_and_content'
                     }
 
                     // AI only see done messages
@@ -435,8 +609,9 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                     }
                 }
 
-                continue;
+                continue
             }
+
             break;
         }
 

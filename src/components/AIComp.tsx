@@ -37,6 +37,7 @@ export default function AIComp() {
     setText("");
 
     const userBlock: Block = {
+      agent_step: undefined,
       id: id(),
       role: "user",
       content: t,
@@ -81,6 +82,9 @@ export default function AIComp() {
 
     const controller = new AbortController();
     const { signal } = controller;
+    signal.addEventListener("abort", () => {
+      console.log("aborted!");
+    });
     setAbortController(controller);
 
     const resp = await fetch("/api/complete", {
@@ -96,7 +100,7 @@ export default function AIComp() {
     const g = readNDJSON(resp.body);
 
     for await (const value of g) {
-      const y = value as ChatStreamYield;
+      const y = value as any as ChatStreamYield;
       accept(y);
     }
 

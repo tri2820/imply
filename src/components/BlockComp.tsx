@@ -1,43 +1,30 @@
 import { marked } from "marked";
 import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
-import { createSignal, For, JSX, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { listBlocks } from "~/client/utils";
 import IconComp from "./IconComp";
 
-import MarketCard from "./MarketCard";
 import {
   CreateMarketToolArgs,
   CreateMarketToolDone,
 } from "~/shared/tools/createMarket";
 import {
+  SearchImageToolArgs,
+  SearchImageToolDoing,
+  SearchImageToolDone,
+} from "~/shared/tools/searchImage";
+import {
   SearchNewsToolArgs,
   SearchNewsToolDone,
 } from "~/shared/tools/searchNews";
-import {
-  SearchImageToolDoing,
-  SearchImageToolDone,
-  SearchImageToolArgs,
-} from "~/shared/tools/searchImage";
-import MaybeImage from "./Image";
 import { ToolName } from "~/shared/tools/utils";
+import MarketCard from "./MarketCard";
+import MarketImage from "./MarketImage";
+import { JSX } from "solid-js";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
-
-  // Does not feel right yet
-  // onMount(() => {
-  //   const isLastBlock = listBlocks().at(-1)?.id === props.block.id;
-
-  //   if (isLastBlock) {
-  //     if (scrolledToBottom() === props.block.id) {
-  //       scrollToEnd();
-  //       return;
-  //     }
-
-  //     setScrolledToBottom(props.block.id);
-  //   }
-  // });
 
   // TODO: sanitize
   const html = () => marked.parse(props.block.content) as string;
@@ -48,6 +35,70 @@ function AssistantBlockComp(props: { block: AssistantBlock }) {
         class="prose prose-invert prose-neutral max-w-none"
         innerHTML={html()}
       />
+    </div>
+  );
+}
+
+function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
+  let ref!: HTMLDivElement;
+
+  // TODO: sanitize
+  const html = () => marked.parse(props.block.content) as string;
+
+  const [show, setShow] = createSignal(true);
+
+  return (
+    <div
+      ref={ref}
+      class="overflow-x-auto my-1 rounded border border-neutral-800 p-4 bg-neutral-900"
+    >
+      <button
+        onClick={() => setShow((p) => !p)}
+        class="flex items-center space-x-2"
+      >
+        <div class="font-semibold">PLANNING WITH TOOLING AI</div>
+        <div class="flex-none">
+          <Show when={show()} fallback={<BsChevronUp />}>
+            <BsChevronDown />
+          </Show>
+        </div>
+      </button>
+
+      <Show when={show()}>
+        <div
+          data-forward={props.block.agent_step == "reasoning_and_foward"}
+          class="prose prose-invert prose-neutral max-w-none data-[forward=true]:prose-sm mt-2"
+          innerHTML={html()}
+        />
+      </Show>
+    </div>
+  );
+}
+
+function ReasoningBlockComp(props: { block: ReasoningBlock }) {
+  let ref!: HTMLDivElement;
+  const [show, setShow] = createSignal(true);
+
+  return (
+    <div
+      ref={ref}
+      class="overflow-x-auto my-2 p-4 border border-neutral-800 rounded bg-neutral-900"
+    >
+      <button
+        onClick={() => setShow((p) => !p)}
+        class="flex items-center space-x-2"
+      >
+        <div class="font-semibold">THINKING</div>
+        <div class="flex-none">
+          <Show when={show()} fallback={<BsChevronUp />}>
+            <BsChevronDown />
+          </Show>
+        </div>
+      </button>
+
+      <Show when={show()}>
+        <div class="text-sm mt-2 ">{props.block.content}</div>
+      </Show>
     </div>
   );
 }
@@ -74,17 +125,33 @@ function ToolBlockBody_ArgumentsString(props: { block: ToolBlock }) {
   );
 }
 
+function ToolBlockBody_ResultError(props: { block: ToolBlock }) {
+  return (
+    <div class="">
+      <div class="py-2 flex items-stretch">
+        <div class="flex-none mx-2 w-[2px] bg-neutral-800"></div>
+        <div class="flex-1">{JSON.stringify(props.block.content.result)}</div>
+      </div>
+    </div>
+  );
+}
+
 function ToolBlockBody_createMarket(props: {
   block: ToolBlock<CreateMarketToolArgs, CreateMarketToolDone>;
 }) {
   return (
     <Show
-      when={props.block.content.result?.market_id}
+      when={props.block.content.result}
       fallback={<ToolBlockBody_ArgumentsString block={props.block} />}
     >
-      {(market_id) => (
+      {(result) => (
         <div class="mt-2">
-          <MarketCard marketId={market_id()} queryAgain />
+          <Show
+            when={result().market_id}
+            fallback={<ToolBlockBody_ResultError block={props.block} />}
+          >
+            {(market_id) => <MarketCard marketId={market_id()} queryAgain />}
+          </Show>
         </div>
       )}
     </Show>
@@ -154,15 +221,12 @@ function ToolBlockBody_searchImage(props: {
 
           <Show when={data()}>
             {(d) => (
-              <div class="py-2 grid grid-cols-4  gap-2">
+              <div class="py-2 flex flex-wrap gap-2">
                 <For each={d().results.slice(0, 16)}>
                   {(r) => (
                     <div class=" rounded overflow-hidden ">
                       <a href={r.url} target="_blank" rel="noopener noreferrer">
-                        <MaybeImage
-                          class="w-full aspect-square object-cover"
-                          src={r.thumbnail.src}
-                        />
+                        <MarketImage src={r.thumbnail.src} />
                       </a>
                     </div>
                   )}
@@ -245,9 +309,22 @@ export default function BlockComp(props: { blockId: string }) {
   };
 
   const components = {
-    assistant: AssistantBlockComp,
+    assistant: (props: { block: AssistantBlock }) => {
+      const components: any = {
+        reasoning_and_foward: AssistantReasoningForwardBlockComp,
+        tool_call_and_content: AssistantBlockComp,
+      };
+      if (!props.block.agent_step) return <></>;
+      return (
+        <Dynamic
+          component={components[props.block.agent_step]}
+          block={props.block}
+        />
+      );
+    },
     user: UserBlockComp,
     tool: ToolBlockComp,
+    reasoning: ReasoningBlockComp,
   };
 
   return (

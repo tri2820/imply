@@ -32,7 +32,7 @@ async function fetchNews(query: string) {
 }
 
 async function* searchNews({ query }: SearchNewsToolArgs) {
-    let n = 3;
+    let n = 10;
     let response: Response | undefined = undefined;
     while (n--) {
         try {
@@ -42,8 +42,7 @@ async function* searchNews({ query }: SearchNewsToolArgs) {
             }
 
         } catch (e) {
-            await new Promise((resolve) => setTimeout(resolve, 1200));
-            console.error(e);
+            await new Promise((resolve) => setTimeout(resolve, 1000 + Math.floor(Math.random() * 1000)));
         }
     }
 

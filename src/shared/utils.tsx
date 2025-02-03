@@ -11,6 +11,7 @@ import { LineType, UTCTimestamp } from "lightweight-charts";
 import { getRequestEvent } from "solid-js/web";
 import { AppSchema } from "../../instant.schema";
 import { ToolName } from "./tools/utils";
+import BLOCKS from "./BLOCKS.json?raw";
 
 export const MIN_USD_AMOUNT = 10;
 export const MIN_SHARE_AMOUNT = 1;
@@ -84,43 +85,7 @@ export function lastItemToUSD(series: Series, precision: number = 2) {
   return "$" + last.value.toFixed(precision);
 }
 export function generateBlocks(): Blocks {
-  return {
-    "90eb360d-1904-4314-81df-c4888c85b097": {
-      id: "90eb360d-1904-4314-81df-c4888c85b097",
-      role: "user",
-      content: "hello",
-      created_at: "2025-01-26T12:25:35.120Z",
-      updated_at: "2025-01-26T12:25:35.120Z",
-    },
-    "896f8a9c-50cc-46b1-8866-4b12309f7664": {
-      id: "896f8a9c-50cc-46b1-8866-4b12309f7664",
-      role: "assistant",
-      content:
-        "That's a bold prediction, as it's quite early to firmly forecast political outcomes for 2028. Many variables come into play, such as political climates, candidates from other parties, and unforeseen events.\n\nLet's create a market to gather opinions and predictions about the 2028 Presidential Election with a focus on Trump's potential candidacy. Stay tuned! The market \"Will Trump win the 2028 U.S. Presidential Election?\" is now created. You can participate to express your prediction and see what others think. Let's see how public sentiment and insights play out over time!",
-      created_at: "2025-01-26T12:25:39.547Z",
-      updated_at: "2025-01-26T12:25:39.547Z",
-    },
-    "2643e820-b1a4-423e-86ea-d5c9884caef4": {
-      id: "2643e820-b1a4-423e-86ea-d5c9884caef4",
-      content: {
-        doings: [],
-        arguments_partial_str: "",
-        name: ToolName.createMarket,
-        arguments: {
-          name: "Will Trump win the 2028 U.S. Presidential Election?",
-          details: {
-            description:
-              "Predict whether Donald Trump will win the 2028 U.S. Presidential Election. Consider factors like his political influence, opposing candidates, and public opinion.",
-            options: ["Yes", "No"],
-            closing_date: new Date("2028-11-01"),
-          },
-        },
-      },
-      role: "tool",
-      created_at: "2025-01-26T12:25:37.983Z",
-      updated_at: "2025-01-26T12:25:37.983Z",
-    },
-  };
+  return JSON.parse(BLOCKS);
 }
 
 export const calcAttributes = (

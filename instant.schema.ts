@@ -54,6 +54,7 @@ const _schema = i.schema({
       updated_at: i.date(),
       content: i.json(),
       role: i.string(),
+      agent_step: i.string().optional(),
     }),
 
     votes: i.entity({

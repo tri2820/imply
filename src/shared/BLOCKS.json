@@ -1,0 +1,1580 @@
+{
+    "2c4b09e8-be12-4b37-bbac-7080f9651308": {
+        "id": "2c4b09e8-be12-4b37-bbac-7080f9651308",
+        "role": "user",
+        "content": "china compeition with us on ai",
+        "created_at": "2025-02-03T15:13:09.177Z",
+        "updated_at": "2025-02-03T15:13:09.177Z"
+    },
+    "2025-02-03T15:13:09.557Z/reasoning": {
+        "agent_step": "reasoning_and_foward",
+        "id": "2025-02-03T15:13:09.557Z/reasoning",
+        "role": "reasoning",
+        "content": "\nAlright, let's tackle this user query about creating a prediction market on China competing with the US in AI. First, I need to understand what the user's goal is. They mentioned using play money, so it's a hypothetical market, but they still want accurate and relevant information to set up meaningful questions.\n\nThe user's prediction is about competition between China and the US in AI, so the first step would be to gather recent and reliable information. I should start by searching for the latest news articles to get a sense of current events, collaborations, competitions, or any significant developments between the two countries in the AI sector as of the current time, which is February 2025.\n\nNext, market trends. It's important to look for data or reports that highlight the growth, investments, key players, and government policies from both the US and China in the AI field. This will help in framing the prediction questions with concrete data points.\n\nTechnical advancements are crucial here. Searching for the latest technological breakthroughs from each country in AI can provide insights into which side might be leading and what specific areas are being contested. Patents, research publications, and major projects could be indicators.\n\nGiven that this is for a prediction market, I need to check if there are existing prediction markets related to this topic. This helps in avoiding duplicates and understanding what the community might already be considering. If there are existing markets, the user might need to adjust their questions to offer something new or more specific.\n\nOnce the information is gathered, the next steps would involve creating the actual market questions. Examples could be about which country will launch a specific AI innovation first, market share in AI technologies, or government regulations impacting AI development. Each question needs clear resolution criteria so participants know exactly what outcome they're predicting.\n\nThumbnails are important for attracting users to the market. I should include relevant keywords for image searches, like \"China US AI competition,\" \"AI technology race,\" or \"global AI dominance.\" This ensures the visuals are pertinent and engaging.\n\nAfter setting up the markets with TOOLING AI's help, a summary would consolidate the key findings, highlight any existing markets, and present the suggested questions so the user can finalize their prediction market setup.\n",
+        "created_at": "2025-02-03T15:13:10.591Z",
+        "updated_at": "2025-02-03T15:14:31.139Z"
+    },
+    "2025-02-03T15:13:09.557Z/content": {
+        "agent_step": "reasoning_and_foward",
+        "id": "2025-02-03T15:13:09.557Z/content",
+        "role": "assistant",
+        "content": "Let me research and prepare structured prediction markets. First, I'll gather relevant information through these steps:\n\n1. **News Check**: Search recent news about US-China AI competition (last 6 months)\n`searchNews({query: \"US China artificial intelligence competition 2024-2025\", numResults: 5})`\n\n2. **Market Trends**: Find statistics about AI development pace comparison\n`searchWeb({query: \"US vs China AI research papers 2024, semiconductor export restrictions AI impact\"})`\n\n3. **Tech Milestones**: Identify measurable AI advancements from both nations\n`searchWeb({query: \"China generative AI approval 2024, US Executive Order on AI 2024\"})`\n\n4. **Existing Markets**: Check similar prediction markets\n`queryMarkets({searchTerm: \"China AI dominance\", limit: 3})`\n\nAfter receiving this data, I'll propose specific binary markets with clear resolution criteria. Would you like me to proceed with these searches?",
+        "created_at": "2025-02-03T15:14:05.718Z",
+        "updated_at": "2025-02-03T15:14:31.141Z"
+    },
+    "2025-02-03T15:14:31.358Z/0": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:14:31.358Z/0",
+        "content": {
+            "doings": [],
+            "arguments_partial_str": "{\"query\": \"US China artificial intelligence competition 2024-2025\"}",
+            "name": "searchNews",
+            "arguments": {
+                "query": "US China artificial intelligence competition 2024-2025"
+            },
+            "result": [
+                {
+                    "title": "Reuters China News | Today's Breaking Stories | Reuters",
+                    "host": "www.reuters.com",
+                    "content": "WorldcategoryUK's Starmer wants 'strong protections' for military base in Chagos Islands dealJanuary 31, 2025\nUnited StatescategoryFormer Federal Reserve adviser arrested for passing trade secrets to China, Justice Department saysJanuary 31, 2025\nANALYSISWhy the US is claiming China’s presence violates the Panama neutrality treatyJanuary 31, 2025\nWorldcategoryTrump will implement tariffs on Mexico, Canada and China on SaturdayJanuary 31, 2025"
+                },
+                {
+                    "title": "The Chinese AI companies that could match DeepSeek’s impact | Artificial intelligence (AI) | The Guardian",
+                    "host": "www.theguardian.com",
+                    "content": "DeepSeek’s release of an artificial intelligence model that could replicate the performance of OpenAI’s o1 at a fraction of the cost has stunned investors and analysts. Markets reeled as Nvidia, a microchip and AI firm, shed more than $500bn in market value in a record one-day loss for any company on Wall Street. Investors feared that DeepSeek challenged the dominance of US AI leaders. Donald Trump described DeepSeek as a “wake-up call”. In China, DeepSeek’s founder, Liang Wenfeng, has been hailed as a national hero and was invited to attend a symposium chaired by China’s premier, Li Qiang.\nAs well as performance, Chinese companies are challenging their US competitors on price. Doubao’s most powerful version is priced at 9 yuan per million tokens, which is nearly half the price of DeepSeek’s offering for DeepSeek-R1.\nKnown as one of China’s “AI tigers”, it was in the headlines recently not for its AI achievements but for the fact that it was blacklisted by the US government. On 15 January, Zhipu was one of more than two dozen Chinese entities added to a US restricted trade list.\nThe pace at which China has been able to catch up with frontier AI research in the US is accelerating."
+                },
+                {
+                    "title": "China - The New York Times",
+                    "host": "www.nytimes.com",
+                    "content": "China is the planet’s most populous country and second largest by land mass. Its civilization is one of the world’s oldest, and it has maintained an advanced economy for two millennia. A single-party socialist state, China has been governed by the Communist Party since the establishment of the People’s Republic of China in 1949 under Mao Zedong, who would usher in both the Cultural Revolution and the Great Leap Forward.\nThe company built a cheaper, competitive chatbot with fewer high-end computer chips than U.S."
+                },
+                {
+                    "title": "DeepSeek A.I. Is a Win for China, but a Danger to Party Control - The New York Times",
+                    "host": "www.nytimes.com",
+                    "content": "DeepSeek’s success embodies China’s ambitions in artificial intelligence. But it could also threaten the grip on power the nation’s leaders hold. ... Feb. 2, 2025, 12:01 a.m.\nA screen displays the match featuring the Chinese Go player Ke Jie against Google’s artificial intelligence program AlphaGo in 2017 in Wuzhen, China.Credit...Wu Hong/European Pressphoto Agency"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:14:33.588Z",
+        "updated_at": "2025-02-03T15:14:33.641Z"
+    },
+    "2025-02-03T15:14:31.358Z/1": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:14:31.358Z/1",
+        "content": {
+            "doings": [
+                {
+                    "data": {
+                        "type": "images",
+                        "query": {
+                            "original": "China US AI competition",
+                            "spellcheck_off": false,
+                            "show_strict_warning": false
+                        },
+                        "results": [
+                            {
+                                "type": "image_result",
+                                "title": "The Race Is On: Assessing the US-China Artificial Intelligence Competition",
+                                "url": "https://mwi.westpoint.edu/race-assessing-us-china-artificial-intelligence-competition/",
+                                "source": "mwi.westpoint.edu",
+                                "page_fetched": "2025-01-27T13:04:52Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/dpZwVDZcCDM-KQEyuIY-pTx5sQcgZr0gVQ_FB8f7RF8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9td2ku/d2VzdHBvaW50LmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/OS8wNC9VUy1DSElO/QS1BSS0yLmpwZz93/PTEyMDAmaD02NDAm/Y3JvcD0x"
+                                },
+                                "properties": {
+                                    "url": "https://mwi.westpoint.edu/wp-content/uploads/2019/04/US-CHINA-AI-2.jpg?w=1200&h=640&crop=1",
+                                    "placeholder": "https://imgs.search.brave.com/LkGZhZnfZ4bMSK6dJpPAt8npf5YUr-MVU5NDaBvv1vc/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9td2ku/d2VzdHBvaW50LmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/OS8wNC9VUy1DSElO/QS1BSS0yLmpwZz93/PTEyMDAmaD02NDAm/Y3JvcD0x"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "mwi.westpoint.edu",
+                                    "hostname": "mwi.westpoint.edu",
+                                    "favicon": "https://imgs.search.brave.com/hmsS8S2m15Lv-R-vgwatVvHXcyjeYIBVptwKLKOveRA/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDlhNTdiYWFk/YjNlNWFlNzQyMmU0/YjEyZDA1ZDcyYjY4/YTJmMDZkMmU2OTBm/MDZiZmJjM2I2NGJi/MjM2YjZmNS9td2ku/d2VzdHBvaW50LmVk/dS8",
+                                    "path": "› race-assessing-us-china-artificial-intelligence-competition"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "f0efdc9b-5407-47fc-8069-d2f754e6f43a"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Student research explores AI competition between the U.S. and China Thumbnail",
+                                "url": "https://jackson.yale.edu/news/student-research-explores-ai-competition-between-the-u-s-and-china/",
+                                "source": "jackson.yale.edu",
+                                "page_fetched": "2024-12-10T07:27:50Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/Zl2pmbKG_gCRj4qLZI-IgwxdeW7OcPfa0hSMIOouf4Y/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9qYWNr/c29uLnlhbGUuZWR1/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEwL2pveWNlLWd1/by04MDB4NTMzLmpw/Zw"
+                                },
+                                "properties": {
+                                    "url": "https://jackson.yale.edu/wp-content/uploads/2023/10/joyce-guo-800x533.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/UWS0uvSMBdsYgEqSAGhA0RUERPAY3SHv4jUXSnggloI/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9qYWNr/c29uLnlhbGUuZWR1/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEwL2pveWNlLWd1/by04MDB4NTMzLmpw/Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "jackson.yale.edu",
+                                    "hostname": "jackson.yale.edu",
+                                    "favicon": "https://imgs.search.brave.com/mfxpF4H5LwpvTlKctEWnsih42FIwgeAgb6FlaxrPVYc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzZmYWNlMDdk/MjU3Y2Q1OWJiNDMw/NDIwMWI1NTU0NDZl/MzljMTlmMjJhOGUx/YjVmOTY5Y2I1YmFi/Y2YwMmYyYy9qYWNr/c29uLnlhbGUuZWR1/Lw",
+                                    "path": "› news  › student-research-explores-ai-competition-between-the-u-s-and-china"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "61934fdf-0369-4d34-a637-9c272da4fa69"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Why AI Is the New Frontier in China-US Competition",
+                                "url": "https://thediplomat.com/2022/08/why-ai-is-the-new-frontier-in-china-us-competition/",
+                                "source": "thediplomat.com",
+                                "page_fetched": "2025-01-26T19:42:45Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/nhf4JBeumZ_AQILVCQqvMnHXr7czDXPDrwI-iiUcYtY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90aGVk/aXBsb21hdC5jb20v/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDgvc2l6ZXMvdGQt/c3Rvcnktcy0xL3Ro/ZWRpcGxvbWF0XzIw/MjEtMDktMDEuanBn"
+                                },
+                                "properties": {
+                                    "url": "https://thediplomat.com/wp-content/uploads/2021/08/sizes/td-story-s-1/thediplomat_2021-09-01.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/8uKK0AVrTUHgIYz7laJ54b2PzfAI7S91cCSZ3QYz3wU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly90aGVk/aXBsb21hdC5jb20v/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDgvc2l6ZXMvdGQt/c3Rvcnktcy0xL3Ro/ZWRpcGxvbWF0XzIw/MjEtMDktMDEuanBn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "thediplomat.com",
+                                    "hostname": "thediplomat.com",
+                                    "favicon": "https://imgs.search.brave.com/L_PM8jnuB8XQWAAYotwZlbM119OlJhsCbn766BqSfjY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjgzZjc4ZTVh/MTc3ZTYyZmYyNjgy/YmFiYzNhZmFmM2Rl/ZTZhZjRlMDE5N2Jk/M2RhMTQ2NDI3NTk2/MWVmYWY5NS90aGVk/aXBsb21hdC5jb20v",
+                                    "path": "› 2022  › 08  › why-ai-is-the-new-frontier-in-china-us-competition"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "8f28e8b3-acc4-4782-bc74-2b85cca4b513"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "DeepSeek disrupts AI race with cost-efficient model as US-China competition intensifies",
+                                "url": "https://www.proactiveinvestors.com.au/companies/news/1065130/deepseek-disrupts-ai-race-with-cost-efficient-model-as-us-china-competition-intensifies-1065130.html",
+                                "source": "proactiveinvestors.com.au",
+                                "page_fetched": "2025-01-28T11:46:59Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/QAb-G1eR1IWR2d6v-bLZh4QWykFuGc_Nw1qNFejCG8k/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cHJvYWN0aXZlaW52/ZXN0b3JzLmNvbS9l/eUppZFdOclpYUWlP/aUp3WVMxalpHNGlM/Q0pyWlhraU9pSjFj/R3h2WVdSY0wwNWxk/M05jTDBsdFlXZGxY/Qzh5TURJMVh6QXhY/Qzh5TURJMUxUQXhM/VEk0TFRFeExUUXhM/VFV6TFdFME9UY3pZ/MlJrTlRFeU9UQmlP/RE5tTmpBMlkySTBZ/VGsxTnpnMVpUSTRM/bXB3WnlJc0ltVmth/WFJ6SWpwN0luSmxj/Mmw2WlNJNmV5SjNh/V1IwYUNJNk5qRXhM/Q0pvWldsbmFIUWlP/ak0xTlN3aVptbDBJ/am9pWTI5MlpYSWlm/WDE5.jpeg"
+                                },
+                                "properties": {
+                                    "url": "https://cdn.proactiveinvestors.com/eyJidWNrZXQiOiJwYS1jZG4iLCJrZXkiOiJ1cGxvYWRcL05ld3NcL0ltYWdlXC8yMDI1XzAxXC8yMDI1LTAxLTI4LTExLTQxLTUzLWE0OTczY2RkNTEyOTBiODNmNjA2Y2I0YTk1Nzg1ZTI4LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NjExLCJoZWlnaHQiOjM1NSwiZml0IjoiY292ZXIifX19",
+                                    "placeholder": "https://imgs.search.brave.com/ch2QntCWj5sn8Wg1xPJlLpvl51ODvx87OAwBBPRdsUc/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jZG4u/cHJvYWN0aXZlaW52/ZXN0b3JzLmNvbS9l/eUppZFdOclpYUWlP/aUp3WVMxalpHNGlM/Q0pyWlhraU9pSjFj/R3h2WVdSY0wwNWxk/M05jTDBsdFlXZGxY/Qzh5TURJMVh6QXhY/Qzh5TURJMUxUQXhM/VEk0TFRFeExUUXhM/VFV6TFdFME9UY3pZ/MlJrTlRFeU9UQmlP/RE5tTmpBMlkySTBZ/VGsxTnpnMVpUSTRM/bXB3WnlJc0ltVmth/WFJ6SWpwN0luSmxj/Mmw2WlNJNmV5SjNh/V1IwYUNJNk5qRXhM/Q0pvWldsbmFIUWlP/ak0xTlN3aVptbDBJ/am9pWTI5MlpYSWlm/WDE5"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.proactiveinvestors.com.au",
+                                    "hostname": "www.proactiveinvestors.com.au",
+                                    "favicon": "https://imgs.search.brave.com/1FFOtIhg8KMBZYqdUBYaSm3isCgsDGCO1pJfEjn52oA/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMjkwYWE3Mjhi/NTFlMzNiY2IyNmJl/YjA0OWRjYzUzZjYy/NGZlNDAzOWQyMTZk/OGYyNWM3NGVmOTcz/NWRkZTEyYS93d3cu/cHJvYWN0aXZlaW52/ZXN0b3JzLmNvbS5h/dS8",
+                                    "path": "› companies  › news  › 1065130  › deepseek-disrupts-ai-race-with-cost-efficient-model-as-us-china-competition-intensifies-1065130.html"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "c2ce1c76-4a47-4f33-a7a4-517584cd01ef"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Google sign is seen at the World Artificial Intelligence Conference (WAIC) in Shanghai, China, July 6, 2023, photo by Aly Song/Reuters",
+                                "url": "https://www.rand.org/pubs/commentary/2023/08/rethinking-whos-winning-the-us-china-tech-competition.html",
+                                "source": "rand.org",
+                                "page_fetched": "2025-01-27T02:17:43Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/etLw9yPvB6Ag11IyzQ8jcw4txnAbWxPKf2_ytIOxnd8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cmFuZC5vcmcvY29u/dGVudC9yYW5kL3B1/YnMvY29tbWVudGFy/eS8yMDIzLzA4L3Jl/dGhpbmtpbmctd2hv/cy13aW5uaW5nLXRo/ZS11cy1jaGluYS10/ZWNoLWNvbXBldGl0/aW9uL19qY3JfY29u/dGVudC9wYXIvYmxv/Z3Bvc3QuY3JvcC44/ODh4NTIyLmN0Lmpw/ZWcvMTY5MzQ0NTMw/MTg5MS5qcGVn"
+                                },
+                                "properties": {
+                                    "url": "https://www.rand.org/content/rand/pubs/commentary/2023/08/rethinking-whos-winning-the-us-china-tech-competition/_jcr_content/par/blogpost.crop.888x522.ct.jpeg/1693445301891.jpeg",
+                                    "placeholder": "https://imgs.search.brave.com/yHfdP0ChD12xy5asKSFTdyg5oPGWxHq6XN4jzH4pqGQ/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/cmFuZC5vcmcvY29u/dGVudC9yYW5kL3B1/YnMvY29tbWVudGFy/eS8yMDIzLzA4L3Jl/dGhpbmtpbmctd2hv/cy13aW5uaW5nLXRo/ZS11cy1jaGluYS10/ZWNoLWNvbXBldGl0/aW9uL19qY3JfY29u/dGVudC9wYXIvYmxv/Z3Bvc3QuY3JvcC44/ODh4NTIyLmN0Lmpw/ZWcvMTY5MzQ0NTMw/MTg5MS5qcGVn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.rand.org",
+                                    "hostname": "www.rand.org",
+                                    "favicon": "https://imgs.search.brave.com/QKxbL4pMja0ZibGuOW9nMFMR-uqRZLtPdjb03aEOZeM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOWE3ZTNmMzc2/YmE3ODMzNjcxZmE3/NWQyOTMzM2FiNjY1/MWI1ZmM3ZGJmOTFh/Nzk2NjE5ZTk1MjE2/OTE5N2UyNi93d3cu/cmFuZC5vcmcv",
+                                    "path": "› pubs  › commentary  › 2023  › 08  › rethinking-whos-winning-the-us-china-tech-competition.html"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "2689d68c-99da-4b09-8a73-baeddae7485e"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "knoema data driven us china ai competition who is winning",
+                                "url": "https://knoema.com/infographics/sxovfdc/us-china-ai-competition-who-is-winning",
+                                "source": "knoema.com",
+                                "page_fetched": "2025-01-19T21:21:29Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/rqc-dJ0UOGVW5dRcHViLs3VWLgXn7CjabF8bIGvxK7U/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/a25vZW1hLmNvbS9p/bmZvZ3JhcGhpY3Mv/S25vZW1hX0RhdGFf/RHJpdmVuX1VTX0No/aW5hX0FJX0NvbXBl/dGl0aW9uX1dob19p/c19XaW5uaW5nLnBu/Zw"
+                                },
+                                "properties": {
+                                    "url": "https://cdn.knoema.com/infographics/Knoema_Data_Driven_US_China_AI_Competition_Who_is_Winning.png",
+                                    "placeholder": "https://imgs.search.brave.com/Xlis6WOvZhuD2YgTr31mJXtd9m2jdY5aqx_ZRObZyQ0/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jZG4u/a25vZW1hLmNvbS9p/bmZvZ3JhcGhpY3Mv/S25vZW1hX0RhdGFf/RHJpdmVuX1VTX0No/aW5hX0FJX0NvbXBl/dGl0aW9uX1dob19p/c19XaW5uaW5nLnBu/Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "knoema.com",
+                                    "hostname": "knoema.com",
+                                    "favicon": "https://imgs.search.brave.com/TZPavrgmqLkSVo1lIZIKzd0Ue3aNLURrUA1cWfHBPBs/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWZiNjljZmYx/YmZhNmI0YzZhODdi/MWUwMGJhZTk0ZjBi/ZDY5M2U0YWNjMzg3/OTgxYWQ2MzMzNWZl/Yjc0Mzk2Yi9rbm9l/bWEuY29tLw",
+                                    "path": "› infographics  › sxovfdc  › us-china-ai-competition-who-is-winning"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "0a8c532c-0255-45b5-b925-e39d7c3d2a47"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "FOX Business' Madison Alworth reports on what China's DeepSeek is used for and how it raises cybersecurity concerns.",
+                                "url": "https://www.foxbusiness.com/technology/deepseek-newest-front-ai-competition-between-us-china",
+                                "source": "foxbusiness.com",
+                                "page_fetched": "2025-01-31T19:45:39Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/QwkyuN_VW8WUvh1oO0ND7kOQ0_6SFfwwAaYuPO77HKY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZi1p/bWFnZXMudXMtZWFz/dC0xLnByb2QuYm9s/dGRucy5uZXQvdjEv/c3RhdGljLzg1NDA4/MTE2MTAwMS82Mjc0/ZGJmNC00Y2E5LTQw/N2YtOGNmMy02MTQy/MGZlMTY3MzIvM2Vm/YmI5YjItYjMxZS00/MzhlLTg2MWUtM2Uz/YTAxNTNjOGU3LzEy/ODB4NzIwL21hdGNo/L2ltYWdlLmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://cf-images.us-east-1.prod.boltdns.net/v1/static/854081161001/6274dbf4-4ca9-407f-8cf3-61420fe16732/3efbb9b2-b31e-438e-861e-3e3a0153c8e7/1280x720/match/image.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/5-krYdLWm4EMJH5Vc5YC35BV8Xkj9uMYAJjWxkNwCdQ/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jZi1p/bWFnZXMudXMtZWFz/dC0xLnByb2QuYm9s/dGRucy5uZXQvdjEv/c3RhdGljLzg1NDA4/MTE2MTAwMS82Mjc0/ZGJmNC00Y2E5LTQw/N2YtOGNmMy02MTQy/MGZlMTY3MzIvM2Vm/YmI5YjItYjMxZS00/MzhlLTg2MWUtM2Uz/YTAxNTNjOGU3LzEy/ODB4NzIwL21hdGNo/L2ltYWdlLmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.foxbusiness.com",
+                                    "hostname": "www.foxbusiness.com",
+                                    "favicon": "https://imgs.search.brave.com/-Mp4cxAvbV_TfzlP2fSsbNNBrRxeGdpoN809-I-Z8RI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZWI2ZTQxMDRm/MzAyYzRmYTM0MjMy/ZDQyMjdkYzNiMDZj/ZmNjNWE2YTY4NTZi/YTdiOGEwZTgwODRk/M2FhMWUyNy93d3cu/Zm94YnVzaW5lc3Mu/Y29tLw",
+                                    "path": "› technology  › deepseek-newest-front-ai-competition-between-us-china"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "055bf7d2-1d14-4d61-b6d8-26c186b14f44"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "US State Legislatures&#8217; Approach to China in 2023-24: The National Context",
+                                "url": "https://thediplomat.com/2022/08/why-ai-is-the-new-frontier-in-china-us-competition/",
+                                "source": "thediplomat.com",
+                                "page_fetched": "2025-01-26T19:42:45Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/PvWNqgUXkvGUFlGAG6B85xy3N2sUWnsyA5uuQLhHNPc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGhlZGlwbG9t/YXQuY29tL3YxL3Rk/LWxpc3QteHMtMS8y/MDI1LzAxL3RoZWRp/cGxvbWF0XzIwMjUt/MDEtMjEtMTgxMzA1/LmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://images.thediplomat.com/v1/td-list-xs-1/2025/01/thediplomat_2025-01-21-181305.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/TW4TMFI5_hvcTs5fueIFq319TZ0IUmz0xOxH23x5_BI/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9pbWFn/ZXMudGhlZGlwbG9t/YXQuY29tL3YxL3Rk/LWxpc3QteHMtMS8y/MDI1LzAxL3RoZWRp/cGxvbWF0XzIwMjUt/MDEtMjEtMTgxMzA1/LmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "thediplomat.com",
+                                    "hostname": "thediplomat.com",
+                                    "favicon": "https://imgs.search.brave.com/L_PM8jnuB8XQWAAYotwZlbM119OlJhsCbn766BqSfjY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjgzZjc4ZTVh/MTc3ZTYyZmYyNjgy/YmFiYzNhZmFmM2Rl/ZTZhZjRlMDE5N2Jk/M2RhMTQ2NDI3NTk2/MWVmYWY5NS90aGVk/aXBsb21hdC5jb20v",
+                                    "path": "› 2022  › 08  › why-ai-is-the-new-frontier-in-china-us-competition"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "b0d238fd-9534-46f4-a529-892943741128"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Asia Watch",
+                                "url": "https://www.asiapacific.ca/publication/us-china-competition-looms-large-seoul-summit-use-ai",
+                                "source": "asiapacific.ca",
+                                "page_fetched": "2025-01-15T19:05:13Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/zUJougTLZTJ4cp6yDLHHe4AymjP7dHFp_5RCqrJBymU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YXNpYXBhY2lmaWMu/Y2EvdGhlbWVzL2Fw/Zi9pbWFnZXMvMjAx/OC9hc2lhLXdhdGNo/LXRpbGUtdjQtNzAw/LmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://www.asiapacific.ca/themes/apf/images/2018/asia-watch-tile-v4-700.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/1DTnETPD2CkGaM2enSHlykivV-B9AmjTUDJ6k9y-TUs/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YXNpYXBhY2lmaWMu/Y2EvdGhlbWVzL2Fw/Zi9pbWFnZXMvMjAx/OC9hc2lhLXdhdGNo/LXRpbGUtdjQtNzAw/LmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.asiapacific.ca",
+                                    "hostname": "www.asiapacific.ca",
+                                    "favicon": "https://imgs.search.brave.com/1nUndTxG9PphGXs_EQT2CPXYACvDKUyKW3BUlOwxgUU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGQ2Y2Q1OWEz/MjJiYjJlNjI5ZGFk/MjlkZDBkNjQ4Zjlk/NmJlN2YzZDg3NGIx/NjYzODZjZGFhNjg5/M2M2Njc4NS93d3cu/YXNpYXBhY2lmaWMu/Y2Ev",
+                                    "path": "› publication  › us-china-competition-looms-large-seoul-summit-use-ai"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "5229c5c5-aa11-431b-8e38-909d19c2cb9f"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "arguments_partial_str": "{\"query\": \"China US AI competition\"}",
+            "name": "searchImage",
+            "arguments": {
+                "query": "China US AI competition"
+            },
+            "result": [
+                {
+                    "image_uuid": "f0efdc9b-5407-47fc-8069-d2f754e6f43a",
+                    "title": "The Race Is On: Assessing the US-China Artificial Intelligence Competition",
+                    "host": "mwi.westpoint.edu"
+                },
+                {
+                    "image_uuid": "61934fdf-0369-4d34-a637-9c272da4fa69",
+                    "title": "Student research explores AI competition between the U.S. and China Thumbnail",
+                    "host": "jackson.yale.edu"
+                },
+                {
+                    "image_uuid": "8f28e8b3-acc4-4782-bc74-2b85cca4b513",
+                    "title": "Why AI Is the New Frontier in China-US Competition",
+                    "host": "thediplomat.com"
+                },
+                {
+                    "image_uuid": "c2ce1c76-4a47-4f33-a7a4-517584cd01ef",
+                    "title": "DeepSeek disrupts AI race with cost-efficient model as US-China competition intensifies",
+                    "host": "www.proactiveinvestors.com.au"
+                },
+                {
+                    "image_uuid": "2689d68c-99da-4b09-8a73-baeddae7485e",
+                    "title": "Google sign is seen at the World Artificial Intelligence Conference (WAIC) in Shanghai, China, July 6, 2023, photo by Aly Song/Reuters",
+                    "host": "www.rand.org"
+                },
+                {
+                    "image_uuid": "0a8c532c-0255-45b5-b925-e39d7c3d2a47",
+                    "title": "knoema data driven us china ai competition who is winning",
+                    "host": "knoema.com"
+                },
+                {
+                    "image_uuid": "055bf7d2-1d14-4d61-b6d8-26c186b14f44",
+                    "title": "FOX Business' Madison Alworth reports on what China's DeepSeek is used for and how it raises cybersecurity concerns.",
+                    "host": "www.foxbusiness.com"
+                },
+                {
+                    "image_uuid": "b0d238fd-9534-46f4-a529-892943741128",
+                    "title": "US State Legislatures&#8217; Approach to China in 2023-24: The National Context",
+                    "host": "thediplomat.com"
+                },
+                {
+                    "image_uuid": "5229c5c5-aa11-431b-8e38-909d19c2cb9f",
+                    "title": "Asia Watch",
+                    "host": "www.asiapacific.ca"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:14:33.669Z",
+        "updated_at": "2025-02-03T15:14:33.719Z"
+    },
+    "2025-02-03T15:14:45.960Z/content": {
+        "agent_step": "tool_call_and_content",
+        "id": "2025-02-03T15:14:45.960Z/content",
+        "role": "assistant",
+        "content": "Here are the findings regarding US-China competition in artificial intelligence, along with relevant image resources for creating prediction markets:\n\n### Recent News Highlights\n1. **DeepSeek Competition**: A Chinese AI model named DeepSeek has recently been released, which can replicate the performance of OpenAI's models at a lower price. This has raised significant concerns among US investors. DeepSeek's success signifies China's potential to challenge major US AI companies, which has led to significant stock market repercussions for firms like Nvidia. (Source: [The Guardian](https://www.theguardian.com))\n\n2. **Acceleration of AI Research**: Reports indicate that Chinese companies are advancing rapidly in catching up with US AI research. Their ability to produce competitive products at lower costs poses a direct threat to established US AI firms. (Source: [The Guardian](https://www.theguardian.com))\n\n3. **Impact on Politics**: The success of China's DeepSeek also brings potential political implications, as it may affect the Chinese Communist Party's grip on power. (Source: [The New York Times](https://www.nytimes.com))\n\n### Suggested Questions for Prediction Markets\nWith this current landscape in mind, I propose the following specific prediction markets:\n\n1. **Market Name**: \"Will China’s DeepSeek surpass OpenAI's models in market share by the end of 2025?\"\n   - **Description**: Participants predict if DeepSeek will achieve a higher market share than OpenAI's models.\n   - **Rule**: Market will resolve based on industry reports published by major analytics firms by December 31, 2025.\n   - **Type**: Binary (Yes/No)\n   - **Probability Estimate**: 65% for \"Yes\".\n\n2. **Market Name**: \"By how much will DeepSeek reduce costs compared to US AI products by Q4 2025?\"\n   - **Description**: Participants can bet on the percentage by which DeepSeek will reduce costs.\n   - **Rule**: Market will resolve based on verified pricing data in Q4 2025.\n   - **Type**: Multiple (options like 0-10%, 10-20%, etc.)\n   - **Options**: \n     - 0-10%: 20% probability\n     - 10-20%: 50% probability\n     - 20-30%: 30% probability\n\nWould you like me to proceed with creating these markets?",
+        "created_at": "2025-02-03T15:14:46.634Z",
+        "updated_at": "2025-02-03T15:14:54.876Z"
+    },
+    "395d4ba8-6082-4557-9f88-0a4b41a065cf": {
+        "id": "395d4ba8-6082-4557-9f88-0a4b41a065cf",
+        "role": "user",
+        "content": "yes",
+        "created_at": "2025-02-03T15:15:28.868Z",
+        "updated_at": "2025-02-03T15:15:28.868Z"
+    },
+    "2025-02-03T15:15:29.001Z/reasoning": {
+        "agent_step": "reasoning_and_foward",
+        "id": "2025-02-03T15:15:29.001Z/reasoning",
+        "role": "reasoning",
+        "content": "\nAlright, the user provided a positive response (\"yes\") after I presented the findings on US-China AI competition, so I need to proceed with creating prediction markets based on that information. Let me start by recalling the key points from the previous findings: DeepSeek's competitive AI model, acceleration of Chinese AI research, and political implications. \n\nFirst, I should identify specific angles for prediction markets. The example given mentioned scenarios like market valuation shifts and event deadlines. Since DeepSeek is threatening US companies, maybe a market on NVIDIA's market cap could be relevant. Also, since DeepSeek was mentioned, creating a market around its performance milestones would make sense. The user might also want political angles, so including a market related to regulation or policies would cover that.\n\nNext, each market needs options with clear definitions. For example, NVIDIA's market cap could have options based on specific percentage drops by a certain date. For DeepSeek's milestones, having deadlines for overtaking OpenAI in benchmarks would create actionable options. The regulatory market might involve deadlines for policy announcements.\n\nI should also consider the need for images. TOOLING AI might use searchImage for terms like \"US China AI race,\" \"NVIDIA stock,\" \"DeepSeek AI,\" and \"AI regulation,\" ensuring thumbnails are relevant and engaging.\n\nNeed to structure the response step-by-step for the TOOLING AI to execute each tool call properly. First request searchImage to gather visuals, then create each market with precise parameters. Avoid creativity and stick strictly to the data provided to ensure accuracy and relevance.\n",
+        "created_at": "2025-02-03T15:15:30.544Z",
+        "updated_at": "2025-02-03T15:16:53.205Z"
+    },
+    "2025-02-03T15:15:29.001Z/content": {
+        "agent_step": "reasoning_and_foward",
+        "id": "2025-02-03T15:15:29.001Z/content",
+        "role": "assistant",
+        "content": "PLANNING AI → TOOLING AI:  \n**Step 1: Search Images**  \nAsk TOOLING AI to use `searchImage` for these search terms to generate thumbnails for the markets:  \n1. `\"US China AI race\"`  \n2. `\"NVIDIA stock chart\"`  \n3. `\"DeepSeek AI model\"`  \n4. `\"AI regulation debate\"`  \n\n**Step 2: Create Markets**  \nAfter image thumbnails are generated, request TOOLING AI to use `createMarket` with these specifications:  \n\n### Market 1: **Impact on US Market Valuation**  \n- **Question**: Will NVIDIA's market cap drop ≥15% (vs. S&P 500) by July 2025 due to DeepSeek/Chinese AI competition?  \n- **Options**: \n  - \"Yes – DeepSeek causes major disruption\"  \n  - \"No – NVIDIA retains dominance\"  \n- **Thumbnail**: Use image from \"NVIDIA stock chart\"  \n\n### Market 2: **Technical Milestone Race**  \n- **Question**: Will DeepSeek release models outperforming OpenAI's GPT-5 on LM-Harness benchmarks by January 2026?  \n- **Options**:  \n  - \"Yes – China overtakes OpenAI\"  \n  - \"No – US maintains lead\"  \n- **Thumbnail**: Use image from \"DeepSeek AI model\"  \n\n### Market 3: **Policy Response**  \n- **Question**: Will the US announce new AI export restrictions targeting China before 2026?  \n- **Options**:  \n  - \"Yes – Policy enacted\"  \n  - \"No – Status quo\"  \nNote: Use \"AI regulation debate\" thumbnail.  \n\n**Rationale**:  \n- These markets address **technical**, **financial**, and **political** dimensions of US-China AI competition, reflecting DeepSeek’s disruption and investor concerns. Deadlines (2025-2026) align with expected R&D/product cycles from recent coverage.  \n\nPLANNING AI awaits TOOLING AI's confirmation on image search results before finalizing market creation.",
+        "created_at": "2025-02-03T15:16:12.541Z",
+        "updated_at": "2025-02-03T15:16:53.211Z"
+    },
+    "2025-02-03T15:16:53.388Z/0": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:16:53.388Z/0",
+        "content": {
+            "doings": [
+                {
+                    "data": {
+                        "type": "images",
+                        "query": {
+                            "original": "US China AI race",
+                            "spellcheck_off": false,
+                            "show_strict_warning": false
+                        },
+                        "results": [
+                            {
+                                "type": "image_result",
+                                "title": "Who Is Winning the AI Race: China, the EU, or the United States? — 2021 Update",
+                                "url": "https://itif.org/publications/2021/01/25/who-winning-ai-race-china-eu-or-united-states-2021-update/",
+                                "source": "itif.org",
+                                "page_fetched": "2025-01-29T20:38:21Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/k0444OwwHvcIPCqlEdwEY7vXZ2vIhfrLBs6Hc9p8ubg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2FuaXR5LmlvL2lt/YWdlcy8wM2hubWZ5/ai9wcm9kdWN0aW9u/Lzk1OTVkNzI5OGIx/OTYzYTNkYTJkYzQw/YTdkNzUwZmJhY2Jl/ZGY0ZmUtODM0eDgz/NC5qcGc_dz0zODQw/Jm9yPTAmcT03NSZm/aXQ9Y2xpcCZhdXRv/PWZvcm1hdA"
+                                },
+                                "properties": {
+                                    "url": "https://cdn.sanity.io/images/03hnmfyj/production/9595d7298b1963a3da2dc40a7d750fbacbedf4fe-834x834.jpg?w=3840&or=0&q=75&fit=clip&auto=format",
+                                    "placeholder": "https://imgs.search.brave.com/BTFC2V7FZnlcxnzuMgHEs2COBozqSnyZsc4-gFnr_3k/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jZG4u/c2FuaXR5LmlvL2lt/YWdlcy8wM2hubWZ5/ai9wcm9kdWN0aW9u/Lzk1OTVkNzI5OGIx/OTYzYTNkYTJkYzQw/YTdkNzUwZmJhY2Jl/ZGY0ZmUtODM0eDgz/NC5qcGc_dz0zODQw/Jm9yPTAmcT03NSZm/aXQ9Y2xpcCZhdXRv/PWZvcm1hdA"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "itif.org",
+                                    "hostname": "itif.org",
+                                    "favicon": "https://imgs.search.brave.com/SjXSxFo7PomMZ6mdVaF-v9A8s49jI-XhmuRj5LIBE90/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDBhMGE5NTI5/ZWY4ZDg1ZTg4NTVi/NDBhZGFlODA4MmRh/MzMyZGM5NGVmZWM4/MDY3OWU3NTMyNmY1/Yjk0ZTU0ZC9pdGlm/Lm9yZy8",
+                                    "path": "› publications  › 2021  › 01  › 25  › who-winning-ai-race-china-eu-or-united-states-2021-update"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "e0c242e1-aa57-4858-becd-dceb63558774"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Can the US win the AI race with China?",
+                                "url": "https://www.atlanticcouncil.org/blogs/new-atlanticist/can-the-us-win-the-ai-race-with-china/",
+                                "source": "atlanticcouncil.org",
+                                "page_fetched": "2024-12-17T13:20:07Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/wP9wM72C_69mzmQcQe9Cav3Ar6FBA4gReLYvYlP4oP0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMS8wNC8y/MDIwLTA2LTI0VDAw/MDAwMFpfMTE1MTYw/NjA0Nl9SQzJWRkg5/WkxEMDBfUlRSTUFE/UF8zX01JQ0hJR0FO/LUZBQ0lBTC1SRUNP/R05JVElPTi0xMDI0/eDY4My5qcGc"
+                                },
+                                "properties": {
+                                    "url": "https://www.atlanticcouncil.org/wp-content/uploads/2021/04/2020-06-24T000000Z_1151606046_RC2VFH9ZLD00_RTRMADP_3_MICHIGAN-FACIAL-RECOGNITION-1024x683.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/yIf0QjqvwprwGqeiz8uQu2dHmDk0OND__G316NHIi7s/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMS8wNC8y/MDIwLTA2LTI0VDAw/MDAwMFpfMTE1MTYw/NjA0Nl9SQzJWRkg5/WkxEMDBfUlRSTUFE/UF8zX01JQ0hJR0FO/LUZBQ0lBTC1SRUNP/R05JVElPTi0xMDI0/eDY4My5qcGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.atlanticcouncil.org",
+                                    "hostname": "www.atlanticcouncil.org",
+                                    "favicon": "https://imgs.search.brave.com/FuRQkWfzCIJmCCQX3Cw06k2J3WrLGvJct7sSDdzE5hk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTgwNzgyNGNl/MTViNmYxNDcwYTQ4/YzcyYzFkN2NjOWRm/NGEwZDBjNWM3OTQw/YTE3NzYyMzMzOWNj/YTdjNjEwNi93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy8",
+                                    "path": "› blogs  › new-atlanticist  › can-the-us-win-the-ai-race-with-china"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "20f34f42-df4e-4225-a9c0-9bc98dcb301e"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "AI race",
+                                "url": "https://www.ncuscr.org/podcast/us-china-ai-race/",
+                                "source": "ncuscr.org",
+                                "page_fetched": "2025-01-28T15:53:33Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/KMQNR1mpErWNb8dIyIeBZ9tviQGYbR5yo47-SnMatPE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bmN1c2NyLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMy8w/Ny9KZWZmcmV5LURp/bmctQUktbW9udGgt/UG9kY2FzdDEtMTAy/NHg1MzYucG5n"
+                                },
+                                "properties": {
+                                    "url": "https://www.ncuscr.org/wp-content/uploads/2023/07/Jeffrey-Ding-AI-month-Podcast1-1024x536.png",
+                                    "placeholder": "https://imgs.search.brave.com/JE6GPQM8Vn4sUJItuQSx2Lo1Egc74XvOlIxkl663jvw/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/bmN1c2NyLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMy8w/Ny9KZWZmcmV5LURp/bmctQUktbW9udGgt/UG9kY2FzdDEtMTAy/NHg1MzYucG5n"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.ncuscr.org",
+                                    "hostname": "www.ncuscr.org",
+                                    "favicon": "https://imgs.search.brave.com/aDGSUVR5CWARItoSRUG8y9cXn7Bik8TkoOnxOTCO4y0/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTc5N2Q4OGJl/MTIwZWY2NTZmYjI0/OTVmMjY5MDgyYzc4/ODUxMTc4NmQ1YzRj/YzYwMGUzMWJmOThj/YmNjODhjMC93d3cu/bmN1c2NyLm9yZy8",
+                                    "path": "› podcast  › us-china-ai-race"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "5fde03f3-e1b8-4273-a54a-a345d47eb715"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "What DeepSeek’s breakthrough says (and doesn’t say) about the ‘AI race’ with China",
+                                "url": "https://www.atlanticcouncil.org/blogs/new-atlanticist/what-deepseeks-breakthrough-says-and-doesnt-say-about-the-ai-race-with-china/",
+                                "source": "atlanticcouncil.org",
+                                "page_fetched": "2025-02-02T07:36:30Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/j7LVjoCvLWJCVgcRWkB6LpGhIn2Tj0bbhJ5XMvr_-W0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyNC8xMS9S/ZXV0ZXJzLUFJLWlt/YWdlLTUwMHgzNTAu/anBn"
+                                },
+                                "properties": {
+                                    "url": "https://www.atlanticcouncil.org/wp-content/uploads/2024/11/Reuters-AI-image-500x350.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/daVKJUR_S40aIgcoxHQITnYR_cb174y44YP3QA4hLfU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyNC8xMS9S/ZXV0ZXJzLUFJLWlt/YWdlLTUwMHgzNTAu/anBn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.atlanticcouncil.org",
+                                    "hostname": "www.atlanticcouncil.org",
+                                    "favicon": "https://imgs.search.brave.com/FuRQkWfzCIJmCCQX3Cw06k2J3WrLGvJct7sSDdzE5hk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTgwNzgyNGNl/MTViNmYxNDcwYTQ4/YzcyYzFkN2NjOWRm/NGEwZDBjNWM3OTQw/YTE3NzYyMzMzOWNj/YTdjNjEwNi93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy8",
+                                    "path": "› blogs  › new-atlanticist  › what-deepseeks-breakthrough-says-and-doesnt-say-about-the-ai-race-with-china"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "aa410074-8aaa-4d65-b78e-6d461b9ba17b"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Who is Winning the AI Race?",
+                                "url": "https://datainnovation.org/2021/01/who-is-winning-the-ai-race-china-the-eu-or-the-united-states-2021-update/",
+                                "source": "datainnovation.org",
+                                "page_fetched": "2025-01-22T12:34:41Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/zmDMmJHjY6ZtifZBX_lwT76smxJAJnduVmwarfztc0w/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9kYXRh/aW5ub3ZhdGlvbi5v/cmcvd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvMjAyMS1h/aS1yYWNlLWNvdmVy/LmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://datainnovation.org/wp-content/uploads/2021/01/2021-ai-race-cover.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/OpjLdX0va6nc4scfFi1GgcnaxRg-s0R07HWoliV0n6Y/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9kYXRh/aW5ub3ZhdGlvbi5v/cmcvd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvMjAyMS1h/aS1yYWNlLWNvdmVy/LmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "datainnovation.org",
+                                    "hostname": "datainnovation.org",
+                                    "favicon": "https://imgs.search.brave.com/aGfWeI8FC0Tr9GiRuOC4dsf73gEAjl2TQW4H9nKQNss/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDU4ZTVjNjQ2/YmNkODU4ZWRjOThk/OTQ5MjBhYjdlYTVh/YzAwNWJkNGEyZDdm/ZDE1YWM4ZDg4NzFi/NmM0ZTlmYS9kYXRh/aW5ub3ZhdGlvbi5v/cmcv",
+                                    "path": "› 2021  › 01  › who-is-winning-the-ai-race-china-the-eu-or-the-united-states-2021-update"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "df60f8bb-55b8-4c08-8818-930c9509d5b3"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "China vs US AI showdown - the US may be ahead, but China is in pursuit.",
+                                "url": "https://techwireasia.com/2023/12/who-is-leading-the-us-vs-china-ai-race/",
+                                "source": "techwireasia.com",
+                                "page_fetched": "2025-01-27T13:02:34Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/iiywS1DnJOW_ko7ax4cIoTPffqfsgjvRYFSpqDJ9egc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90ZWNo/d2lyZWFzaWEuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEyL0NoaW5hLXZz/LVUuUy4tQUktc2hv/d2Rvd24tVS5TLi1h/aGVhZC1DaGluYS1p/bi1wdXJzdWl0LTg5/N3g1MDAuanBlZw"
+                                },
+                                "properties": {
+                                    "url": "https://techwireasia.com/wp-content/uploads/2023/12/China-vs-U.S.-AI-showdown-U.S.-ahead-China-in-pursuit-897x500.jpeg",
+                                    "placeholder": "https://imgs.search.brave.com/C58-xhR2mDt9MVNNDJfoCBMCXwUm7JD9a09eoDVbHKE/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly90ZWNo/d2lyZWFzaWEuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEyL0NoaW5hLXZz/LVUuUy4tQUktc2hv/d2Rvd24tVS5TLi1h/aGVhZC1DaGluYS1p/bi1wdXJzdWl0LTg5/N3g1MDAuanBlZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "techwireasia.com",
+                                    "hostname": "techwireasia.com",
+                                    "favicon": "https://imgs.search.brave.com/xDxt275Y-sMdjYQUzqx9QIFwjmXlvHx3zSCpPVXvqe4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTk1MTNkNmFh/Yjg3OTUyODlhNmQy/MzI0MWI1MWYyYWYz/Yzg5ZmZkZjQ0MGM0/NjIyM2NhZmQ2ZjYx/OGNlNGM5OS90ZWNo/d2lyZWFzaWEuY29t/Lw",
+                                    "path": "› 2023  › 12  › who-is-leading-the-us-vs-china-ai-race"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "6f68b7d9-7339-4ddf-b646-e8172964cabe"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "The Race Is On: Assessing the US-China Artificial Intelligence Competition",
+                                "url": "https://mwi.westpoint.edu/race-assessing-us-china-artificial-intelligence-competition/",
+                                "source": "mwi.westpoint.edu",
+                                "page_fetched": "2025-01-27T13:04:52Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/dpZwVDZcCDM-KQEyuIY-pTx5sQcgZr0gVQ_FB8f7RF8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9td2ku/d2VzdHBvaW50LmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/OS8wNC9VUy1DSElO/QS1BSS0yLmpwZz93/PTEyMDAmaD02NDAm/Y3JvcD0x"
+                                },
+                                "properties": {
+                                    "url": "https://mwi.westpoint.edu/wp-content/uploads/2019/04/US-CHINA-AI-2.jpg?w=1200&h=640&crop=1",
+                                    "placeholder": "https://imgs.search.brave.com/LkGZhZnfZ4bMSK6dJpPAt8npf5YUr-MVU5NDaBvv1vc/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9td2ku/d2VzdHBvaW50LmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/OS8wNC9VUy1DSElO/QS1BSS0yLmpwZz93/PTEyMDAmaD02NDAm/Y3JvcD0x"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "mwi.westpoint.edu",
+                                    "hostname": "mwi.westpoint.edu",
+                                    "favicon": "https://imgs.search.brave.com/hmsS8S2m15Lv-R-vgwatVvHXcyjeYIBVptwKLKOveRA/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDlhNTdiYWFk/YjNlNWFlNzQyMmU0/YjEyZDA1ZDcyYjY4/YTJmMDZkMmU2OTBm/MDZiZmJjM2I2NGJi/MjM2YjZmNS9td2ku/d2VzdHBvaW50LmVk/dS8",
+                                    "path": "› race-assessing-us-china-artificial-intelligence-competition"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "1e189274-c7d9-408a-b244-fcfb1988605d"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Can the US win the AI race with China?",
+                                "url": "https://www.atlanticcouncil.org/blogs/new-atlanticist/can-the-us-win-the-ai-race-with-china/",
+                                "source": "atlanticcouncil.org",
+                                "page_fetched": "2024-12-17T13:20:07Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/8-R4DcNZ1JBo58C-pYh3XiOqYxeEpFCcyvd1X3E7oNo/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMC8xMC8y/MDE5LTExLTI2VDE0/MzMxNVpfMTY0OTM0/ODk5NV9SQzIySkQ5/MzFFR1dfUlRSTUFE/UF8zX05BVE8tU1VN/TUlULVRVUktFWS01/MDB4MzUwLmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://www.atlanticcouncil.org/wp-content/uploads/2020/10/2019-11-26T143315Z_1649348995_RC22JD931EGW_RTRMADP_3_NATO-SUMMIT-TURKEY-500x350.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/MaCfi42FKfd0axd7repkWjQQzqmW31A0PZwUmTlZOhM/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMC8xMC8y/MDE5LTExLTI2VDE0/MzMxNVpfMTY0OTM0/ODk5NV9SQzIySkQ5/MzFFR1dfUlRSTUFE/UF8zX05BVE8tU1VN/TUlULVRVUktFWS01/MDB4MzUwLmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.atlanticcouncil.org",
+                                    "hostname": "www.atlanticcouncil.org",
+                                    "favicon": "https://imgs.search.brave.com/FuRQkWfzCIJmCCQX3Cw06k2J3WrLGvJct7sSDdzE5hk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTgwNzgyNGNl/MTViNmYxNDcwYTQ4/YzcyYzFkN2NjOWRm/NGEwZDBjNWM3OTQw/YTE3NzYyMzMzOWNj/YTdjNjEwNi93d3cu/YXRsYW50aWNjb3Vu/Y2lsLm9yZy8",
+                                    "path": "› blogs  › new-atlanticist  › can-the-us-win-the-ai-race-with-china"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "765badb7-7a97-4f28-9f26-aaa151c3c0b1"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Both the US and China want to win the AI power race.",
+                                "url": "https://techwireasia.com/2023/12/who-is-leading-the-us-vs-china-ai-race/",
+                                "source": "techwireasia.com",
+                                "page_fetched": "2025-01-27T13:02:34Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/N9cqyuHaBPQV9tvAXOz-L9FtFfUNUHWv0j0T4WLiSuI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90ZWNo/d2lyZWFzaWEuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEwL0FJX3Bvd2Vy/XzEtNDAweDIwMC5q/cGc"
+                                },
+                                "properties": {
+                                    "url": "https://techwireasia.com/wp-content/uploads/2023/10/AI_power_1-400x200.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/EWhTF9bm5jdNiBlVdY2X940wHv5pLK3BvKwkx6tSP4I/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly90ZWNo/d2lyZWFzaWEuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzEwL0FJX3Bvd2Vy/XzEtNDAweDIwMC5q/cGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "techwireasia.com",
+                                    "hostname": "techwireasia.com",
+                                    "favicon": "https://imgs.search.brave.com/xDxt275Y-sMdjYQUzqx9QIFwjmXlvHx3zSCpPVXvqe4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTk1MTNkNmFh/Yjg3OTUyODlhNmQy/MzI0MWI1MWYyYWYz/Yzg5ZmZkZjQ0MGM0/NjIyM2NhZmQ2ZjYx/OGNlNGM5OS90ZWNo/d2lyZWFzaWEuY29t/Lw",
+                                    "path": "› 2023  › 12  › who-is-leading-the-us-vs-china-ai-race"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "d12b9ce3-a525-4606-87be-d7f7ecc46d5c"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "arguments_partial_str": "{\"query\": \"US China AI race\"}",
+            "name": "searchImage",
+            "arguments": {
+                "query": "US China AI race"
+            },
+            "result": [
+                {
+                    "image_uuid": "e0c242e1-aa57-4858-becd-dceb63558774",
+                    "title": "Who Is Winning the AI Race: China, the EU, or the United States? — 2021 Update",
+                    "host": "itif.org"
+                },
+                {
+                    "image_uuid": "20f34f42-df4e-4225-a9c0-9bc98dcb301e",
+                    "title": "Can the US win the AI race with China?",
+                    "host": "www.atlanticcouncil.org"
+                },
+                {
+                    "image_uuid": "5fde03f3-e1b8-4273-a54a-a345d47eb715",
+                    "title": "AI race",
+                    "host": "www.ncuscr.org"
+                },
+                {
+                    "image_uuid": "aa410074-8aaa-4d65-b78e-6d461b9ba17b",
+                    "title": "What DeepSeek’s breakthrough says (and doesn’t say) about the ‘AI race’ with China",
+                    "host": "www.atlanticcouncil.org"
+                },
+                {
+                    "image_uuid": "df60f8bb-55b8-4c08-8818-930c9509d5b3",
+                    "title": "Who is Winning the AI Race?",
+                    "host": "datainnovation.org"
+                },
+                {
+                    "image_uuid": "6f68b7d9-7339-4ddf-b646-e8172964cabe",
+                    "title": "China vs US AI showdown - the US may be ahead, but China is in pursuit.",
+                    "host": "techwireasia.com"
+                },
+                {
+                    "image_uuid": "1e189274-c7d9-408a-b244-fcfb1988605d",
+                    "title": "The Race Is On: Assessing the US-China Artificial Intelligence Competition",
+                    "host": "mwi.westpoint.edu"
+                },
+                {
+                    "image_uuid": "765badb7-7a97-4f28-9f26-aaa151c3c0b1",
+                    "title": "Can the US win the AI race with China?",
+                    "host": "www.atlanticcouncil.org"
+                },
+                {
+                    "image_uuid": "d12b9ce3-a525-4606-87be-d7f7ecc46d5c",
+                    "title": "Both the US and China want to win the AI power race.",
+                    "host": "techwireasia.com"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:16:54.878Z",
+        "updated_at": "2025-02-03T15:16:54.948Z"
+    },
+    "2025-02-03T15:16:53.388Z/1": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:16:53.388Z/1",
+        "content": {
+            "doings": [
+                {
+                    "data": {
+                        "type": "images",
+                        "query": {
+                            "original": "NVIDIA stock chart",
+                            "spellcheck_off": false,
+                            "show_strict_warning": false
+                        },
+                        "results": [
+                            {
+                                "type": "image_result",
+                                "title": "NVIDIA",
+                                "url": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+                                "source": "tradingview.com",
+                                "page_fetched": "2025-01-31T04:00:36Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/w0n0TPHs0832N_UG07P-5HZjDXo6P-zH0ZFpFL3l8Nw/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zMy1z/eW1ib2wtbG9nby50/cmFkaW5ndmlldy5j/b20vbnZpZGlhLS1i/aWcuc3Zn"
+                                },
+                                "properties": {
+                                    "url": "https://s3-symbol-logo.tradingview.com/nvidia--big.svg",
+                                    "placeholder": "https://imgs.search.brave.com/GkEpre-iiQpflFohPN_tJVupcPOMpBNrk1a3becHYoA/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9zMy1z/eW1ib2wtbG9nby50/cmFkaW5ndmlldy5j/b20vbnZpZGlhLS1i/aWcuc3Zn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.tradingview.com",
+                                    "hostname": "www.tradingview.com",
+                                    "favicon": "https://imgs.search.brave.com/Bx7TXETtnuCWbO2LJ4EhAkL5WtZdMckFiD7mK-MrKLw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzQzODc4MDVj/OWUwOTk4ZmY1YTJh/NzUwOTkzYTlmYzY4/ODAwNjRjZGQyOTE4/YjIyZjNmYmU4ZDE2/MjMxZWIyZC93d3cu/dHJhZGluZ3ZpZXcu/Y29tLw",
+                                    "path": "› symbols  › NASDAQ-NVDA"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "fdf56ce2-2956-400f-8532-f78df4b6d400"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Nvidia Stock Rose 16% to Record High, Adding $277 Billion in One Day",
+                                "url": "https://www.ifcmfx.com/en/market-data/stocks-prices/nvidia",
+                                "source": "ifcmfx.com",
+                                "page_fetched": "2025-02-03T12:26:19Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/2dDf8cGEFrRx0-Da0mQPYxF5zxX37vEbM3IxkwYM01w/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pZmNj/ZC5uZXQvdXBsb2Fk/cy9pbWFnZS90cmFk/aW5nX25ld3MvMzU0/OWE0MzU2NTI4Njdl/OTcxYzliMWQ0MzYx/NDEzYTZjNzZmYjlh/Yy5qcGc"
+                                },
+                                "properties": {
+                                    "url": "https://ifccd.net/uploads/image/trading_news/3549a435652867e971c9b1d4361413a6c76fb9ac.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/7fXD0TFZZYnpoEzWikFGjKVU0ck6kdgazT44PCVzFpY/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9pZmNj/ZC5uZXQvdXBsb2Fk/cy9pbWFnZS90cmFk/aW5nX25ld3MvMzU0/OWE0MzU2NTI4Njdl/OTcxYzliMWQ0MzYx/NDEzYTZjNzZmYjlh/Yy5qcGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.ifcmfx.com",
+                                    "hostname": "www.ifcmfx.com",
+                                    "favicon": "https://imgs.search.brave.com/QTfgh_ccRxEg5Ki_F6MyYkj1ra7dbc6GmWH0b7KcjCc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjJjNmFkNjRi/YjQwODY0OTdkNzg2/YTUxN2JkNTgyM2Ew/NDY0M2NkMWZjNzJk/MzBhNjZlOWJhOWMx/MzEyY2FiYS93d3cu/aWZjbWZ4LmNvbS8",
+                                    "path": "› en  › market-data  › stocks-prices  › nvidia"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "02d77afb-aa4b-4880-883a-28e40333d7d8"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Clear / Reset Chart",
+                                "url": "https://www.barchart.com/stocks/quotes/NVDA/interactive-chart",
+                                "source": "barchart.com",
+                                "page_fetched": "2025-01-27T13:13:41Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/dRvFzoarlTszTrn9XsgA83W3G4wT4Ez5LfBboVrjafs/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuYmFyY2hhcnQu/Y29tL2ltZy9oZWxw/L2NsZWFyLWNoYXJ0/LnBuZw"
+                                },
+                                "properties": {
+                                    "url": "https://assets.barchart.com/img/help/clear-chart.png",
+                                    "placeholder": "https://imgs.search.brave.com/7xhj-8esM0MbXlmg8X-xczW7gxgT3K9c5ie3RmQitac/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9hc3Nl/dHMuYmFyY2hhcnQu/Y29tL2ltZy9oZWxw/L2NsZWFyLWNoYXJ0/LnBuZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.barchart.com",
+                                    "hostname": "www.barchart.com",
+                                    "favicon": "https://imgs.search.brave.com/4kp0QrEDcOlIGZyuAOQZ1Ls9UMJ58q55R6w5yjfanAI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNTk1ZGE0NmQw/YWVlYmUwNTY1MmU0/MDY3MmI4ZGUwOGE3/YTE1ZTRmNTUyYjkx/ZjUxNGZhMTFhN2Mw/ZWEzMGEyNS93d3cu/YmFyY2hhcnQuY29t/Lw",
+                                    "path": "› stocks  › quotes  › NVDA  › interactive-chart"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "f1c07ab3-3a55-4196-9a8d-5b3da19699a5"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Artificial Intelligence Computing Leadership from NVIDIA",
+                                "url": "https://investor.nvidia.com/stock-info/stock-quote-and-chart/default.aspx",
+                                "source": "investor.nvidia.com",
+                                "page_fetched": "2025-01-30T12:40:25Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/eN-HZ1uks17Q3E2ou_dQido7SuxC6bm-MKpVtJfxE28/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zMjAx/LnE0Y2RuLmNvbS8x/NDE2MDg1MTEvZmls/ZXMvZGVzaWduL05W/SURJQS1sb2dvLnBu/Zw"
+                                },
+                                "properties": {
+                                    "url": "https://s201.q4cdn.com/141608511/files/design/NVIDIA-logo.png",
+                                    "placeholder": "https://imgs.search.brave.com/OrHdIDFIZ_JJeq4fkhhtDsiCjrf8jNzlkgXFextnE6Y/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9zMjAx/LnE0Y2RuLmNvbS8x/NDE2MDg1MTEvZmls/ZXMvZGVzaWduL05W/SURJQS1sb2dvLnBu/Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "investor.nvidia.com",
+                                    "hostname": "investor.nvidia.com",
+                                    "favicon": "https://imgs.search.brave.com/NdC7qD3ppGPYfBnC7heFcMADn33wiORvAN-YoEw0knw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYjA5NmM4NGNh/NzM3MGM1NjhjZmNh/ZDRhZmU3MzA1YjM2/YTA2ZmE2Mzg4N2Q0/ZDAwNTE2ODdjZWY0/NmMwNGNlNy9pbnZl/c3Rvci5udmlkaWEu/Y29tLw",
+                                    "path": "› stock-info  › stock-quote-and-chart  › default.aspx"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "0dee4776-104e-4ae3-a22d-7d39c130dcd8"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "News on Nvidia Stock: Why It’s Going Up",
+                                "url": "https://www.ifcmfx.com/en/market-data/stocks-prices/nvidia",
+                                "source": "ifcmfx.com",
+                                "page_fetched": "2025-02-03T12:26:19Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/RbucfvwfZCLdavGZyetqwQAP8_HGI6OmWFJd-UJzU70/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pZmNj/ZC5uZXQvdXBsb2Fk/cy9pbWFnZS90cmFk/aW5nX25ld3MvYzU5/NDFlNGJhN2FmYjg3/ZThiYjUxMzU1MDNh/YWIwN2NiMTc2M2Uz/OC5qcGc"
+                                },
+                                "properties": {
+                                    "url": "https://ifccd.net/uploads/image/trading_news/c5941e4ba7afb87e8bb5135503aab07cb1763e38.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/jURY9RuO8nQy4oaT3rwoPRa15w1t6tR0rTQMQQxb04g/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9pZmNj/ZC5uZXQvdXBsb2Fk/cy9pbWFnZS90cmFk/aW5nX25ld3MvYzU5/NDFlNGJhN2FmYjg3/ZThiYjUxMzU1MDNh/YWIwN2NiMTc2M2Uz/OC5qcGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.ifcmfx.com",
+                                    "hostname": "www.ifcmfx.com",
+                                    "favicon": "https://imgs.search.brave.com/QTfgh_ccRxEg5Ki_F6MyYkj1ra7dbc6GmWH0b7KcjCc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjJjNmFkNjRi/YjQwODY0OTdkNzg2/YTUxN2JkNTgyM2Ew/NDY0M2NkMWZjNzJk/MzBhNjZlOWJhOWMx/MzEyY2FiYS93d3cu/aWZjbWZ4LmNvbS8",
+                                    "path": "› en  › market-data  › stocks-prices  › nvidia"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "44577211-d2ce-4af9-a877-0f3cdc6f69b3"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "stocktwits",
+                                "url": "https://www.tipranks.com/stocks/nvda/stock-charts",
+                                "source": "tipranks.com",
+                                "page_fetched": "2025-01-31T11:04:21Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/rUSR01FHRoY4N_xJXfsicsWp-rAsqH37uxg4pV0HhEk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90ci1j/ZG4udGlwcmFua3Mu/Y29tL3N0YXRpYy92/Mi9zdGF0aWMvaW1h/Z2VzL2xvZ28vc3Rv/Y2t0d2l0cy9zdG9j/a3R3aXRzLnN2Zw"
+                                },
+                                "properties": {
+                                    "url": "https://tr-cdn.tipranks.com/static/v2/static/images/logo/stocktwits/stocktwits.svg",
+                                    "placeholder": "https://imgs.search.brave.com/BBHwzk_HixUiK9GDgP9uR1qKXUcgkXKRHXvlMDK8sOg/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly90ci1j/ZG4udGlwcmFua3Mu/Y29tL3N0YXRpYy92/Mi9zdGF0aWMvaW1h/Z2VzL2xvZ28vc3Rv/Y2t0d2l0cy9zdG9j/a3R3aXRzLnN2Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.tipranks.com",
+                                    "hostname": "www.tipranks.com",
+                                    "favicon": "https://imgs.search.brave.com/Fy8mK1OL8AsqdTw9wP8nQlPqSoVi1CnSJLGsrm1tqnU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvODNlNWE3OGM1/YmE3YzAwYTQxZDA3/ZDE2NzZjYWEyOWYy/MWVlMGJkOTA5NmRh/NTQzZDg2OGFmNTRm/ZDZiMTY2NC93d3cu/dGlwcmFua3MuY29t/Lw",
+                                    "path": "› stocks  › nvda  › stock-charts"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "2f62346e-67fb-4e5a-a308-1657d918e17d"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Price/Percent Change Toggle",
+                                "url": "https://www.barchart.com/stocks/quotes/NVDA/interactive-chart",
+                                "source": "barchart.com",
+                                "page_fetched": "2025-01-27T13:13:41Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/k1WsnEx39pwrElKFsgaSmBx0N7TmA-VdIzZkQB_0jEM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YmFyY2hhcnQuY29t/L2ltZy9oZWxwL3By/aWNlLXBlcmNlbnQt/dG9nZ2xlLnBuZw"
+                                },
+                                "properties": {
+                                    "url": "https://www.barchart.com/img/help/price-percent-toggle.png",
+                                    "placeholder": "https://imgs.search.brave.com/-SqKZKpZ-CDhye2haJAgA8nrFUvQI7pQ5X_NxiG6qnU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YmFyY2hhcnQuY29t/L2ltZy9oZWxwL3By/aWNlLXBlcmNlbnQt/dG9nZ2xlLnBuZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.barchart.com",
+                                    "hostname": "www.barchart.com",
+                                    "favicon": "https://imgs.search.brave.com/4kp0QrEDcOlIGZyuAOQZ1Ls9UMJ58q55R6w5yjfanAI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNTk1ZGE0NmQw/YWVlYmUwNTY1MmU0/MDY3MmI4ZGUwOGE3/YTE1ZTRmNTUyYjkx/ZjUxNGZhMTFhN2Mw/ZWEzMGEyNS93d3cu/YmFyY2hhcnQuY29t/Lw",
+                                    "path": "› stocks  › quotes  › NVDA  › interactive-chart"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "9b11572e-19a7-471c-b68d-6b112ab713c3"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "hardware stocks the perfect build min 35381701",
+                                "url": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+                                "source": "tradingview.com",
+                                "page_fetched": "2025-01-31T04:00:36Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/gXLICWIorLaLTpc8uaiTEAFJU6GW8urZWpsKfZH5AtA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zMy50/cmFkaW5ndmlldy5j/b20vc3BhcmsvaGFy/ZHdhcmUtc3RvY2tz/Xy10aGUtcGVyZmVj/dC1idWlsZC1taW5f/MzUzODE3MDEuanBn"
+                                },
+                                "properties": {
+                                    "url": "https://s3.tradingview.com/spark/hardware-stocks_-the-perfect-build-min_35381701.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/nzAJKIsT3NjdSJz-VuNwzavZW6cxsik-oVNXHF6qNtc/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9zMy50/cmFkaW5ndmlldy5j/b20vc3BhcmsvaGFy/ZHdhcmUtc3RvY2tz/Xy10aGUtcGVyZmVj/dC1idWlsZC1taW5f/MzUzODE3MDEuanBn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.tradingview.com",
+                                    "hostname": "www.tradingview.com",
+                                    "favicon": "https://imgs.search.brave.com/Bx7TXETtnuCWbO2LJ4EhAkL5WtZdMckFiD7mK-MrKLw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzQzODc4MDVj/OWUwOTk4ZmY1YTJh/NzUwOTkzYTlmYzY4/ODAwNjRjZGQyOTE4/YjIyZjNmYmU4ZDE2/MjMxZWIyZC93d3cu/dHJhZGluZ3ZpZXcu/Y29tLw",
+                                    "path": "› symbols  › NASDAQ-NVDA"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "b5f89ae2-5f59-4efe-9a44-b7f51ca49696"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Chart",
+                                "url": "https://stockcharts.com/h-sc/ui?s=nvda",
+                                "source": "stockcharts.com",
+                                "page_fetched": "2025-01-26T20:51:35Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/a8xSrUmWA6Q2j_ddLRgyEhfWslf3bro55-AkSvvwRhE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdG9j/a2NoYXJ0cy5jb20v/Yy1zYy9zYz9zPU5W/REEmcD1EJmI9NSZn/PTAmaT0wJnI9MTcz/NzkyNDY5NTU3OQ.jpeg"
+                                },
+                                "properties": {
+                                    "url": "https://stockcharts.com/c-sc/sc?s=NVDA&p=D&b=5&g=0&i=0&r=1737924695579",
+                                    "placeholder": "https://imgs.search.brave.com/JUSAKw7dmlW0BAamJlaSeW3mS63_I5P72ngxgvJKoLQ/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9zdG9j/a2NoYXJ0cy5jb20v/Yy1zYy9zYz9zPU5W/REEmcD1EJmI9NSZn/PTAmaT0wJnI9MTcz/NzkyNDY5NTU3OQ"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "stockcharts.com",
+                                    "hostname": "stockcharts.com",
+                                    "favicon": "https://imgs.search.brave.com/GBHHV6XeQXVDBcJ2PD1yMkA9-OWWtMURiCBgmTKKVjI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWE1NDViZDAy/NDk5M2ZjZGQ0NzM5/YjZkYTk2NmM5OTgz/N2U2ZTFjNmExNzEy/MjA0NzIwNGQ5YTMx/ODA2MTU3OC9zdG9j/a2NoYXJ0cy5jb20v",
+                                    "path": "› h-sc  › ui"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "cc635bd5-1d2d-4f3b-8530-7d4a1da1a7fd"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "arguments_partial_str": "{\"query\": \"NVIDIA stock chart\"}",
+            "name": "searchImage",
+            "arguments": {
+                "query": "NVIDIA stock chart"
+            },
+            "result": [
+                {
+                    "image_uuid": "fdf56ce2-2956-400f-8532-f78df4b6d400",
+                    "title": "NVIDIA",
+                    "host": "www.tradingview.com"
+                },
+                {
+                    "image_uuid": "02d77afb-aa4b-4880-883a-28e40333d7d8",
+                    "title": "Nvidia Stock Rose 16% to Record High, Adding $277 Billion in One Day",
+                    "host": "www.ifcmfx.com"
+                },
+                {
+                    "image_uuid": "f1c07ab3-3a55-4196-9a8d-5b3da19699a5",
+                    "title": "Clear / Reset Chart",
+                    "host": "www.barchart.com"
+                },
+                {
+                    "image_uuid": "0dee4776-104e-4ae3-a22d-7d39c130dcd8",
+                    "title": "Artificial Intelligence Computing Leadership from NVIDIA",
+                    "host": "investor.nvidia.com"
+                },
+                {
+                    "image_uuid": "44577211-d2ce-4af9-a877-0f3cdc6f69b3",
+                    "title": "News on Nvidia Stock: Why It’s Going Up",
+                    "host": "www.ifcmfx.com"
+                },
+                {
+                    "image_uuid": "2f62346e-67fb-4e5a-a308-1657d918e17d",
+                    "title": "stocktwits",
+                    "host": "www.tipranks.com"
+                },
+                {
+                    "image_uuid": "9b11572e-19a7-471c-b68d-6b112ab713c3",
+                    "title": "Price/Percent Change Toggle",
+                    "host": "www.barchart.com"
+                },
+                {
+                    "image_uuid": "b5f89ae2-5f59-4efe-9a44-b7f51ca49696",
+                    "title": "hardware stocks the perfect build min 35381701",
+                    "host": "www.tradingview.com"
+                },
+                {
+                    "image_uuid": "cc635bd5-1d2d-4f3b-8530-7d4a1da1a7fd",
+                    "title": "Chart",
+                    "host": "stockcharts.com"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:16:54.961Z",
+        "updated_at": "2025-02-03T15:16:55.013Z"
+    },
+    "2025-02-03T15:16:53.388Z/2": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:16:53.388Z/2",
+        "content": {
+            "doings": [
+                {
+                    "data": {
+                        "type": "images",
+                        "query": {
+                            "original": "DeepSeek AI model",
+                            "spellcheck_off": false,
+                            "show_strict_warning": false
+                        },
+                        "results": [
+                            {
+                                "type": "image_result",
+                                "title": "How China created AI model DeepSeek and shocked the world",
+                                "url": "https://www.nature.com/articles/d41586-025-00229-6",
+                                "source": "nature.com",
+                                "page_fetched": "2025-02-03T15:15:27Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/DJbYQZrOKQRlyIH7wv3dD3-z1bXYDhGXCpvx2E6K18A/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMubmF0dXJlLmNv/bS93MTQwaDc5L21h/Z2F6aW5lLWFzc2V0/cy9kNDE1ODYtMDI1/LTAwMjU5LTAvZDQx/NTg2LTAyNS0wMDI1/OS0wXzUwNTY3Njc2/LmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://images.nature.com/w140h79/magazine-assets/d41586-025-00259-0/d41586-025-00259-0_50567676.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/9IAgFl-j89Q4SDjltcOTWs00BfEarD5G-fva0o9Vwig/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9pbWFn/ZXMubmF0dXJlLmNv/bS93MTQwaDc5L21h/Z2F6aW5lLWFzc2V0/cy9kNDE1ODYtMDI1/LTAwMjU5LTAvZDQx/NTg2LTAyNS0wMDI1/OS0wXzUwNTY3Njc2/LmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.nature.com",
+                                    "hostname": "www.nature.com",
+                                    "favicon": "https://imgs.search.brave.com/0fL1osa7ifHN59zuJ6uJJLU7Z-L3ioVavMKYltv4AFQ/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTRhOGIyNjMw/Y2Y5NTYwZWIxNjNl/MDlkYjQ3Y2FiOWVh/MThhOTUyZDIwYWZj/NGRkMDk2MzZjZGRi/MzI1YTkxOC93d3cu/bmF0dXJlLmNvbS8",
+                                    "path": "› articles  › d41586-025-00229-6"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "47b99df3-7ee2-4110-bbe6-a30b8fe7f931"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "How North Korea could leverage China’s DeepSeek AI model for military, cyber ops",
+                                "url": "https://www.nknews.org/pro/how-north-korea-could-leverage-chinas-deepseek-ai-model-for-military-cyber-ops/",
+                                "source": "nknews.org",
+                                "page_fetched": "2025-02-03T10:09:16Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/Goj7Xp82CtSDgYYgQEhEHIOnrn3nMI6zizfCHB9YbxY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMua29yZWFyaXNr/LmNvbS91cGxvYWRz/L3NpdGVzLzQvMjAy/NS8wMi9LSlVBSS1k/cm9uZXMtOTM1eDUw/MC5wbmc"
+                                },
+                                "properties": {
+                                    "url": "https://assets.korearisk.com/uploads/sites/4/2025/02/KJUAI-drones-935x500.png",
+                                    "placeholder": "https://imgs.search.brave.com/ly--svztM-jb7ItxsdzW8sHZquFYTJ60LERnSAFaCmc/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9hc3Nl/dHMua29yZWFyaXNr/LmNvbS91cGxvYWRz/L3NpdGVzLzQvMjAy/NS8wMi9LSlVBSS1k/cm9uZXMtOTM1eDUw/MC5wbmc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.nknews.org",
+                                    "hostname": "www.nknews.org",
+                                    "favicon": "https://imgs.search.brave.com/nT-IKzZL7vwSfseRTOCOc6ace7QBwflGxHJMgdz2ahk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZWYxN2IxYTdi/NGFhNWEwNjg2MWVj/ODNiNzljM2NhNDkz/MGRkMGEzZjlhMjYy/ODBhN2M1Y2EzZDAx/Mzk3YzE3YS93d3cu/bmtuZXdzLm9yZy8",
+                                    "path": "› pro  › how-north-korea-could-leverage-chinas-deepseek-ai-model-for-military-cyber-ops"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "7bd71a51-12e2-45cc-9e7f-7e2de9805bfd"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "model_pretraining",
+                                "url": "https://github.com/deepseek-ai/DeepSeek-Coder",
+                                "source": "github.com",
+                                "page_fetched": "2025-02-02T21:39:27Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/81Z-iUyTZWY-LvIGVKRgHVC6ce0P4o_S_VWx4IPBOik/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9naXRo/dWIuY29tL2RlZXBz/ZWVrLWFpL0RlZXBT/ZWVrLUNvZGVyL3Jh/dy9tYWluL3BpY3R1/cmVzL21vZGVsX3By/ZXRyYWluaW5nLnBu/Zw"
+                                },
+                                "properties": {
+                                    "url": "https://github.com/deepseek-ai/DeepSeek-Coder/raw/main/pictures/model_pretraining.png",
+                                    "placeholder": "https://imgs.search.brave.com/nWQQ6osrDvHePVToLBGLgHtBRZjvzVrxaUdg_lNvSnM/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9naXRo/dWIuY29tL2RlZXBz/ZWVrLWFpL0RlZXBT/ZWVrLUNvZGVyL3Jh/dy9tYWluL3BpY3R1/cmVzL21vZGVsX3By/ZXRyYWluaW5nLnBu/Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "github.com",
+                                    "hostname": "github.com",
+                                    "favicon": "https://imgs.search.brave.com/xxsA4YxzaR0cl-DBsH9-lpv2gsif3KMYgM87p26bs_o/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWQyNWM1NjA5/ZjZmZjNlYzI2MDNk/N2VkNmJhYjE2MzZl/MDY5ZTMxMDUzZmY1/NmU3NWIzNWVmMjk0/NTBjMjJjZi9naXRo/dWIuY29tLw",
+                                    "path": "› deepseek-ai  › DeepSeek-Coder"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "3566257f-b0c8-4755-a691-f1ac8ebfe86e"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Chinese DeepSeek AI",
+                                "url": "https://thehackernews.com/2025/01/italy-bans-chinese-deepseek-ai-over.html",
+                                "source": "thehackernews.com",
+                                "page_fetched": "2025-02-03T08:47:02Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/GiFwILV8NbKpBZfexeJt2yskwsAbqVDJiLvoXaJsQUU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9ibG9n/Z2VyLmdvb2dsZXVz/ZXJjb250ZW50LmNv/bS9pbWcvYi9SMjl2/WjJ4bC9BVnZYc0Vn/WEJrTjBTRkpsV2R3/dGpCUUpCc2hJR3NJ/U05DYlRTcWlHdEM5/N3VQQTNteElSTkc4/Yy1sdUxvZ2QyQ1pX/dmZKcC1aNmZDN1d3/SjhyRThjWTEwWjRt/VjA4cGFNMERkVlFo/eXBoZW5oeXBoZW5w/ZURqemhEZllzUjFs/LVFtd3RaUlpaRmFo/UDhrVl9tUmFINVRo/XzFrQzhRNndHS3hs/ZWFVYVBvV1BMYnlO/Yk5sUzQ3SXRTVWJ1/eFk4V0RQMWdzRzdE/X2VzQll0QS9zNzI4/LXJ3LWUzNjUvZGVl/cC5wbmc"
+                                },
+                                "properties": {
+                                    "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXBkN0SFJlWdwtjBQJBshIGsISNCbTSqiGtC97uPA3mxIRNG8c-luLogd2CZWvfJp-Z6fC7WwJ8rE8cY10Z4mV08paM0DdVQhyphenhyphenpeDjzhDfYsR1l-QmwtZRZZFahP8kV_mRaH5Th_1kC8Q6wGKxleaUaPoWPLbyNbNlS47ItSUbuxY8WDP1gsG7D_esBYtA/s728-rw-e365/deep.png",
+                                    "placeholder": "https://imgs.search.brave.com/dBnB9vD9x_-0xZdmmfydg-kMJVwSMVouJO1MuTl4m1U/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9ibG9n/Z2VyLmdvb2dsZXVz/ZXJjb250ZW50LmNv/bS9pbWcvYi9SMjl2/WjJ4bC9BVnZYc0Vn/WEJrTjBTRkpsV2R3/dGpCUUpCc2hJR3NJ/U05DYlRTcWlHdEM5/N3VQQTNteElSTkc4/Yy1sdUxvZ2QyQ1pX/dmZKcC1aNmZDN1d3/SjhyRThjWTEwWjRt/VjA4cGFNMERkVlFo/eXBoZW5oeXBoZW5w/ZURqemhEZllzUjFs/LVFtd3RaUlpaRmFo/UDhrVl9tUmFINVRo/XzFrQzhRNndHS3hs/ZWFVYVBvV1BMYnlO/Yk5sUzQ3SXRTVWJ1/eFk4V0RQMWdzRzdE/X2VzQll0QS9zNzI4/LXJ3LWUzNjUvZGVl/cC5wbmc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "thehackernews.com",
+                                    "hostname": "thehackernews.com",
+                                    "favicon": "https://imgs.search.brave.com/u1C2XKFnNe67n0r2HsGXhxWqihfK1nu5j092gyrKRaQ/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzVlNDZiZjY1/NGExZjdiMDhlNTY0/NWY1OWExYjJhYmY2/MTM0NDM1MzcwMjhj/MWU5OTJlZmM4YjIy/NTNkMjgzMC90aGVo/YWNrZXJuZXdzLmNv/bS8",
+                                    "path": "› 2025  › 01  › italy-bans-chinese-deepseek-ai-over.html"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "db7d180c-ed08-4ff9-a18c-42f9fa772d05"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Microsoft DeepSeek partnership",
+                                "url": "https://www.watanserb.com/en/2025/02/02/microsoft-integrates-deepseeks-r1-ai-model-into-azure-ai-foundry/",
+                                "source": "watanserb.com",
+                                "page_fetched": "2025-02-03T13:38:16Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/q4YRemC0m3JxlL863XZbCCbIx1LDYOTJ7U94FA4yCO8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/d2F0YW5zZXJiLmNv/bS9lbi93cC1jb250/ZW50L3VwbG9hZHMv/MjAyNS8wMi9tdS5q/cGc"
+                                },
+                                "properties": {
+                                    "url": "https://www.watanserb.com/en/wp-content/uploads/2025/02/mu.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/1l3adC84r8t-1Wklo6igLiRiHsLOitQQTDaTadHaRig/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/d2F0YW5zZXJiLmNv/bS9lbi93cC1jb250/ZW50L3VwbG9hZHMv/MjAyNS8wMi9tdS5q/cGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.watanserb.com",
+                                    "hostname": "www.watanserb.com",
+                                    "favicon": "https://imgs.search.brave.com/qpL0_gaQX-Mi-MuvLj7Z6BZtHFinGCdRlT1Q_6PUVpw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGRmMmFjMDEx/MTI1YWY2ZjYzYWVj/ZjM3ZWI3MWY1Mjcw/ZTZhMzZmMmQwM2Nh/MzVlNTc1MmMzZDQx/M2M1NjRjNC93d3cu/d2F0YW5zZXJiLmNv/bS8",
+                                    "path": "› en  › 2025  › 02  › 02  › microsoft-integrates-deepseeks-r1-ai-model-into-azure-ai-foundry"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "a94661d8-d1dc-485a-8cec-4a562287e2a6"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Alibaba Group sign is seen at the World Artificial Intelligence Conference (WAIC) in Shanghai",
+                                "url": "https://www.reuters.com/technology/artificial-intelligence/alibaba-releases-ai-model-it-claims-surpasses-deepseek-v3-2025-01-29/",
+                                "source": "reuters.com",
+                                "page_fetched": "2025-02-03T13:07:36Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/ryWcR8k6ICs128wiMqAkl3xk7JozuUNbtz3Z8YvPQts/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cmV1dGVycy5jb20v/cmVzaXplci92Mi9H/VkhOM1RSTzVaUE1M/Q081WEc2RUxGUUM3/RS5qcGc_YXV0aD01/MDFlMzE3ZTQ0NDAw/NTZkYzQ5MWZlNWE0/ZWM4ZDUzMDI1Mzg2/NTExY2IyYzEwZWUx/ZWM3MmM5OWUyYWZl/MGU0JndpZHRoPTUw/MDAmcXVhbGl0eT04/MA"
+                                },
+                                "properties": {
+                                    "url": "https://www.reuters.com/resizer/v2/GVHN3TRO5ZPMLCO5XG6ELFQC7E.jpg?auth=501e317e4440056dc491fe5a4ec8d53025386511cb2c10ee1ec72c99e2afe0e4&width=5000&quality=80",
+                                    "placeholder": "https://imgs.search.brave.com/85zZpoczGlpgGE-qeCdz2lNqvdEgZx0LnTKf2vLqVK4/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/cmV1dGVycy5jb20v/cmVzaXplci92Mi9H/VkhOM1RSTzVaUE1M/Q081WEc2RUxGUUM3/RS5qcGc_YXV0aD01/MDFlMzE3ZTQ0NDAw/NTZkYzQ5MWZlNWE0/ZWM4ZDUzMDI1Mzg2/NTExY2IyYzEwZWUx/ZWM3MmM5OWUyYWZl/MGU0JndpZHRoPTUw/MDAmcXVhbGl0eT04/MA"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.reuters.com",
+                                    "hostname": "www.reuters.com",
+                                    "favicon": "https://imgs.search.brave.com/g-LRPAPxrx_Eqo7F4IKC-Guqa4ONApD9n_VKZlqfqWo/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzE0MWM3N2Ji/ZjQ3ZDhmYzI3NjMz/ODNjYTRiMGI4MjM4/OTExMzRkM2E1ODI4/MjI4YzA0ZWQ0OTRk/YWY5YTQwMy93d3cu/cmV1dGVycy5jb20v",
+                                    "path": "› technology  › artificial-intelligence  › alibaba-releases-ai-model-it-claims-surpasses-deepseek-v3-2025-01-29"
+                                },
+                                "confidence": "medium",
+                                "image_uuid": "eb0f13ff-df8f-4fa8-bef8-c57c655d0b14"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "What is DeepSeek",
+                                "url": "https://dev.to/proflead/deepseek-ai-ai-that-crushed-openai-how-to-use-deepseek-r1-privately-22fl",
+                                "source": "dev.to",
+                                "page_fetched": "2025-01-30T12:57:52Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/wkz74gtrO1O-LwAeXaQCiaNoAJBBy_j-VsCHCrc03aM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YTIuZGV2LnRvL2R5/bmFtaWMvaW1hZ2Uv/d2lkdGg9ODAwLGhl/aWdodD0sZml0PXNj/YWxlLWRvd24sZ3Jh/dml0eT1hdXRvLGZv/cm1hdD1hdXRvL2h0/dHBzOi8vZGV2LXRv/LXVwbG9hZHMuczMu/YW1hem9uYXdzLmNv/bS91cGxvYWRzL2Fy/dGljbGVzL2k2Y2Ez/OGl4cnZ2aXVwMzZi/azUwLnBuZw"
+                                },
+                                "properties": {
+                                    "url": "https://media2.dev.to/dynamic/image/width=800,height=,fit=scale-down,gravity=auto,format=auto/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/i6ca38ixrvviup36bk50.png",
+                                    "placeholder": "https://imgs.search.brave.com/MJAQpG8BWTgpkl4OIi2vnL2bmqR5pkO4amQpJCfjjiQ/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9tZWRp/YTIuZGV2LnRvL2R5/bmFtaWMvaW1hZ2Uv/d2lkdGg9ODAwLGhl/aWdodD0sZml0PXNj/YWxlLWRvd24sZ3Jh/dml0eT1hdXRvLGZv/cm1hdD1hdXRvL2h0/dHBzOi8vZGV2LXRv/LXVwbG9hZHMuczMu/YW1hem9uYXdzLmNv/bS91cGxvYWRzL2Fy/dGljbGVzL2k2Y2Ez/OGl4cnZ2aXVwMzZi/azUwLnBuZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "dev.to",
+                                    "hostname": "dev.to",
+                                    "favicon": "https://imgs.search.brave.com/UUpF8I85K--vkQzrhameM7iRPRU5VCTXyWbS4sk6G2g/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNTg5MTcxNDBh/N2U4ODc4MDg0NWQ4/MzU0YWJkNDY3ZWRm/MjUxY2U1YjY5MzJm/YWRlOTI4YjAyZDI1/ZjU0MmJjNi9kZXYu/dG8v",
+                                    "path": "› proflead  › deepseek-ai-ai-that-crushed-openai-how-to-use-deepseek-r1-privately-22fl"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "33d43f6e-56f8-438d-abc9-96fbff6e627d"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "DeepSeek iPhone App",
+                                "url": "https://gizmodo.com/deepseek-releases-open-source-ai-image-generator-as-american-stocks-continue-to-crater-2000555311",
+                                "source": "gizmodo.com",
+                                "page_fetched": "2025-01-31T09:47:11Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/6kYFUZ7cf4XmiHPLes2CKcy4zQ7VYxyZozre6lytNVk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9naXpt/b2RvLmNvbS9hcHAv/dXBsb2Fkcy8yMDI1/LzAxL0RlZXBTZWVr/LWlQaG9uZS1BcHAu/anBn"
+                                },
+                                "properties": {
+                                    "url": "https://gizmodo.com/app/uploads/2025/01/DeepSeek-iPhone-App.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/3cGnhdywdgsOs9HHIEGySq7dDC4d3SKlwx2ss3V3guU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9naXpt/b2RvLmNvbS9hcHAv/dXBsb2Fkcy8yMDI1/LzAxL0RlZXBTZWVr/LWlQaG9uZS1BcHAu/anBn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "gizmodo.com",
+                                    "hostname": "gizmodo.com",
+                                    "favicon": "https://imgs.search.brave.com/NpqI6jEA1E203ZIoyOHPwlPcTgtMbxlO2bl6ygwEN9w/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMjJlOTBjOTk2/ZjYxNmU0NGM4ZmNk/OTM3YmQ1OTcyYjli/OGIxYWU0YzE0ODIy/NWFlOTc3ZjkxY2Vj/M2ZjZDRkMC9naXpt/b2RvLmNvbS8",
+                                    "path": "› deepseek-releases-open-source-ai-image-generator-as-american-stocks-continue-to-crater-2000555311"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "d42a26e5-b27a-444f-8ad1-d415a8b344c8"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Futurism",
+                                "url": "https://futurism.com/the-byte/deepseek-image-ai-dall-e-and-stable-diffusion",
+                                "source": "futurism.com",
+                                "page_fetched": "2025-01-31T15:47:33Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/CvSovZZEB_MomX1xcM9zbK7k0ScJMwK03JHzi3bZcpQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9mdXR1/cmlzbS5jb20vX25l/eHQvaW1hZ2U_dXJs/PWh0dHBzOi8vd29y/ZHByZXNzLWFzc2V0/cy5mdXR1cmlzbS5j/b20vMjAyNS8wMS9k/ZWVwc2Vlay1pbWFn/ZS1haS1kYWxsLWUt/YW5kLXN0YWJsZS1k/aWZmdXNpb24tMS5q/cGcmdz0yMDQ4JnE9/NzU.jpeg"
+                                },
+                                "properties": {
+                                    "url": "https://futurism.com/_next/image?url=https://wordpress-assets.futurism.com/2025/01/deepseek-image-ai-dall-e-and-stable-diffusion-1.jpg&w=2048&q=75",
+                                    "placeholder": "https://imgs.search.brave.com/LMZYXW47iXkARnWb8d7ddJDmtyrTMcaPKMJdjUphSjM/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9mdXR1/cmlzbS5jb20vX25l/eHQvaW1hZ2U_dXJs/PWh0dHBzOi8vd29y/ZHByZXNzLWFzc2V0/cy5mdXR1cmlzbS5j/b20vMjAyNS8wMS9k/ZWVwc2Vlay1pbWFn/ZS1haS1kYWxsLWUt/YW5kLXN0YWJsZS1k/aWZmdXNpb24tMS5q/cGcmdz0yMDQ4JnE9/NzU"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "futurism.com",
+                                    "hostname": "futurism.com",
+                                    "favicon": "https://imgs.search.brave.com/owu0E174UnTYKNMMWAWaGSwgw9LqavTvadw8hd4R8q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMGEzYzNiMzFl/NDAyNjJmMDA5ZGIx/MDc4M2ZiNWNlNWI1/MjAxMjA0NmUyNmZl/YjUxMmUwNTFlZjY1/MjRjYmUwZC9mdXR1/cmlzbS5jb20v",
+                                    "path": "› the-byte  › deepseek-image-ai-dall-e-and-stable-diffusion"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "cd870dcd-5f2d-48ed-bea3-57df340be817"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "arguments_partial_str": "{\"query\": \"DeepSeek AI model\"}",
+            "name": "searchImage",
+            "arguments": {
+                "query": "DeepSeek AI model"
+            },
+            "result": [
+                {
+                    "image_uuid": "47b99df3-7ee2-4110-bbe6-a30b8fe7f931",
+                    "title": "How China created AI model DeepSeek and shocked the world",
+                    "host": "www.nature.com"
+                },
+                {
+                    "image_uuid": "7bd71a51-12e2-45cc-9e7f-7e2de9805bfd",
+                    "title": "How North Korea could leverage China’s DeepSeek AI model for military, cyber ops",
+                    "host": "www.nknews.org"
+                },
+                {
+                    "image_uuid": "3566257f-b0c8-4755-a691-f1ac8ebfe86e",
+                    "title": "model_pretraining",
+                    "host": "github.com"
+                },
+                {
+                    "image_uuid": "db7d180c-ed08-4ff9-a18c-42f9fa772d05",
+                    "title": "Chinese DeepSeek AI",
+                    "host": "thehackernews.com"
+                },
+                {
+                    "image_uuid": "a94661d8-d1dc-485a-8cec-4a562287e2a6",
+                    "title": "Microsoft DeepSeek partnership",
+                    "host": "www.watanserb.com"
+                },
+                {
+                    "image_uuid": "eb0f13ff-df8f-4fa8-bef8-c57c655d0b14",
+                    "title": "Alibaba Group sign is seen at the World Artificial Intelligence Conference (WAIC) in Shanghai",
+                    "host": "www.reuters.com"
+                },
+                {
+                    "image_uuid": "33d43f6e-56f8-438d-abc9-96fbff6e627d",
+                    "title": "What is DeepSeek",
+                    "host": "dev.to"
+                },
+                {
+                    "image_uuid": "d42a26e5-b27a-444f-8ad1-d415a8b344c8",
+                    "title": "DeepSeek iPhone App",
+                    "host": "gizmodo.com"
+                },
+                {
+                    "image_uuid": "cd870dcd-5f2d-48ed-bea3-57df340be817",
+                    "title": "Futurism",
+                    "host": "futurism.com"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:16:55.026Z",
+        "updated_at": "2025-02-03T15:16:55.076Z"
+    },
+    "2025-02-03T15:16:53.388Z/3": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:16:53.388Z/3",
+        "content": {
+            "doings": [
+                {
+                    "data": {
+                        "type": "images",
+                        "query": {
+                            "original": "AI regulation debate",
+                            "spellcheck_off": false,
+                            "show_strict_warning": false
+                        },
+                        "results": [
+                            {
+                                "type": "image_result",
+                                "title": "artificial intelligence regulation",
+                                "url": "https://www.techslang.com/the-artificial-intelligence-debate-is-it-time-for-ai-regulation/",
+                                "source": "techslang.com",
+                                "page_fetched": "2024-11-11T05:41:41Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/yOs-dNjrFQG27sbswManV11BwMW7J_ORwpfIoFIp0dc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGVjaHNsYW5nLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/MC8wNC9DYW52YS1M/YWR5LWp1c3RpY2Ut/b24tZGlnaXRhbC1i/YWNrZ3JvdW5kLUNv/bmNlcHQtb2YtYXJ0/aWZpY2lhbC1pbnRl/bGxpZ2VuY2UtbGF3/eWVyLWUxNTg1OTA4/NDQ1ODMxLmpwZw"
+                                },
+                                "properties": {
+                                    "url": "https://www.techslang.com/wp-content/uploads/2020/04/Canva-Lady-justice-on-digital-background-Concept-of-artificial-intelligence-lawyer-e1585908445831.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/yKB2cyTLwcqHPjhgbJaBHevsGldtBOQj7LHP5qpZs-Q/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/dGVjaHNsYW5nLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/MC8wNC9DYW52YS1M/YWR5LWp1c3RpY2Ut/b24tZGlnaXRhbC1i/YWNrZ3JvdW5kLUNv/bmNlcHQtb2YtYXJ0/aWZpY2lhbC1pbnRl/bGxpZ2VuY2UtbGF3/eWVyLWUxNTg1OTA4/NDQ1ODMxLmpwZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.techslang.com",
+                                    "hostname": "www.techslang.com",
+                                    "favicon": "https://imgs.search.brave.com/J0cZ4j6uTCkm3C48Ub_7N01qZWZDXUpLt446T_Fpsa8/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDU1MzhjMjk4/M2U4ODQ5MGE3NDRm/YzIyMzBiZTMwZjcx/ZDQ3YzFjYTc5ZGI3/ZThiMDRiZWU5MzQx/MzVhYzRlMy93d3cu/dGVjaHNsYW5nLmNv/bS8",
+                                    "path": "› the-artificial-intelligence-debate-is-it-time-for-ai-regulation"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "0832c6bd-c604-4118-8b3b-a3d896c69a9b"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Examples of how AI systems can amplify bias",
+                                "url": "https://www.techtarget.com/searchenterpriseai/news/252465706/Gauging-the-right-amount-of-government-regulation-of-AI",
+                                "source": "techtarget.com",
+                                "page_fetched": "2024-12-01T04:56:58Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/iYMzHC8nkfSovP6xRYnJV5nl8ouTn6SCYTPo_nuZe0w/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGVjaHRhcmdldC5j/b20vcm1zL29ubGlu/ZUltYWdlcy9iaV9l/emluZS1ob3dfYWlf/c3lzdGVtc19hbXBs/aWZ5X2JpYXNfbW9i/aWxlLnBuZw"
+                                },
+                                "properties": {
+                                    "url": "https://www.techtarget.com/rms/onlineImages/bi_ezine-how_ai_systems_amplify_bias_mobile.png",
+                                    "placeholder": "https://imgs.search.brave.com/QEge15_19JeMi-Zozun6IXiwVq4P5o5BpGwFAjrxCNs/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/dGVjaHRhcmdldC5j/b20vcm1zL29ubGlu/ZUltYWdlcy9iaV9l/emluZS1ob3dfYWlf/c3lzdGVtc19hbXBs/aWZ5X2JpYXNfbW9i/aWxlLnBuZw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.techtarget.com",
+                                    "hostname": "www.techtarget.com",
+                                    "favicon": "https://imgs.search.brave.com/7V4OwW22owVBOHh6uy8Tyl-MSJDrm0BUo36AIBVNYaA/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjhkYjViOTRh/NzMwOGYxYzBmNGU4/MTJjOTE3YjE2NTBj/NmVkZGQyYjMwNTlj/YzAxNzI0NzcyMzQz/ZDc0YTY0ZC93d3cu/dGVjaHRhcmdldC5j/b20v",
+                                    "path": "› searchenterpriseai  › news  › 252465706  › Gauging-the-right-amount-of-government-regulation-of-AI"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "2b81b5d4-2d89-46c8-b960-852356531fdb"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "artificial intelligence ai",
+                                "url": "https://www.pymnts.com/news/artificial-intelligence/2024/global-ai-treaty-sparks-debate-innovation-versus-regulation/",
+                                "source": "pymnts.com",
+                                "page_fetched": "2025-01-31T22:13:25Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/80--wJ-G5znwEsmx1dSTvlHFqKNTkn4ZkcP1sWXMnaI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cHltbnRzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMy8x/MS9hcnRpZmljaWFs/LWludGVsbGlnZW5j/ZS1BSS5qcGc_dz03/Njg"
+                                },
+                                "properties": {
+                                    "url": "https://www.pymnts.com/wp-content/uploads/2023/11/artificial-intelligence-AI.jpg?w=768",
+                                    "placeholder": "https://imgs.search.brave.com/DNVcKNuN9ZXA3jewIidVjLkLyY9i6kDb86AHIC_kn5k/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/cHltbnRzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMy8x/MS9hcnRpZmljaWFs/LWludGVsbGlnZW5j/ZS1BSS5qcGc_dz03/Njg"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.pymnts.com",
+                                    "hostname": "www.pymnts.com",
+                                    "favicon": "https://imgs.search.brave.com/w68kIc_7HKCOtyJwNpTADJI7ah2LwqemLZf2aAmlNu0/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzBkMjA1NDhh/MWY0MzcxZTE5NWJl/YjcwMzM4NTNmZDkw/ZTg2MDhkMzM5ZjRl/YzFhYTQ2NGU3MzMy/ZTIzYzc5MS93d3cu/cHltbnRzLmNvbS8",
+                                    "path": "› news  › artificial-intelligence  › 2024  › global-ai-treaty-sparks-debate-innovation-versus-regulation"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "0179a9e3-0590-48a9-91e0-1ee2f79db2cf"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "2023 05 16t164517z 771838838 rc2qz0a9gcl7 rtrmadp 3 usa ai congress",
+                                "url": "https://www.aei.org/technology-and-innovation/the-global-debate-on-intricacies-of-ai-regulation/",
+                                "source": "aei.org",
+                                "page_fetched": "2024-11-11T05:41:40Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/qRznJ1vl-dL6gnktNtk-AgD3Abtblhb0UEa6NmhqGBk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YWVpLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8wNS8y/MDIzLTA1LTE2VDE2/NDUxN1pfNzcxODM4/ODM4X1JDMlFaMEE5/R0NMN19SVFJNQURQ/XzNfVVNBLUFJLUNP/TkdSRVNTLmpwZz94/ODUwOTU"
+                                },
+                                "properties": {
+                                    "url": "https://www.aei.org/wp-content/uploads/2023/05/2023-05-16T164517Z_771838838_RC2QZ0A9GCL7_RTRMADP_3_USA-AI-CONGRESS.jpg?x85095",
+                                    "placeholder": "https://imgs.search.brave.com/qIJT0d434jY9l_H1gYF1JgeWhmZzgsukbCcEd023JEI/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YWVpLm9yZy93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8wNS8y/MDIzLTA1LTE2VDE2/NDUxN1pfNzcxODM4/ODM4X1JDMlFaMEE5/R0NMN19SVFJNQURQ/XzNfVVNBLUFJLUNP/TkdSRVNTLmpwZz94/ODUwOTU"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.aei.org",
+                                    "hostname": "www.aei.org",
+                                    "favicon": "https://imgs.search.brave.com/pFyWY2rgkKFOcf51BU56neDlp6YsspkYNSwgj43Y1zc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvODIwZDQxNDI2/NDZmOTYzODJjYzA5/YmVkYzliMDVmNWE5/MTk1OWExOTA2NmNh/MTU5ZWQ5NDAxNWI4/YzUwNDQyZS93d3cu/YWVpLm9yZy8",
+                                    "path": "› technology-and-innovation  › the-global-debate-on-intricacies-of-ai-regulation"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "1081f2d5-f658-4b10-8758-dfed11e24b78"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Microsoft vice chair and president Brad Smith speaks at the Semafor World Economic Summit on April 12, 2023 in Washington, DC.",
+                                "url": "https://www.cnn.com/2023/05/25/tech/microsoft-ai-regulation-calls/index.html",
+                                "source": "cnn.com",
+                                "page_fetched": "2025-01-13T18:11:19Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/epJvUIB2862y9KRkedbqOCq5-PJL6sWnLi216DQ0jbk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5jbm4uY29tL2Fw/aS92MS9pbWFnZXMv/c3RlbGxhci9wcm9k/LzIzMDUyNTExNTky/OS1taWNyb3NvZnQt/YnJhZC1zbWl0aC0w/NDEyLmpwZz9xPXdf/MTExMCxjX2ZpbGw"
+                                },
+                                "properties": {
+                                    "url": "https://media.cnn.com/api/v1/images/stellar/prod/230525115929-microsoft-brad-smith-0412.jpg?q=w_1110,c_fill",
+                                    "placeholder": "https://imgs.search.brave.com/WKj6dU3RQpdiL7D92DACdyCbUr3In6FLE5pUOxDt1kU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9tZWRp/YS5jbm4uY29tL2Fw/aS92MS9pbWFnZXMv/c3RlbGxhci9wcm9k/LzIzMDUyNTExNTky/OS1taWNyb3NvZnQt/YnJhZC1zbWl0aC0w/NDEyLmpwZz9xPXdf/MTExMCxjX2ZpbGw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.cnn.com",
+                                    "hostname": "www.cnn.com",
+                                    "favicon": "https://imgs.search.brave.com/tV1joo3SHuITYemc5OsCps2_N9Toz6zArm5dNdbSoMs/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWE3MWZjOTZk/NGRhM2RmZDQzMjZh/NjE3OGQ3NzQ3MDI5/NDJiOGI2ZDdkZDFj/ODI3N2MzYWU3OGU4/YzQ3YTNkNC93d3cu/Y25uLmNvbS8",
+                                    "path": "› 2023  › 05  › 25  › tech  › microsoft-ai-regulation-calls  › index.html"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "6e688478-e03e-4887-af57-6af6504e533d"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "closeup of a California 2024 ballot",
+                                "url": "https://carnegieendowment.org/posts/2024/09/california-sb1047-ai-safety-regulation?lang=en",
+                                "source": "carnegieendowment.org",
+                                "page_fetched": "2025-01-30T05:31:48Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/w6FdQHjt8Xiiauh-L-8B5XQhjzmgTqcBq7-XqLlZmi0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jYXJu/ZWdpZWVuZG93bWVu/dC5vcmcvc3RhdGlj/L21lZGlhL2ltYWdl/cy9jYWxpZm9ybmlh/LTIwMjQtYmFsbG90/LWVsZWN0aW9uLUdl/dHR5SW1hZ2VzLTIx/ODIzNjE4MTVlZGl0/ZWQuanBn"
+                                },
+                                "properties": {
+                                    "url": "https://carnegieendowment.org/static/media/images/california-2024-ballot-election-GettyImages-2182361815edited.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/VkVTs2xKapOjSqh4MQgLMtC2-VsQL80acu0TlVY_2qA/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jYXJu/ZWdpZWVuZG93bWVu/dC5vcmcvc3RhdGlj/L21lZGlhL2ltYWdl/cy9jYWxpZm9ybmlh/LTIwMjQtYmFsbG90/LWVsZWN0aW9uLUdl/dHR5SW1hZ2VzLTIx/ODIzNjE4MTVlZGl0/ZWQuanBn"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "carnegieendowment.org",
+                                    "hostname": "carnegieendowment.org",
+                                    "favicon": "https://imgs.search.brave.com/OtC__BX-_G6YW9_8tWVSK7bkb2GlL8L9kcgdM__nJDQ/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGMxMzQxYTFj/ODQ3MGZjYWRiNWU3/NTVhYzA5YTIxMDkz/OTEwNDgwZjQ1NGM0/OWYzYzZlYWZkOGY4/YjhiNzA2OC9jYXJu/ZWdpZWVuZG93bWVu/dC5vcmcv",
+                                    "path": "› posts  › 2024  › 09  › california-sb1047-ai-safety-regulation"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "363bc9d2-cbbe-4d0a-bad8-434bdd723551"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Web Summit, Europe's largest technology conference, in Lisbon",
+                                "url": "https://www.reuters.com/technology/microsoft-president-goes-europe-shape-ai-regulation-debate-2023-06-29/",
+                                "source": "reuters.com",
+                                "page_fetched": "2024-11-11T05:41:36Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/-MNjOycXQHWgAITooKKyn0EKGojfF7lHHy7WBPh8p9M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jbG91/ZGZyb250LXVzLWVh/c3QtMi5pbWFnZXMu/YXJjcHVibGlzaGlu/Zy5jb20vcmV1dGVy/cy9BRE1FQ1BaT1BK/UEJMTllLTE1PQVcy/TVUzNC5qcGc"
+                                },
+                                "properties": {
+                                    "url": "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/ADMECPZOPJPBLNYKLMOAW2MU34.jpg",
+                                    "placeholder": "https://imgs.search.brave.com/w38nsWTLO4bsPMk8KaUBv6NpMCHbXlM8t5upC9_cL_w/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly9jbG91/ZGZyb250LXVzLWVh/c3QtMi5pbWFnZXMu/YXJjcHVibGlzaGlu/Zy5jb20vcmV1dGVy/cy9BRE1FQ1BaT1BK/UEJMTllLTE1PQVcy/TVUzNC5qcGc"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.reuters.com",
+                                    "hostname": "www.reuters.com",
+                                    "favicon": "https://imgs.search.brave.com/g-LRPAPxrx_Eqo7F4IKC-Guqa4ONApD9n_VKZlqfqWo/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzE0MWM3N2Ji/ZjQ3ZDhmYzI3NjMz/ODNjYTRiMGI4MjM4/OTExMzRkM2E1ODI4/MjI4YzA0ZWQ0OTRk/YWY5YTQwMy93d3cu/cmV1dGVycy5jb20v",
+                                    "path": "› technology  › microsoft-president-goes-europe-shape-ai-regulation-debate-2023-06-29"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "3c676346-faf6-4ba6-a4ab-d80da61af2e1"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "Graphic showing guidelines for creating a framework for AI regulation",
+                                "url": "https://www.techtarget.com/searchenterpriseai/news/252465706/Gauging-the-right-amount-of-government-regulation-of-AI",
+                                "source": "techtarget.com",
+                                "page_fetched": "2024-12-01T04:56:58Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/wKVzC-HELiuDCYK9tJA6fDAC-U1EMIaNVta73QxC3Is/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGVjaHRhcmdldC5j/b20vcm1zL29ubGlu/ZUltYWdlcy9lbnRl/cnByaXNlX2FpLWd1/aWRlbGluZXNfZm9y/X2NyZWF0aW5nX2Fu/X2FpX3JlZ3VsYXRv/cnlfZnJhbWV3b3Jr/LWZfbW9iaWxlLnBu/Zw"
+                                },
+                                "properties": {
+                                    "url": "https://www.techtarget.com/rms/onlineImages/enterprise_ai-guidelines_for_creating_an_ai_regulatory_framework-f_mobile.png",
+                                    "placeholder": "https://imgs.search.brave.com/LmW4pPPc7EQTNPtReiEdIFPLvDv2nfJGTS0vD8RGauU/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/dGVjaHRhcmdldC5j/b20vcm1zL29ubGlu/ZUltYWdlcy9lbnRl/cnByaXNlX2FpLWd1/aWRlbGluZXNfZm9y/X2NyZWF0aW5nX2Fu/X2FpX3JlZ3VsYXRv/cnlfZnJhbWV3b3Jr/LWZfbW9iaWxlLnBu/Zw"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.techtarget.com",
+                                    "hostname": "www.techtarget.com",
+                                    "favicon": "https://imgs.search.brave.com/7V4OwW22owVBOHh6uy8Tyl-MSJDrm0BUo36AIBVNYaA/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjhkYjViOTRh/NzMwOGYxYzBmNGU4/MTJjOTE3YjE2NTBj/NmVkZGQyYjMwNTlj/YzAxNzI0NzcyMzQz/ZDc0YTY0ZC93d3cu/dGVjaHRhcmdldC5j/b20v",
+                                    "path": "› searchenterpriseai  › news  › 252465706  › Gauging-the-right-amount-of-government-regulation-of-AI"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "5d2ff11c-58e8-442f-b095-4d784bab035d"
+                            },
+                            {
+                                "type": "image_result",
+                                "title": "A diagram outlining a risk-based AI regulatory framework with Minimal Risk, Limited Risk, High Risk, and Unacceptable Risk levels arranged in a pyramid.",
+                                "url": "https://www.brookings.edu/articles/the-three-challenges-of-ai-regulation/",
+                                "source": "brookings.edu",
+                                "page_fetched": "2025-01-08T17:23:58Z",
+                                "thumbnail": {
+                                    "src": "https://imgs.search.brave.com/nIi20Y1tK85s__Y2G8ryRJNsSEsER4V3aT-p7smYG-M/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YnJvb2tpbmdzLmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/My8wNi9SaXNrQmFz/ZWRBSVJlZy5wbmc_/cXVhbGl0eT03NSZ3/PTgzMA"
+                                },
+                                "properties": {
+                                    "url": "https://www.brookings.edu/wp-content/uploads/2023/06/RiskBasedAIReg.png?quality=75&w=830",
+                                    "placeholder": "https://imgs.search.brave.com/s5QBwfS-FIdQGDS1OYPbgFo8YA7AiRf0wM7Jt_6UAps/rs:fit:76:0:0:0/g:ce/q:10/aHR0cHM6Ly93d3cu/YnJvb2tpbmdzLmVk/dS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/My8wNi9SaXNrQmFz/ZWRBSVJlZy5wbmc_/cXVhbGl0eT03NSZ3/PTgzMA"
+                                },
+                                "meta_url": {
+                                    "scheme": "https",
+                                    "netloc": "www.brookings.edu",
+                                    "hostname": "www.brookings.edu",
+                                    "favicon": "https://imgs.search.brave.com/NuFxptcP1lLmMRlBWx3zQ0Bxbxrd24c6NevK6dCMLUI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYTVlMTVjNWM2/OWRkYjRmMWM2MWU1/N2VhNjc5NjkxYTg0/YWYyYWE1NzJjNTM0/OGU1YmZlYjg3NzJh/NWFjYzYyNi93d3cu/YnJvb2tpbmdzLmVk/dS8",
+                                    "path": "› articles  › the-three-challenges-of-ai-regulation"
+                                },
+                                "confidence": "low",
+                                "image_uuid": "d21eaa9f-c717-4ea7-8206-2d82ee741dce"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "arguments_partial_str": "{\"query\": \"AI regulation debate\"}",
+            "name": "searchImage",
+            "arguments": {
+                "query": "AI regulation debate"
+            },
+            "result": [
+                {
+                    "image_uuid": "0832c6bd-c604-4118-8b3b-a3d896c69a9b",
+                    "title": "artificial intelligence regulation",
+                    "host": "www.techslang.com"
+                },
+                {
+                    "image_uuid": "2b81b5d4-2d89-46c8-b960-852356531fdb",
+                    "title": "Examples of how AI systems can amplify bias",
+                    "host": "www.techtarget.com"
+                },
+                {
+                    "image_uuid": "0179a9e3-0590-48a9-91e0-1ee2f79db2cf",
+                    "title": "artificial intelligence ai",
+                    "host": "www.pymnts.com"
+                },
+                {
+                    "image_uuid": "1081f2d5-f658-4b10-8758-dfed11e24b78",
+                    "title": "2023 05 16t164517z 771838838 rc2qz0a9gcl7 rtrmadp 3 usa ai congress",
+                    "host": "www.aei.org"
+                },
+                {
+                    "image_uuid": "6e688478-e03e-4887-af57-6af6504e533d",
+                    "title": "Microsoft vice chair and president Brad Smith speaks at the Semafor World Economic Summit on April 12, 2023 in Washington, DC.",
+                    "host": "www.cnn.com"
+                },
+                {
+                    "image_uuid": "363bc9d2-cbbe-4d0a-bad8-434bdd723551",
+                    "title": "closeup of a California 2024 ballot",
+                    "host": "carnegieendowment.org"
+                },
+                {
+                    "image_uuid": "3c676346-faf6-4ba6-a4ab-d80da61af2e1",
+                    "title": "Web Summit, Europe's largest technology conference, in Lisbon",
+                    "host": "www.reuters.com"
+                },
+                {
+                    "image_uuid": "5d2ff11c-58e8-442f-b095-4d784bab035d",
+                    "title": "Graphic showing guidelines for creating a framework for AI regulation",
+                    "host": "www.techtarget.com"
+                },
+                {
+                    "image_uuid": "d21eaa9f-c717-4ea7-8206-2d82ee741dce",
+                    "title": "A diagram outlining a risk-based AI regulatory framework with Minimal Risk, Limited Risk, High Risk, and Unacceptable Risk levels arranged in a pyramid.",
+                    "host": "www.brookings.edu"
+                }
+            ]
+        },
+        "created_at": "2025-02-03T15:16:55.087Z",
+        "updated_at": "2025-02-03T15:16:55.117Z"
+    },
+    "2025-02-03T15:17:11.064Z/0": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:17:11.064Z/0",
+        "content": {
+            "doings": [],
+            "arguments_partial_str": "{\"name\": \"Impact on US Market Valuation\", \"description\": \"Will NVIDIA's market cap drop ≥15% (vs. S&P 500) by July 2025 due to DeepSeek/Chinese AI competition?\", \"rule\": \"Market resolution will be based on NVIDIA's market cap change as reported by financial news sources by July 2025.\", \"type\": \"binary\", \"image_uuid\": \"fdf56ce2-2956-400f-8532-f78df4b6d400\", \"probability_yes\": 0.3}",
+            "name": "createMarket",
+            "arguments": {
+                "name": "Impact on US Market Valuation",
+                "description": "Will NVIDIA's market cap drop ≥15% (vs. S&P 500) by July 2025 due to DeepSeek/Chinese AI competition?",
+                "rule": "Market resolution will be based on NVIDIA's market cap change as reported by financial news sources by July 2025.",
+                "type": "binary",
+                "image_uuid": "fdf56ce2-2956-400f-8532-f78df4b6d400",
+                "probability_yes": 0.3
+            },
+            "result": {
+                "market_id": "414e6a35-26e0-407b-95b5-0cabc7563e4e"
+            }
+        },
+        "created_at": "2025-02-03T15:17:21.504Z",
+        "updated_at": "2025-02-03T15:17:22.105Z"
+    },
+    "2025-02-03T15:17:11.064Z/1": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:17:11.064Z/1",
+        "content": {
+            "doings": [],
+            "arguments_partial_str": "{\"name\": \"Technical Milestone Race\", \"description\": \"Will DeepSeek release models outperforming OpenAI's GPT-5 on LM-Harness benchmarks by January 2026?\", \"rule\": \"Market resolution will be based on performance benchmarks reported by credible AI research publications by January 2026.\", \"type\": \"binary\", \"image_uuid\": \"db7d180c-ed08-4ff9-a18c-42f9fa772d05\", \"probability_yes\": 0.4}",
+            "name": "createMarket",
+            "arguments": {
+                "name": "Technical Milestone Race",
+                "description": "Will DeepSeek release models outperforming OpenAI's GPT-5 on LM-Harness benchmarks by January 2026?",
+                "rule": "Market resolution will be based on performance benchmarks reported by credible AI research publications by January 2026.",
+                "type": "binary",
+                "image_uuid": "db7d180c-ed08-4ff9-a18c-42f9fa772d05",
+                "probability_yes": 0.4
+            },
+            "result": {
+                "market_id": "2aeae4b5-d85a-4b4e-9c60-3810729407d1"
+            }
+        },
+        "created_at": "2025-02-03T15:17:22.121Z",
+        "updated_at": "2025-02-03T15:17:22.946Z"
+    },
+    "2025-02-03T15:17:11.064Z/2": {
+        "agent_step": "tool_call_and_content",
+        "role": "tool",
+        "id": "2025-02-03T15:17:11.064Z/2",
+        "content": {
+            "doings": [],
+            "arguments_partial_str": "{\"name\": \"Policy Response\", \"description\": \"Will the US announce new AI export restrictions targeting China before 2026?\", \"rule\": \"Market resolution will be based on official US government announcements regarding AI export restrictions before 2026.\", \"type\": \"binary\", \"image_uuid\": \"0832c6bd-c604-4118-8b3b-a3d896c69a9b\", \"probability_yes\": 0.5}",
+            "name": "createMarket",
+            "arguments": {
+                "name": "Policy Response",
+                "description": "Will the US announce new AI export restrictions targeting China before 2026?",
+                "rule": "Market resolution will be based on official US government announcements regarding AI export restrictions before 2026.",
+                "type": "binary",
+                "image_uuid": "0832c6bd-c604-4118-8b3b-a3d896c69a9b",
+                "probability_yes": 0.5
+            },
+            "result": {
+                "market_id": "8f9bd8ad-ff66-49f0-8168-e08e9a293fd5"
+            }
+        },
+        "created_at": "2025-02-03T15:17:22.960Z",
+        "updated_at": "2025-02-03T15:17:23.367Z"
+    },
+    "2025-02-03T15:17:23.259Z/content": {
+        "agent_step": "tool_call_and_content",
+        "id": "2025-02-03T15:17:23.259Z/content",
+        "role": "assistant",
+        "content": "All set! 🎉 I’ve created three prediction markets focusing on the US-China competition in AI, as per our discussion. Here they are:\n\n### 1. **Impact on US Market Valuation**\n- **Question**: Will NVIDIA's market cap drop ≥15% (vs. S&P 500) by July 2025 due to DeepSeek/Chinese AI competition?\n- **Options**:\n  - \"Yes – DeepSeek causes major disruption\"\n  - \"No – NVIDIA retains dominance\"\n- **Resolution Rule**: Based on NVIDIA's market cap change reported by financial news sources by July 2025.\n- **Market ID**: [Market Link](https://imply.app/market/414e6a35-26e0-407b-95b5-0cabc7563e4e)\n- **Thumbnail**: ![NVIDIA Stock Chart](insert_endpoint_here)\n\n### 2. **Technical Milestone Race**\n- **Question**: Will DeepSeek release models outperforming OpenAI's GPT-5 on LM-Harness benchmarks by January 2026?\n- **Options**:\n  - \"Yes – China overtakes OpenAI\"\n  - \"No – US maintains lead\"\n- **Resolution Rule**: Based on performance benchmarks published by credible AI research publications by January 2026.\n- **Market ID**: [Market Link](https://imply.app/market/2aeae4b5-d85a-4b4e-9c60-3810729407d1)\n- **Thumbnail**: ![DeepSeek AI Model](insert_endpoint_here)\n\n### 3. **Policy Response**\n- **Question**: Will the US announce new AI export restrictions targeting China before 2026?\n- **Options**:\n  - \"Yes – Policy enacted\"\n  - \"No – Status quo\"\n- **Resolution Rule**: Based on official US government announcements regarding AI export restrictions before 2026.\n- **Market ID**: [Market Link](https://imply.app/market/8f9bd8ad-ff66-49f0-8168-e08e9a293fd5)\n- **Thumbnail**: ![AI Regulation Debate](insert_endpoint_here)\n\nFeel free to dive into any of the markets! If you have more ideas or other themes to explore, I'm here to help!  \\( ́・ω・`)/✨",
+        "created_at": "2025-02-03T15:17:23.798Z",
+        "updated_at": "2025-02-03T15:17:31.039Z"
+    }
+}
