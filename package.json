@@ -19,6 +19,7 @@
     "lightweight-charts": "^4.2.2",
     "marked": "^15.0.6",
     "openai": "^4.80.0",
+    "posthog-js": "^1.215.3",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.2",
     "streaming-iterables": "^8.0.1",

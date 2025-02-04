@@ -18,8 +18,18 @@ import "@fontsource/poppins/900.css";
 import Nav from "./components/Nav";
 import { db } from "./client/database";
 import { setProfileSubscription } from "./client/utils";
+import posthog from "posthog-js";
 
 export default function App() {
+  onMount(() => {
+    if (!window.env.POSTHOG_TOKEN) return;
+    console.log("connecting to posthog", window.env.POSTHOG_TOKEN);
+    posthog.init(window.env.POSTHOG_TOKEN, {
+      api_host: "https://eu.i.posthog.com",
+      person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
+    });
+  });
+
   function subscribeProfile(profile_id: string) {
     console.log("subscribeProfile", profile_id);
     return db.subscribeQuery(

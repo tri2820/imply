@@ -20,6 +20,9 @@ BRAVE_SEARCH_API_KEY=
 JWT_SECRET_KEY=
 INSTANTDB_APP_ID=
 INSTANT_APP_ADMIN_TOKEN=
+
+# Analytics
+POSTHOG_TOKEN=
 ```
 
 ### 🔑 Key Details:
@@ -51,6 +54,8 @@ OPENAI_BASE_URL=https://openrouter.ai/api/v1
 OPENAI_MODEL=openai/gpt-4o-mini
 REASONING_MODEL=deepseek/deepseek-r1
 ```
+
+6. **POSTHOG_TOKEN**: This is optional & used for analytics purposes.
 
 ## Method 1: Via Docker
 

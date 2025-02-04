@@ -399,8 +399,7 @@ export const systemMessage = (): { [key: string]: ChatCompletionMessageParam } =
         
         
 
-        Tools you can ask TOOLING AI to use: ${tools.map(t => t.definition)}. 
-    `,
+        Tools you can ask TOOLING AI to use: ${tools.map(t => t.name)}.`,
     },
     tools: {
         role: "system",
@@ -448,9 +447,9 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     // Only tools in the same "inference" can share memory
     // To share memory accross inferences we need to store memStorage to something persistent 
     // like an in-memory database like Redis or a real database (Postgres, InstantDB)
-    // const extraArgs: ExtraArgs = {
-    //     memStorage: {}
-    // }
+    const extraArgs: ExtraArgs = {
+        memStorage: {}
+    }
 
     // Safe guard
     let MAX_ITER = 5;
@@ -557,7 +556,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                     }
                     tool_called.push(tool_call.name)
 
-                    const toolG = toolLogic(tool_call.arguments);
+                    const toolG = toolLogic(tool_call.arguments, extraArgs);
 
                     for await (const tool_yield of toolG) {
                         yield { id: tool_call.id, ...tool_yield, name: tool_call.name } as ToolYieldWithId

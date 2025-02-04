@@ -65,6 +65,7 @@ export default createHandler(() => (
             {`
               window.env = {
                 INSTANTDB_APP_ID: "${getEnv("INSTANTDB_APP_ID")}",
+                POSTHOG_TOKEN: "${getEnv("POSTHOG_TOKEN")}",
               }; console.log('window.env', window.env)
             `}
           </script>
