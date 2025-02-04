@@ -21,7 +21,7 @@
 - [x] 🤖 AI Agents
   - [x] 📚 can research & create prediction markets
   - [ ] 🔀 can merge similar markets
-  - [ ] 🔍 can resolve markets (e.g. verifying sources)
+  - [ ] 🔍 can resolve markets (i.e. verifying sources)
   - [ ] 💼 can buy/sell shares on users' behalf
 
 <p align="center">
