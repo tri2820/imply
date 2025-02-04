@@ -151,55 +151,48 @@ export default function AIComp() {
               <For each={listBlocks()}>
                 {(b) => <BlockComp blockId={b.id} />}
               </For>
-              <Show when={abortController()}>
+              {/* <Show when={abortController()}>
                 <Spinner size="sm" />
-              </Show>
+              </Show> */}
             </div>
           </Show>
         </div>
 
         <div class=" sticky bottom-0 py-4 z-20">
-          <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 hover rounded-3xl focus-within:border-neutral-500">
-            <textarea
-              value={text()}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  submit();
-                }
-              }}
-              onInput={(e) => setText(e.currentTarget.value)}
-              class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500 z-50"
-              placeholder="My prediction is..."
-            />
-
-            <Show
-              when={abortController()}
-              fallback={
+          <Show
+            when={abortController()}
+            fallback={
+              <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 rounded-3xl focus-within:border-neutral-500">
+                <textarea
+                  value={text()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      submit();
+                    }
+                  }}
+                  onInput={(e) => setText(e.currentTarget.value)}
+                  class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500 z-50"
+                  placeholder="My prediction is..."
+                />
                 <button
                   onClick={submit}
                   class="p-1 bg-white rounded-full text-black mr-2 mt-2 hover:opacity-50"
                 >
                   <BsArrowUpShort class="w-8 h-8" />
                 </button>
-              }
-            >
-              {(ac) => (
-                <button
-                  disabled={ac() ? true : false}
-                  onClick={() => {
-                    // https://github.com/solidjs/solid-start/issues/1753
-                    // ac().abort();
-                    // setAbortController(undefined);
-                  }}
-                  class="p-1 bg-white rounded-full text-black mr-2 mt-2 hover:opacity-50"
-                >
-                  {/* <BsStopFill class="w-8 h-8" /> */}
+              </div>
+            }
+          >
+            <div class="flex flex-col items-center select-none">
+              <div class="border-2 rounded-3xl  bg-neutral-800 border-neutral-800 overflow-hidden">
+                <div class="flex items-center p-4 py-2 space-x-2 animate-pulse ">
+                  <div class="flex-1">Researching</div>
                   <Spinner size="sm" />
-                </button>
-              )}
-            </Show>
-          </div>
+                </div>
+              </div>
+            </div>
+          </Show>
         </div>
       </main>
     </div>

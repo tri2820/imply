@@ -184,8 +184,9 @@ export const chartSeries = () => {
 };
 
 export const [scrolledToBottom, setScrolledToBottom] = createSignal<string>();
-export const [abortController, setAbortController] =
-  createSignal<AbortController>();
+export const [abortController, setAbortController] = createSignal<
+  AbortController | undefined
+>();
 
 // export const [blocksScrollView, setBlocksScrollView] =
 //   createSignal<HTMLDivElement>();

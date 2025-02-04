@@ -137,6 +137,7 @@ export const createMarketTool = makeTool({
     description: `Create a prediction market. 
     Important:
     - Probability must be in range [0, 1].
+    - Description are long (200 words) paragraphs of text to give a context to the market. It should explain why initial probability is set to a certain value. Be insightful and concise.
 
     The 'type' field determines the market structure:
     - 'binary' requires 'probability_yes'. Important: try to estimate it accurately.

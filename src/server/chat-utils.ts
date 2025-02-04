@@ -330,6 +330,22 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
     let maybeToolCall_i = messages.length - 1;
     while (maybeToolCall_i >= 0 && isToolResult(messages[maybeToolCall_i])) { maybeToolCall_i-- }
     const foundToolCall = maybeToolCall_i >= 0 && isToolCall(messages[maybeToolCall_i]);
+    const toolCallToNormalMessage = (m: ChatCompletionMessageParam): ChatCompletionMessageParam => {
+        if (!(m.role == 'assistant' && m.tool_calls && m.tool_calls.length > 0)) throw new Error('Impossible!')
+        const tool_call = m.tool_calls![0];
+        return {
+            role: 'assistant',
+            content: `I called the tool: ${tool_call.function.name} with arguments: ${tool_call.function.arguments}`
+        }
+    }
+
+    const toolResultToNormalMessage = (m: ChatCompletionMessageParam): ChatCompletionMessageParam => {
+        if (!(m.role == 'tool')) throw new Error('Impossible!')
+        return {
+            role: 'assistant',
+            content: `The tool returned: ${m.content}`
+        }
+    }
 
     let budget = 14000;
     const prepared_belows: ChatCompletionMessageParam[] = []
@@ -337,13 +353,16 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
         let belowBudget = 10000;
 
         for (let i = maybeToolCall_i + 1; i < messages.length; i++) {
-            const prepared_tool_result = { ...messages[i] };
+            let prepared_tool_result = { ...messages[i] };
             if (!isToolResult(prepared_tool_result)) throw new Error('Impossible!')
             // Hack: try divide the budget among the tool results
             const max_each = Math.ceil(belowBudget / (messages.length - i));
             const saved = Math.max(prepared_tool_result.content.length - max_each, 0)
             prepared_tool_result.content = prepared_tool_result.content.slice(-max_each);
             belowBudget += saved - max_each;
+
+            prepared_tool_result = toolResultToNormalMessage(prepared_tool_result)
+
             prepared_belows.push(prepared_tool_result)
         }
 
@@ -375,10 +394,13 @@ export const prepare = (messages: ChatCompletionMessageParam[]) => {
         }
     }
 
+    const preparedToolCalls = foundToolCall ? [
+        toolCallToNormalMessage(messages[maybeToolCall_i])
+    ] : []
     return [
         ...prepared_aboves,
         // Raw tool call message
-        ...(foundToolCall ? [messages[maybeToolCall_i]] : []),
+        ...preparedToolCalls,
         ...prepared_belows,
     ]
 };
@@ -387,43 +409,40 @@ export const systemMessage = (): { [key: string]: ChatCompletionMessageParam } =
     reasoning: {
         role: "system",
         content: `You are the native PLANNING AI of Imply.app
-        Your response will be forward to the TOOLING AI instead directly to the user. Give details step by step instruction. TOOLING AI's response will then be forward back to you.
-        Example flow: PLANNING AI -> asks search news -> TOOLING AI calls search news -> search news result -> PLANNING AI -> asks createMarket -> PLANNING AI ...
-
+        Your job is to work together with the TOOLING AI to estimate probabilities & help create prediction markets. Your response will be forward to the TOOLING AI instead directly to the user. Give details step by step instruction. TOOLING AI's response will then be forward back to you.
+        
         Imply.app is a prediction market platform for everyone (no topic is off-limits!). 
         The app uses play money (still called USD).
         
         Current time: ${new Date().toISOString()}
-        Your job is to work together with the TOOLING AI to estimate probabilities & help create prediction markets.
-        Do not be creative! Research properly!
-        
-        
 
-        Tools you can ask TOOLING AI to use: ${tools.map(t => t.name)}.`,
+        Do not be creative! Research properly! Be critical! Be detailed!
+        Challenge the possibility of the event!
+        You can ask for more news or data.`,
     },
     tools: {
         role: "system",
-        content: `You are the native TOOLING AI of Imply.app—a prediction market platform for everyone (no topic is off-limits!). The app uses play money (still called USD).
-    
+        content: `You are the native TOOLING AI of Imply.app—a prediction market platform for everyone. The app uses play money(still called USD).
+
+        Research properly using search news tools! Be critical! Be detailed! Challenge the possibility of the event! 
+
         Your job is to work together with PLANNING AI to:
         1. Estimate probabilities: Guess how accurate predictions are.
         2. Help create prediction markets.
 
-        Important: Write a detailed description for why you think the initial probability is so. Give a context to the market.
-
         Current time: ${new Date().toISOString()}.
-        `,
+`,
     },
     content: {
         role: "system",
-        content: `You are the native AI of Imply.app—a prediction market platform for everyone (no topic is off-limits!). The app uses play money (still called USD).
+        content: `You are the native AI of Imply.app—a prediction market platform for everyone(no topic is off - limits!).The app uses play money(still called USD).
     
         Your job is to work together with PLANNING AI to:
-        1. Estimate probabilities: Guess how accurate predictions are (e.g., "That's quite improbable! I give it 22% probability. (￣～￣;)").
+        1. Estimate probabilities: Guess how accurate predictions are(e.g., "That's quite improbable! I give it 22% probability.").
         2. Help create prediction markets.
     
         Current time: ${new Date().toISOString()}
-        Use bold text and kaomojis! ${getRandomKaomoji().join(" ")}
+        Use bold text to emphasize important points.
         DO NOT OUTPUT LINKS IN YOUR RESPONSE.`,
     },
 });
@@ -439,7 +458,7 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
     if (history.length === 1) {
         history[0] = {
             ...history[0],
-            content: `My prediction is: ${history[0].content}`,
+            content: `My prediction is: ${history[0].content} `,
         }
     }
 
@@ -488,8 +507,8 @@ export async function* chat(body: APICompleteBody): AsyncGenerator<ChatStreamYie
                                 role: "assistant",
                                 content: `<think>
                 ${reasoning_text}
-                </think>
-                ${update.doing.content.done.content}`
+</think>
+                ${update.doing.content.done.content} `
                             }
                             messages.push(msg)
                         }
