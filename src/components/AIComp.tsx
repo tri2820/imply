@@ -112,9 +112,9 @@ export default function AIComp() {
     setAbortController(undefined);
   }
 
-  // onMount(() => {
-  //   setBlocks(generateBlocks());
-  // });
+  onMount(() => {
+    setBlocks(generateBlocks());
+  });
 
   return (
     <div class="flex-1 w-full flex flex-col items-stretch ">

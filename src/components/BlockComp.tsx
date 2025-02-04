@@ -55,7 +55,7 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
         }
         class="flex items-center space-x-2"
       >
-        <div class="font-semibold">PLANNING WITH TOOLING AI</div>
+        <div class="font-semibold">PLANNING</div>
         <div class="flex-none">
           <Show
             when={blockShow()[props.block.id] ?? true}
@@ -321,31 +321,36 @@ export default function BlockComp(props: { blockId: string }) {
     };
   };
 
+  const assistantComponents: any = {
+    reasoning_and_foward: AssistantReasoningForwardBlockComp,
+    tool_call_and_content: AssistantBlockComp,
+  };
+
   const components = {
-    assistant: (props: { block: AssistantBlock }) => {
-      const components: any = {
-        reasoning_and_foward: AssistantReasoningForwardBlockComp,
-        tool_call_and_content: AssistantBlockComp,
-      };
-      if (!props.block.agent_step) return <></>;
-      return (
-        <Dynamic
-          component={components[props.block.agent_step]}
-          block={props.block}
-        />
-      );
-    },
+    assistant: (props: { block: AssistantBlock }) => (
+      <Show when={props.block.agent_step}>
+        {(step) => (
+          <Dynamic
+            component={assistantComponents[step()]}
+            block={props.block}
+          />
+        )}
+      </Show>
+    ),
+
     user: UserBlockComp,
     tool: ToolBlockComp,
     reasoning: ReasoningBlockComp,
   };
+
+  const label = <AssistantLabel />;
 
   return (
     <Show when={block()}>
       {(b) => (
         <div data-end={b().isEndSecion} class="data-[end=true]:mb-4">
           <Show when={b().isStartSecion && sectionType(b().role) == 0}>
-            <AssistantLabel />
+            {label}
           </Show>
 
           <Dynamic component={components[b().role]} block={b() as any} />

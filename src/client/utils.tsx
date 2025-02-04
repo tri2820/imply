@@ -84,7 +84,7 @@ export const [blocks, setBlocks] = createSignal<Blocks>({});
 export const blocksToList = (blocks: Blocks) =>
   Object.values(blocks).toSorted(
     (a, b) =>
-      new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
   );
 export const listBlocks = () => blocksToList(blocks());
 
