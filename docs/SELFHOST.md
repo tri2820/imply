@@ -87,5 +87,5 @@ Make sure you have the `.env` file created as described in the previous section 
 ```sh
 cp app.config.bun.ts app.config.ts
 bun run build
-bun run start:bun
+bun run start
 ```
