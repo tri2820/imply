@@ -5,7 +5,7 @@ Some useful Docker commands:
 1. Build the Docker image for **Imply**.
 
 ```sh
-docker build -t imply .
+docker build -t docker.io/implyapp/imply .
 ```
 
 2. Use the following to start the application:
