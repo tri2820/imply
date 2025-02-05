@@ -12,19 +12,18 @@
 
 A prediction market is like a stock market, but instead of buying and selling company shares, people trade guesses about future events. The price of each guess shows how likely people think that event is to happen. If you predict correctly, you make money; if you're wrong, you lose. This helps gather the opinions of many people to make better predictions.
 
-Imply is a platform to host and resolve prediction markets. We make prediction markets easy to use & understand through AI & better interface. The app is live here [https://imply.app](https://imply.app).
+Imply make prediction markets easy to use & understand. The app is live here [https://imply.app](https://imply.app).
 
 ### Currently working on:
-
-- [x] 📈 Prediction markets
-  - [x] ⚙️ Automated Market Markers (CPMM)
-  - [x] ⏱️ Real-time price update
-  - [ ] 🖥️ Simplified trading UI/UX
 - [x] 🤖 AI Agents
   - [x] 📚 can research & create prediction markets
   - [ ] 🔀 can merge similar markets
   - [ ] 🔍 can resolve markets (i.e. verifying sources)
   - [ ] 💼 can buy/sell shares on users' behalf
+- [x] 📈 Prediction markets
+  - [x] ⚙️ Automated Market Markers (CPMM)
+  - [x] ⏱️ Real-time price update
+  - [ ] 🖥️ Simplified trading UI/UX
 
 ### Quick Demo (Youtube)
 
