@@ -24,6 +24,12 @@
   - [ ] 🔍 can resolve markets (i.e. verifying sources)
   - [ ] 💼 can buy/sell shares on users' behalf
 
+### Quick Demo (Youtube)
+
+[![Quick Demo](https://img.youtube.com/vi/x3VCd4FStJU/0.jpg)](https://www.youtube.com/watch?v=x3VCd4FStJU)
+
+
+### Screenshots
 <p align="center">
   <img src="/public/screenshot.jpg" />
   <img src="/public/screenshot2.jpg" />
