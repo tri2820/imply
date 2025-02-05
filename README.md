@@ -10,7 +10,9 @@
 
 ## Imply
 
-[Imply](https://imply.app) is a platform to host and resolve prediction markets. We make prediction markets user-friendly & ready for mass adoption through AI.
+A prediction market is like a stock market, but instead of buying and selling company shares, people trade guesses about future events. The price of each guess shows how likely people think that event is to happen. If you predict correctly, you make money; if you're wrong, you lose. This helps gather the opinions of many people to make better predictions.
+
+[Imply](https://imply.app) is a platform to host and resolve prediction markets. We make prediction markets easy to use & understand through AI & better interface.
 
 ### Currently working on:
 
@@ -28,8 +30,8 @@
 
 [![Quick Demo](https://img.youtube.com/vi/x3VCd4FStJU/0.jpg)](https://www.youtube.com/watch?v=x3VCd4FStJU)
 
-
 ### Screenshots
+
 <p align="center">
   <img src="/public/screenshot.jpg" />
   <img src="/public/screenshot2.jpg" />
