@@ -35,7 +35,6 @@ Imply is a platform to host and resolve prediction markets. We make prediction m
 <p align="center">
   <img src="/public/screenshot.jpg" />
   <img src="/public/screenshot2.jpg" />
-  <img src="/public/screenshot3.jpg" />
 </p>
 
 ## Self-Hosting
