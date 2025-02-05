@@ -46,4 +46,7 @@ jobs:
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: implyapp/imply
-          subject-digest: ${{ steps.docker_build.outputs.digest }}
+
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-cugkir23esus73b1s9d0?key=${{ secrets.RENDER_DEPLOY_KEY }}&imgURL=docker.io%2Fimplyapp%2Fimply%3Alatest"
