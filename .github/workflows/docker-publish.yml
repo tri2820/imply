@@ -46,6 +46,7 @@ jobs:
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: implyapp/imply
+          subject-digest: ${{ steps.docker_build.outputs.digest }}
 
       - name: Trigger Render Deploy
         run: |
