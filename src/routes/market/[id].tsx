@@ -105,13 +105,13 @@ export default function MarketPage() {
               </div>
 
               <div class="px-4 py-2 space-y-2">
-                <div>
+                <div class="space-y-2">
                   <div class="text-xl font-bold">Description</div>
-                  <div>{m().description}</div>
+                  <div class="text-neutral-400">{m().description}</div>
                 </div>
-                <div>
+                <div class="space-y-2">
                   <div class="text-xl font-bold">Rule</div>
-                  <div>{m().rule}</div>
+                  <div class="text-neutral-400">{m().rule}</div>
                 </div>
               </div>
 

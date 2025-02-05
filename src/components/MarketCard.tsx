@@ -57,92 +57,102 @@ export default function MarketCard(props: {
   return (
     <Show when={market()}>
       {(m) => (
-        <div class="border border-neutral-800 p-4 rounded bg-neutral-900 no-scrollbar space-y-2 flex flex-col">
-          <div class="flex items-center space-x-3">
-            <MarketImage src={m().image} size="sm" />
-            <a href={`/market/${props.marketId}`} class="font-bold">
-              {m().name}
-            </a>
-          </div>
-
-          <Show
-            when={m().options.length > 1}
-            fallback={
-              <Show when={m().options.at(0)}>
-                {(o) => {
-                  return (
-                    <>
-                      <div class=" flex-1 space-y-1">
-                        <CheckBoxItem
-                          label="Yes"
-                          prob={o().yesProb}
-                          id="yes"
-                          hideCheckBox
-                          onChange={() => {
-                            const yesShare = o().shares.find(
-                              (s) => s.type == "yes"
-                            );
-                            redirectToMarket(o().id, yesShare?.id);
-                          }}
-                        />
-                        <CheckBoxItem
-                          label="No"
-                          prob={noProb(o().yesProb)}
-                          id="no"
-                          hideCheckBox
-                          onChange={() => {
-                            const noShare = o().shares.find(
-                              (s) => s.type == "no"
-                            );
-                            redirectToMarket(o().id, noShare?.id);
-                          }}
-                        />
-                      </div>
-                      {/* <div class="flex flex-col items-stretch">
-                        <button
-                          onClick={() => {
-                            redirectToMarket();
-                          }}
-                          class="bg-[#360ccc]/80 hover:bg-[#360ccc] px-4 py-2 rounded"
-                        >
-                          Predict
-                        </button>
-                      </div> */}
-                    </>
-                  );
-                }}
-              </Show>
-            }
-          >
-            <div class="space-y-1">
-              <For each={m().options.slice(0, 3)}>
-                {(o, i) => (
-                  <div>
-                    <OptionItem
-                      color={o.color as Color}
-                      label={o.name}
-                      id={o.id}
-                      prob={prob(o)}
-                      onClick={redirectToMarket}
-                    />
-                  </div>
-                )}
-              </For>
+        <a href={`/market/${props.marketId}`}>
+          <div class="border border-neutral-800 h-full p-4  rounded group bg-neutral-900 no-scrollbar space-y-2 flex flex-col hover:bg-[#1b1a1a] cursor-pointer">
+            <div class="flex items-center space-x-3 flex-none">
+              <MarketImage src={m().image} size="sm" />
+              <div class="font-bold text-white">{m().name}</div>
             </div>
 
-            <Show when={m().options.length > 3}>
-              {
-                <div class="text-sm text-neutral-400">
-                  and {m().options.length - 3} more
-                </div>
-              }
-            </Show>
-          </Show>
+            <div class=" flex-1 ">
+              <div class="mt-1 mb-4 max-h-40 overflow-hidden relative">
+                <div
+                  class="absolute bottom-0 w-full h-40 
+                bg-gradient-to-t 
+                from-neutral-900 via-neutral-900/80
+                group-hover:from-[#1b1a1a] group-hover:via-[#1b1a1a]/80
+                 to-transparent 
+                left-0"
+                />
+                <div class="text-neutral-300">{m().description}</div>
+              </div>
 
-          <div class="pt-2 ">
-            <MarketSocialComp marketId={props.marketId} />
+              <Show
+                when={m().options.length > 1}
+                fallback={
+                  <Show when={m().options.at(0)}>
+                    {(o) => {
+                      return (
+                        <>
+                          <div class="space-y-1">
+                            <CheckBoxItem
+                              label="Yes"
+                              prob={o().yesProb}
+                              id="yes"
+                              hideCheckBox
+                              onChange={() => {
+                                const yesShare = o().shares.find(
+                                  (s) => s.type == "yes"
+                                );
+                                redirectToMarket(o().id, yesShare?.id);
+                              }}
+                            />
+                            <CheckBoxItem
+                              label="No"
+                              prob={noProb(o().yesProb)}
+                              id="no"
+                              hideCheckBox
+                              onChange={() => {
+                                const noShare = o().shares.find(
+                                  (s) => s.type == "no"
+                                );
+                                redirectToMarket(o().id, noShare?.id);
+                              }}
+                            />
+                          </div>
+                        </>
+                      );
+                    }}
+                  </Show>
+                }
+              >
+                <div class="space-y-1">
+                  <For each={m().options.slice(0, 3)}>
+                    {(o, i) => (
+                      <div>
+                        <OptionItem
+                          color={o.color as Color}
+                          label={o.name}
+                          id={o.id}
+                          prob={prob(o)}
+                          onClick={redirectToMarket}
+                        />
+                      </div>
+                    )}
+                  </For>
+                </div>
+
+                <Show when={m().options.length > 3}>
+                  {
+                    <div class="text-sm text-neutral-400 mt-2">
+                      and {m().options.length - 3} more
+                    </div>
+                  }
+                </Show>
+              </Show>
+            </div>
+
+            <div
+              class="flex-none min-h-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
+              <MarketSocialComp marketId={props.marketId} />
+            </div>
           </div>
-        </div>
+        </a>
       )}
     </Show>
   );

@@ -112,7 +112,7 @@ declare global {
                 shares: {},
             },
             $: {
-                first: 8,
+                first: number,
                 after: Cursor,
                 order: {
                     num_votes: "desc",

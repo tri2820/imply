@@ -25,12 +25,12 @@ export default function BuySellComp(props: BuySellProps) {
   };
 
   const [searchParams, setSearchParams] = useSearchParams();
-  onMount(() => {
+  createEffect(() => {
     if (searchParams.optionId) {
       setOptionId(searchParams.optionId as string);
       return;
     }
-
+    console.log("props.market.options", props.market.options);
     const firstOption = props.market.options.at(0);
     if (firstOption) {
       setOptionId(firstOption.id);

@@ -173,7 +173,7 @@ export default function SellComp(props: BuySellProps) {
         <Show
           fallback={
             <div class="text-center text-neutral-500 h-80">
-              Select an option to buy
+              Select an option to sell
             </div>
           }
           when={option()}

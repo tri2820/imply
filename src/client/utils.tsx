@@ -65,7 +65,7 @@ export async function loadMarkets() {
           shares: {},
         },
         $: {
-          first: 8,
+          first: 10,
           ...(lastCursor && { after: lastCursor }),
           order: {
             num_votes: "desc",
