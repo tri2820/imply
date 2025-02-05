@@ -32,6 +32,7 @@ jobs:
           images: implyapp/imply
 
       - name: Build and push Docker image
+        id: docker_build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -45,3 +46,4 @@ jobs:
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: implyapp/imply
+          subject-digest: ${{ steps.docker_build.outputs.digest }}
