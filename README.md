@@ -1,5 +1,5 @@
 <p align="center">
-<img src="/public/banner.png">
+<img src="/public/screenshot.jpg" />
 </p>
 
 <div align="center">
@@ -28,13 +28,6 @@ Imply make prediction markets easy to use & understand. The app is live here [ht
 ### Quick Demo (Youtube)
 
 [![Quick Demo](https://img.youtube.com/vi/x3VCd4FStJU/0.jpg)](https://www.youtube.com/watch?v=x3VCd4FStJU)
-
-### Screenshots
-
-<p align="center">
-  <img src="/public/screenshot.jpg" />
-  <img src="/public/screenshot2.jpg" />
-</p>
 
 ## Self-Hosting
 
