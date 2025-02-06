@@ -11,6 +11,7 @@ import { bigLogoEl, profile } from "~/client/utils";
 import ProfileImage from "./ProfileImage";
 import { BsDiscord, BsGithub } from "solid-icons/bs";
 import IconComp from "./IconComp";
+import Gem from "./Gem";
 
 export default function Nav() {
   const [showLogo, setShowLogo] = createSignal(false);
@@ -57,7 +58,7 @@ export default function Nav() {
 
   return (
     <div class=" sticky top-0 z-50 w-full ">
-      <nav class="flex-none bg-neutral-900 border-b border-neutral-800">
+      <nav class="flex-none bg-neutral-900 border-b-2 border-neutral-800">
         <div class="flex items-center space-x-4 px-2 py-1 h-14">
           {/* <ul class=" flex items-center py-4 px-2 text-white flex-1 ">
           <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
@@ -97,8 +98,14 @@ export default function Nav() {
             <BsGithub class="w-4 h-4" />
           </a>
           <div class="flex-1" />
-
-          <Show when={profile()}>
+          <div class=" rounded overflow-hidden border-2 border-white">
+            <img src="/assets/uiflags/vn.svg" class="w-8" />
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="font-nunito font-extrabold">1000</div>
+            <Gem />
+          </div>
+          {/* <Show when={profile()}>
             {(p) => (
               <div
                 onClick={() => {
@@ -116,7 +123,7 @@ export default function Nav() {
                 <ProfileImage />
               </div>
             )}
-          </Show>
+          </Show> */}
         </div>
       </nav>
       {/* <div class="flex flex-col items-center bg-neutral-800">

@@ -1,6 +1,13 @@
 import { useParams } from "@solidjs/router";
 import { BsInfoCircle } from "solid-icons/bs";
-import { createEffect, For, onCleanup, onMount, Show } from "solid-js";
+import {
+  createEffect,
+  createSignal,
+  For,
+  onCleanup,
+  onMount,
+  Show,
+} from "solid-js";
 import { db } from "~/client/database";
 import {
   market,
@@ -15,7 +22,9 @@ import MarketImage from "~/components/MarketImage";
 import MarketSocialComp from "~/components/MarketSocialComp";
 import MarketChart from "~/components/MartketChart";
 import OptionImage from "~/components/OptionImage";
-import { dateF_dmy, dateF_h, prob, probToPercent } from "~/shared/utils";
+import OptionItem from "~/components/OptionItem";
+import Options from "~/components/Options";
+import { Color, dateF_dmy, dateF_h, prob, probToPercent } from "~/shared/utils";
 
 export default function MarketPage() {
   const params = useParams();
@@ -76,68 +85,38 @@ export default function MarketPage() {
     });
   });
 
+  const [pickedOptionId, setPickedOptionId] = createSignal<string>();
+  function optionClicked() {}
+
   return (
     <Show when={market()}>
       {(m) => (
-        <main class="max-w-6xl mx-auto">
-          <div class=" flex flex-col  lg:flex-row lg:items-start items-stretch lg:space-x-2">
-            <div class="flex-1 overflow-hidden">
-              <div class="flex items-center space-x-8  px-4 py-4">
-                <MarketImage src={m().image} />
-                <h1 class="text-3xl font-bold">{m().name}</h1>
-              </div>
-
-              <MarketChart />
-
-              <MarketSocialComp marketId={params.id} />
-
-              <div class="flex items-start space-x-2 py-2 text-sm text-neutral-500 px-4 ">
-                <BsInfoCircle class="w-3 h-3 mt-1" />
-                <div>
-                  <div>
-                    AI will resolve this market at: {dateF_dmy(m().resolve_at)}
-                  </div>
-                  <div>
-                    Stop trading at: {dateF_dmy(m().stop_trading_at)} (
-                    {dateF_h(m().stop_trading_at)})
-                  </div>
-                </div>
-              </div>
-
-              <div class="px-4 py-2 space-y-2">
-                <div class="space-y-2">
-                  <div class="text-xl font-bold">Description</div>
-                  <div class="text-neutral-400">{m().description}</div>
-                </div>
-                <div class="space-y-2">
-                  <div class="text-xl font-bold">Rule</div>
-                  <div class="text-neutral-400">{m().rule}</div>
-                </div>
-              </div>
-
-              <Show when={m().options.length > 1}>
-                <div class="max-h-72 overflow-y-auto no-scrollbar py-4 lg:px-4 ">
-                  <For each={m().options}>
-                    {(o) => (
-                      <div
-                        data-selected={o.id == optionId()}
-                        class="flex items-center space-x-8 hover:bg-white/5 data-[selected=true]:bg-white/5 transition-all p-2 cursor-pointer"
-                        onClick={() => setOptionId(o.id)}
-                      >
-                        <OptionImage />
-                        <div class="font-bold w-1/3 overflow-x-hidden line-clamp-1">
-                          {o.name}
-                        </div>
-                        <div>{probToPercent(prob(o))}</div>
-                      </div>
-                    )}
-                  </For>
-                </div>
-              </Show>
+        <main class="max-w-6xl mx-auto ">
+          <div class="flex-1 overflow-hidden space-y-4 py-8">
+            <div class="flex items-center space-x-6  px-4 ">
+              <MarketImage src={m().image} />
+              <h1 class="text-3xl font-bold">{m().name}</h1>
             </div>
 
-            <div class="flex-none py-4">
-              <BuySellComp market={m()} />
+            {/* <MarketChart /> */}
+
+            <div class="px-4 space-y-1">
+              <Options m={m()} />
+            </div>
+
+            <div class="px-4">
+              <MarketSocialComp marketId={params.id} />
+            </div>
+
+            <div class="px-4 space-y-2">
+              <div class="space-y-2">
+                <div class="text-xl font-bold">Description</div>
+                <div class="text-neutral-400">{m().description}</div>
+              </div>
+              <div class="space-y-2">
+                <div class="text-xl font-bold">Rule</div>
+                <div class="text-neutral-400">{m().rule}</div>
+              </div>
             </div>
           </div>
         </main>

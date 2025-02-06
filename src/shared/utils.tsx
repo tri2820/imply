@@ -24,16 +24,20 @@ export enum Color {
   Yellow = "#ffaa00",
   Green = "#00ffaa",
   Purple = "#aa00ff",
+  Red500 = "#ef4444",
+  Blue500 = "#3b82f6",
 }
 export const colors = Object.values(Color);
 export const colorClasses = {
   background: {
-    [Color.LightPurple]: `bg-[#987ef7]/20 group-hover:bg-[#987ef7]/40 data-[checked=true]:bg-[#987ef7]/40`,
-    [Color.Blue]: `bg-blue-500/20 group-hover:bg-blue-500/40 data-[checked=true]:bg-blue-500/40`,
-    [Color.Pink]: `bg-pink-500/20 group-hover:bg-pink-500/40 data-[checked=true]:bg-pink-500/40`,
-    [Color.Green]: `bg-green-500/20 group-hover:bg-green-500/40 data-[checked=true]:bg-green-500/40`,
-    [Color.Yellow]: `bg-yellow-500/20 group-hover:bg-yellow-500/40 data-[checked=true]:bg-yellow-500/40`,
-    [Color.Purple]: `bg-purple-500/20 group-hover:bg-purple-500/40 data-[checked=true]:bg-purple-500/40`,
+    [Color.LightPurple]: `bg-[#987ef7]/20 group-hover:bg-[#987ef7]/40 data-[checked=true]:bg-[#987ef7]`,
+    [Color.Blue]: `bg-blue-500/20 group-hover:bg-blue-500/40 data-[checked=true]:bg-blue-500`,
+    [Color.Pink]: `bg-pink-500/20 group-hover:bg-pink-500/40 data-[checked=true]:bg-pink-500`,
+    [Color.Green]: `bg-green-500/20 group-hover:bg-green-500/40 data-[checked=true]:bg-green-500`,
+    [Color.Yellow]: `bg-yellow-500/20 group-hover:bg-yellow-500/40 data-[checked=true]:bg-yellow-500`,
+    [Color.Purple]: `bg-purple-500/20 group-hover:bg-purple-500/40 data-[checked=true]:bg-purple-500`,
+    [Color.Red500]: `bg-red-500/20 group-hover:bg-red-500/40 data-[checked=true]:!bg-red-500`,
+    [Color.Blue500]: `bg-blue-500/20 group-hover:bg-blue-500/40 data-[checked=true]:!bg-blue-500`,
   },
 };
 

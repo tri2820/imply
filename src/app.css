@@ -8,7 +8,6 @@
 }
 
 body {
-  /* font-family: "Inter", sans-serif; */
   font-family: 'Poppins', sans-serif;
   background: rgb(var(--background-rgb));
   color: rgb(var(--foreground-rgb));
@@ -116,3 +115,37 @@ input[type=number] {
 span.avoidwrap {
   display: inline-block;
 }
+
+.parent:hover:not(:has(.ignoreHover:hover)) {
+  @apply hover:bg-[#1b1a1a]
+}
+
+
+.parent:hover:not(:has(.ignoreHover:hover)) .togetherWithParent {
+  @apply from-[#1b1a1a] via-[#1b1a1a]/80
+  to-transparent 
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(2px);
+  }
+  50% {
+    transform: translateX(-1px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.bouncing-element {
+  animation: bounce 1s ease infinite;
+}
+
+.font-nunito {
+  font-family: 'Nunito Variable', sans-serif;
+}
+
+

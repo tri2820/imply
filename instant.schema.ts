@@ -46,6 +46,9 @@ const _schema = i.schema({
       created_at: i.date(),
       yesProb: i.number(),
     }),
+    reports: i.entity({
+
+    }),
     conversations: i.entity({
       name: i.string(),
     }),

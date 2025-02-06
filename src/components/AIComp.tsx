@@ -119,28 +119,31 @@ export default function AIComp() {
   return (
     <div class="flex-1 w-full flex flex-col items-stretch ">
       <main class="flex-1  flex flex-col mx-auto lg:max-w-3xl w-full relative">
-        <div class="flex-1  flex flex-col z-10">
+        <div class="flex-1  flex flex-col z-10 ">
           <Show
             when={userChatted()}
             fallback={
-              <div class="flex-1 flex items-end pb-8" ref={setBigLogoEl}>
+              <div class="flex-1 flex items-end pb-1" ref={setBigLogoEl}>
                 <div class="flex items-center justify-center">
                   <div class="space-y-4">
                     <div class="flex items-center space-x-4">
-                      <IconComp size="lg" />
-                      <h1 class="font-bold text-4xl md:text-5xl font-lexend leading-none ">
-                        Predict Anything
+                      <IconComp size="2xl" />
+                      <h1 class="font-extrabold text-4xl md:text-5xl font-nunito leading-none ">
+                        Read news in a fun way
                       </h1>
                     </div>
 
-                    <div>
-                      <span class="avoidwrap">
-                        We will tell how accurate your prediction is.
-                      </span>{" "}
-                      <span class="avoidwrap">
-                        If no data is available, a prediction market will be
-                        created to gather insights from the crowd.
-                      </span>
+                    <div class="pt-2 flex flex-wrap gap-1 ">
+                      <button class="px-3 py-1.5 rounded-full bg-neutral-800">
+                        Will DeepSeek crash US stock market?
+                      </button>
+                      <button class="px-3 py-1.5 rounded-full bg-neutral-800">
+                        Will Trump’s Gaza plan gain support from U.S. allies?
+                      </button>
+                      <button class="px-3 py-1.5 rounded-full bg-neutral-800">
+                        Will U.S. inflation rise due to new trade policies in
+                        2025?
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -158,11 +161,11 @@ export default function AIComp() {
           </Show>
         </div>
 
-        <div class=" sticky bottom-0 py-4 z-20">
+        <div class=" sticky bottom-0 z-20">
           <Show
             when={abortController()}
             fallback={
-              <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 rounded-3xl focus-within:border-neutral-500">
+              <div class="flex items-start border-2 bg-neutral-800 border-neutral-800 rounded-3xl focus-within:border-neutral-500 ">
                 <textarea
                   value={text()}
                   onKeyDown={(e) => {
@@ -173,7 +176,7 @@ export default function AIComp() {
                   }}
                   onInput={(e) => setText(e.currentTarget.value)}
                   class="flex-1 px-4 py-3 resize-none bg-transparent h-24 outline-none placeholder:text-neutral-500 z-50"
-                  placeholder="My prediction is..."
+                  placeholder="Ask a question..."
                 />
                 <button
                   onClick={submit}

@@ -15,6 +15,10 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import "@fontsource/poppins/900.css";
+
+// Supports weights 200-900
+import "@fontsource-variable/nunito";
+
 import Nav from "./components/Nav";
 import { db } from "./client/database";
 import { setProfileSubscription } from "./client/utils";

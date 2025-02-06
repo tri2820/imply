@@ -19,36 +19,40 @@ export default function CheckBoxItem(props: {
     }[props.id]);
 
   return (
-    <div
-      onClick={() => {
-        props.onChange?.(props.id);
-      }}
-      class="group relative p-4 flex items-center space-x-2 border rounded border-neutral-800 bg-white/5 flex-1 cursor-pointer "
-    >
+    <div>
       <div
-        data-checked={checked()}
-        class={"absolute top-0 left-0 h-full  transition " + colorClass()}
-        style={{
-          width: props.prob ? `${props.prob * 100}%` : 0,
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          props.onChange?.(props.id);
         }}
-      />
-      <div class="flex items-center space-x-2 flex-1 z-10">
-        <div>{props.label}</div>
-        <Show
-          when={props.price === undefined}
-          fallback={
-            <div>{props.price ? `$${props.price.toFixed(2)}` : "N/A"}</div>
-          }
-        >
-          <Show when={props.prob !== undefined}>
-            <div>{probToPercent(props.prob)}</div>
+        class="group relative p-4 flex items-center space-x-2 border rounded-full overflow-hidden border-neutral-800 bg-white/5 flex-1 cursor-pointer "
+      >
+        <div
+          data-checked={checked()}
+          class={"absolute top-0 left-0 h-full  transition " + colorClass()}
+          style={{
+            width: props.prob ? `${props.prob * 100}%` : 0,
+          }}
+        />
+        <div class="flex items-center space-x-2 flex-1 z-10">
+          <div>{props.label}</div>
+          <Show
+            when={props.price === undefined}
+            fallback={
+              <div>{props.price ? `$${props.price.toFixed(2)}` : "N/A"}</div>
+            }
+          >
+            <Show when={props.prob !== undefined}>
+              <div>{probToPercent(props.prob)}</div>
+            </Show>
           </Show>
+        </div>
+
+        <Show when={!props.hideCheckBox}>
+          <CheckBox checked={checked()} />
         </Show>
       </div>
-
-      <Show when={!props.hideCheckBox}>
-        <CheckBox checked={checked()} />
-      </Show>
     </div>
   );
 }

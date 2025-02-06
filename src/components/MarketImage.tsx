@@ -13,7 +13,7 @@ export default function MarketImage(props: {
       src={props.src}
       alt="market image"
       class={
-        "object-cover bg-neutral-800 rounded border border-neutral-800 flex-none " +
+        "object-cover bg-neutral-800 rounded border-2 border-white flex-none " +
         sizeClass
       }
     />

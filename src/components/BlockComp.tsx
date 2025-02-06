@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import { BsChevronDown, BsChevronUp, BsTerminal } from "solid-icons/bs";
+import { BsTerminal } from "solid-icons/bs";
 import { For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { blockShow, listBlocks, setBlockShow } from "~/client/utils";
@@ -18,6 +18,7 @@ import { SearchWebToolArgs, SearchWebToolDone } from "~/shared/tools/searchWeb";
 import { ToolName } from "~/shared/tools/utils";
 import MarketCard from "./MarketCard";
 import MarketImage from "./MarketImage";
+import { FaSolidChevronDown, FaSolidChevronUp } from "solid-icons/fa";
 
 function AssistantBlockComp(props: { block: AssistantBlock }) {
   let ref!: HTMLDivElement;
@@ -42,10 +43,7 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
   const html = () => marked.parse(props.block.content) as string;
 
   return (
-    <div
-      ref={ref}
-      class="overflow-x-auto my-1 rounded border border-neutral-800 p-4 bg-neutral-900"
-    >
+    <div ref={ref} class="overflow-x-auto my-1 rounded-2xl p-4 bg-neutral-900">
       <button
         onClick={() =>
           setBlockShow((p) => ({
@@ -59,9 +57,9 @@ function AssistantReasoningForwardBlockComp(props: { block: AssistantBlock }) {
         <div class="flex-none">
           <Show
             when={blockShow()[props.block.id] ?? true}
-            fallback={<BsChevronUp />}
+            fallback={<FaSolidChevronUp />}
           >
-            <BsChevronDown />
+            <FaSolidChevronDown />
           </Show>
         </div>
       </button>
@@ -80,10 +78,7 @@ function ReasoningBlockComp(props: { block: ReasoningBlock }) {
   let ref!: HTMLDivElement;
 
   return (
-    <div
-      ref={ref}
-      class="overflow-x-auto my-2 p-4 border border-neutral-800 rounded bg-neutral-900"
-    >
+    <div ref={ref} class="overflow-x-auto my-2 p-4 rounded-2xl bg-neutral-900">
       <button
         onClick={() =>
           setBlockShow((p) => ({
@@ -97,9 +92,9 @@ function ReasoningBlockComp(props: { block: ReasoningBlock }) {
         <div class="flex-none">
           <Show
             when={blockShow()[props.block.id] ?? true}
-            fallback={<BsChevronUp />}
+            fallback={<FaSolidChevronUp />}
           >
-            <BsChevronDown />
+            <FaSolidChevronDown />
           </Show>
         </div>
       </button>
@@ -265,7 +260,7 @@ function ToolBlockComp(props: { block: ToolBlock }) {
             [props.block.id]: !p[props.block.id],
           }));
         }}
-        class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 rounded border border-neutral-800 flex items-center space-x-2"
+        class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 rounded-xl border border-neutral-800 flex items-center space-x-2"
       >
         <div class="flex-none">
           <BsTerminal class="w-4 h-4" />
@@ -276,9 +271,9 @@ function ToolBlockComp(props: { block: ToolBlock }) {
         <div class="flex-none">
           <Show
             when={blockShow()[props.block.id] ?? true}
-            fallback={<BsChevronUp />}
+            fallback={<FaSolidChevronUp />}
           >
-            <BsChevronDown />
+            <FaSolidChevronDown />
           </Show>
         </div>
       </button>
@@ -293,7 +288,7 @@ function ToolBlockComp(props: { block: ToolBlock }) {
 function AssistantLabel() {
   return (
     <div class="flex items-center space-x-2 my-1">
-      <IconComp size="xs" />
+      <IconComp size="lg" />
       <img src="/name.svg" class="h-6" />
     </div>
   );

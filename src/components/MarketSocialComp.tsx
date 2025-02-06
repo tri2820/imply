@@ -1,16 +1,10 @@
-import { createEffect, createSignal, Show } from "solid-js";
-
-import {
-  BiRegularDownvote,
-  BiRegularUpvote,
-  BiSolidDownvote,
-  BiSolidUpvote,
-} from "solid-icons/bi";
+import { createEffect, createSignal, onMount, Show } from "solid-js";
+import lottie from "lottie-web";
+import { BiRegularHeart, BiSolidHeart } from "solid-icons/bi";
 import { db } from "~/client/database";
 import { api_vote, profile } from "~/client/utils";
-import { numF } from "~/shared/utils";
-import { InstantCoreDatabase } from "@instantdb/core";
-import { AppSchema } from "../../instant.schema";
+import { dateF_dmy, numF } from "~/shared/utils";
+import { BsInfoCircle } from "solid-icons/bs";
 
 export default function MarketSocialComp(props: { marketId: string }) {
   const [marketResponse, setMarketResponse] =
@@ -59,14 +53,12 @@ export default function MarketSocialComp(props: { marketId: string }) {
   });
 
   return (
-    <Show when={market()}>
-      {(m) => (
-        <div class="flex items-center space-x-1">
-          <div class="flex-1" />
-          <div class="bg-neutral-800 flex items-center flex-none rounded-full">
+    <div class="min-h-10">
+      <Show when={market()}>
+        {(m) => (
+          <div class="flex items-center space-x-1">
             <button
               onClick={() => {
-                console.log("vote", vote());
                 if (vote() == 1) {
                   setVote(0);
                   api_vote(m().id, {
@@ -80,55 +72,33 @@ export default function MarketSocialComp(props: { marketId: string }) {
                   type: "upvote",
                 });
               }}
+              class="bg-neutral-800 flex items-center flex-none rounded-full px-4 hover:bg-neutral-700 transition-all group"
             >
-              <div
-                data-active={vote() == 1}
-                class="text-neutral-600 active:text-orange-800 hover:bg-orange-400/20 px-2 py-2 hover:text-white rounded-full data-[active=true]:text-orange-400"
-              >
-                <Show
-                  when={vote() == 1}
-                  fallback={<BiRegularUpvote class="w-5 h-5 " />}
-                >
-                  <BiSolidUpvote class="w-5 h-5 " />
-                </Show>
+              <div class="text-center ">
+                <div class="text-sm font-bold">{num_votes()}</div>
+              </div>
+
+              <div>
+                <div class="text-neutral-600 pl-2 py-2 group-hover:text-white ">
+                  <Show
+                    when={vote() == 1}
+                    fallback={<BiRegularHeart class="w-5 h-5 " />}
+                  >
+                    <BiSolidHeart class="w-5 h-5 text-red-500" />
+                  </Show>
+                </div>
               </div>
             </button>
-
-            <div class="w-6 text-center ">
-              <div class="text-sm font-bold">{num_votes()}</div>
+            <div class="flex-1" />
+            <div class="flex items-start space-x-2 py-2 text-sm text-neutral-500">
+              <BsInfoCircle class="w-3 h-3 mt-1" />
+              <div>
+                <div>Gem collect at {dateF_dmy(m().resolve_at)}</div>
+              </div>
             </div>
-
-            <button
-              onClick={() => {
-                if (vote() == -1) {
-                  setVote(0);
-                  api_vote(m().id, {
-                    type: "remove",
-                  });
-                  return;
-                }
-
-                setVote(-1);
-                api_vote(m().id, {
-                  type: "downvote",
-                });
-              }}
-            >
-              <div
-                data-active={vote() == -1}
-                class="text-neutral-600 active:text-indigo-800 hover:bg-indigo-400/20 px-2 py-2 hover:text-white rounded-full data-[active=true]:text-indigo-400"
-              >
-                <Show
-                  when={vote() == -1}
-                  fallback={<BiRegularDownvote class="w-5 h-5 " />}
-                >
-                  <BiSolidDownvote class="w-5 h-5 " />
-                </Show>
-              </div>
-            </button>
           </div>
-        </div>
-      )}
-    </Show>
+        )}
+      </Show>
+    </div>
   );
 }

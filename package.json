@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fontsource-variable/lexend": "^5.1.2",
+    "@fontsource-variable/nunito": "^5.1.1",
     "@fontsource/poppins": "^5.1.1",
     "@instantdb/admin": "^0.17.9",
     "@instantdb/core": "^0.17.9",
@@ -17,6 +18,7 @@
     "jose": "^5.9.6",
     "json-stream-es": "^1.2.1",
     "lightweight-charts": "^4.2.2",
+    "lottie-web": "^5.12.2",
     "marked": "^15.0.6",
     "openai": "^4.80.0",
     "posthog-js": "^1.215.3",
