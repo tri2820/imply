@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package gdelt.v1;
+
+option go_package = "imply/server/gen/gdelt/v1;gdeltv1";
+
+service GdeltService {
+  rpc SearchArticles(SearchArticlesRequest) returns (SearchArticlesResponse);
+  rpc GetTimeline(GetTimelineRequest) returns (GetTimelineResponse);
+}
+
+message SearchArticlesRequest {
+  string query = 1;
+  string timespan = 2;
+  string start_date = 3;
+  string end_date = 4;
+  int32 max_records = 5;
+}
+
+message Article {
+  string url = 1;
+  string title = 2;
+  string domain = 3;
+  string language = 4;
+  string seendate = 5;
+}
+
+message SearchArticlesResponse {
+  repeated Article articles = 1;
+}
+
+message GetTimelineRequest {
+  string query = 1;
+  string mode = 2;
+  string timespan = 3;
+  string start_date = 4;
+  string end_date = 5;
+}
+
+message TimelinePoint {
+  string date = 1;
+  double value = 2;
+}
+
+message GetTimelineResponse {
+  repeated TimelinePoint points = 1;
+}

@@ -1,0 +1,6 @@
+{
+  "listen_addr": ":8080",
+  "database_url": "postgresql://neondb_owner:npg_pjlKD56gmXYJ@ep-rapid-shadow-ah2xx2cj-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+  "jwt_secret": "change-this-secret-in-production",
+  "frontend_url": "http://localhost:3000"
+}

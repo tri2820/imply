@@ -14,10 +14,16 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            bun
             go
             gopls
             gotools
             go-tools
+            buf
+            protoc-gen-es
+            protoc-gen-go
+            protoc-gen-connect-go
+            tmux
           ];
         };
       }

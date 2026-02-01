@@ -1,0 +1,6 @@
+{
+  "listen_addr": ":8080",
+  "database_url": "postgresql://user:password@localhost:5432/imply",
+  "jwt_secret": "change-this-secret-in-production",
+  "frontend_url": "http://localhost:3000"
+}
