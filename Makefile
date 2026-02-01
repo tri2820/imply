@@ -26,3 +26,7 @@ db-init:
 
 dev:
 	./tmux.dev.sh
+
+typecheck:
+	cd app && bunx tsc --noEmit
+	go vet ./...

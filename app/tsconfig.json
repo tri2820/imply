@@ -7,20 +7,21 @@
 
     // Modules
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "isolatedModules": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
 
-    // Path Aliases
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-
     // Type Checking & Safety
     "strict": true,
-    "types": ["vite/client"]
+    "skipLibCheck": true,
+    "types": ["vite/client", "node"],
+
+    // Paths
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }
